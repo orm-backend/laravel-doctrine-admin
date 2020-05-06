@@ -1,0 +1,23 @@
+{
+    "name": "it-aces/laravel-doctrine-admin",
+    "description": "Administrative dashboard for Laravel Doctrine",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["it-aces", "laravel-doctrine-admin", "laravel admin", "doctrine"],
+    "authors": [
+        {
+            "name": "Vitaliy Kovalenko",
+            "email": "vvk@kola.cloud"
+        }
+    ],
+    "require": {
+    	"it-aces/laravel-doctrine": "dev-master"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+        	"ItAces\\Admin\\": "src/ItAces/Admin"
+        }
+    }
+}
