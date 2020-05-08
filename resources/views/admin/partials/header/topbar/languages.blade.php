@@ -8,7 +8,7 @@
 	</div>
 	<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround">
 		<!--[html-partial:include:{"file":"partials/_topbar/dropdown/languages.html"}]/-->
-		@include('admin.partials.topbar.dropdown.languages')
+		@include('itaces::admin.partials.topbar.dropdown.languages')
 	</div>
 </div>
 

@@ -46,28 +46,28 @@
 <body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
     <!-- begin:: Page -->
     <!--[html-partial:include:{"file":"partials/_header/base-mobile.html"}]/-->
-    @include('admin.partials.header.base-mobile')
+    @include('itaces::admin.partials.header.base-mobile')
     <div class="kt-grid kt-grid--hor kt-grid--root">
     	<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
     		<!--[html-partial:include:{"file":"partials/_aside/base.html"}]/-->
-    		@include('admin.partials.aside.base')
+    		@include('itaces::admin.partials.aside.base')
     		<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
     			<!--[html-partial:include:{"file":"partials/_header/base.html"}]/-->
-    			@include('admin.partials.header.base')
+    			@include('itaces::admin.partials.header.base')
     			<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
     				<!--[html-partial:include:{"file":"partials/_subheader/subheader-v1.html"}]/-->
-    				@include('admin.partials.subheader.subheader-v1')
+    				@include('itaces::admin.partials.subheader.subheader-v1')
     				<!--[html-partial:include:{"file":"partials/_content/base.html"}]/-->
-    				@yield('content')
+    				@yield('itaces::content')
     			</div>
     			<!--[html-partial:include:{"file":"partials/_footer/base.html"}]/-->
-    			@include('admin.partials.footer.base')
+    			@include('itaces::admin.partials.footer.base')
     		</div>
     	</div>
     </div>
     <!-- end:: Page -->
     <!--[html-partial:include:{"file":"partials/_scrolltop.html"}]/-->
-    @include('admin.partials.scrolltop')
+    @include('itaces::admin.partials.scrolltop')
     <!--[html-partial:include:{"file":"partials/_toolbar.html"}]/-->
     
     <!--[html-partial:include:{"file":"partials/_demo-panel.html"}]/-->

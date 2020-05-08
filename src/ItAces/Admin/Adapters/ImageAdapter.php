@@ -29,7 +29,7 @@ class ImageAdapter extends AdminControllerAdapter
         $container = new FieldContainer($this->repository->em());
         $container->addEntity($entity);
         
-        return view('admin.image.edit', [
+        return view('itaces::admin.image.edit', [
             'menu' => $this->menu,
             'container' => $container,
             'meta' => [
@@ -43,7 +43,7 @@ class ImageAdapter extends AdminControllerAdapter
 
     public function create(Request $request)
     {
-        return view('admin.image.create', [
+        return view('itaces::admin.image.create', [
             'menu' => $this->menu,
             'action' => route('admin.entity.store', 'app-model-image'),
         ]);

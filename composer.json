@@ -19,5 +19,12 @@
         "psr-4": {
         	"ItAces\\Admin\\": "src/ItAces/Admin"
         }
-    }
+    },
+    "extra": {
+	    "laravel": {
+	        "providers": [
+	            "ItAces\\Admin\\PackageServiceProvider"
+	        ]
+	    }
+	}
 }

@@ -13,16 +13,34 @@ class PackageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        include __DIR__.'/../../routes.php';
+        $this->loadRoutesFrom(__DIR__.'/../../routes.php');
+        
+        $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'itaces');
+
+        $this->publishes([
+            __DIR__.'/../../../public/admin' => public_path('assets/admin'),
+            //__DIR__.'/../../../resources/views' => resource_path('views/vendor/itaces'),
+        ], 'public');
         
         $this->publishes([
-            __DIR__.'/../../../resources/admin' => base_path('/resources/admin'),
-            __DIR__.'/../../../resources/views/admin' => base_path('/resources/views/admin'),
-        ], 'itaces');
+            __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
+        ], 'config');
         
         Gate::define('dashboard-access', function ($user) {
             return $user->hasDashboardAccess();
         });
+    }
+    
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../../../config/admin.php', 'admin'
+        );
     }
 
 }

@@ -1,4 +1,4 @@
-@extends('admin.layout')
-@section('content')
-@include('admin.partials.content.base')
+@extends('itaces::admin.layout')
+@section('itaces::content')
+@include('itaces::admin.partials.content.base')
 @endsection

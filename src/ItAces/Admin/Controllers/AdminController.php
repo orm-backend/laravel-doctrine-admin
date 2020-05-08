@@ -38,7 +38,7 @@ class AdminController extends WebController
     {
         parent::__construct();
         $this->withJoins = new WithJoinsRepository();
-        $this->adapters = config('itaces.adapters.web');
+        $this->adapters = config('admin.adapters');
         $metadata = $this->repository->em()->getMetadataFactory()->getAllMetadata();
 
         foreach ($metadata as $classMetadata) {
@@ -75,7 +75,9 @@ class AdminController extends WebController
     
     public function index()
     {
-        return view('admin.index', [
+        $metadata = $this->repository->em()->getMetadataFactory()->getAllMetadata();
+        
+        return view('itaces::admin.index', [
             'menu' => $this->menu
         ]);
     }
@@ -124,7 +126,7 @@ class AdminController extends WebController
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
 
-        return view('admin.entity.search', [
+        return view('itaces::admin.entity.search', [
             'menu' => $this->menu,
             'paginator' => $paginator,
             'container' => $container,
@@ -164,7 +166,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view('admin.entity.details', [
+        return view('itaces::admin.entity.details', [
             'menu' => $this->menu,
             'container' => $container,
             'meta' => $meta,
@@ -204,7 +206,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view('admin.entity.edit', [
+        return view('itaces::admin.entity.edit', [
             'menu' => $this->menu,
             'container' => $container,
             'meta' => $meta,
@@ -243,7 +245,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
         
-        return view('admin.entity.create', [
+        return view('itaces::admin.entity.create', [
             'menu' => $this->menu,
             'container' => $container,
             'meta' => $meta,
@@ -451,7 +453,7 @@ class AdminController extends WebController
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
         
-        return view('admin.entity.trash', [
+        return view('itaces::admin.entity.trash', [
             'menu' => $this->menu,
             'paginator' => $paginator,
             'container' => $container,
@@ -538,11 +540,6 @@ class AdminController extends WebController
         }
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Records were successfully restored.'));
-    }
-    
-    protected function cleanUp(array $map)
-    {
-        // To do nothing?
     }
 
 }

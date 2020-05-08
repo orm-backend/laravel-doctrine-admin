@@ -1,5 +1,5 @@
-@extends('admin.layout')
-@section('content')
+@extends('itaces::admin.layout')
+@section('itaces::content')
 <!-- begin:: Content -->
 <script src="/assets/admin/js/itaces/entity-edit.js" type="text/javascript" defer></script>
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">

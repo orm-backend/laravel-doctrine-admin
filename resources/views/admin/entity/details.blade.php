@@ -1,5 +1,5 @@
-@extends('admin.layout')
-@section('content')
+@extends('itaces::admin.layout')
+@section('itaces::content')
 <!-- begin:: Content -->
 <style>
 @media print

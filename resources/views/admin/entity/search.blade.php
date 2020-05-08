@@ -1,5 +1,5 @@
-@extends('admin.layout')
-@section('content')
+@extends('itaces::admin.layout')
+@section('itaces::content')
 <!-- begin:: Content -->
 <script src="/assets/admin/js/itaces/entity-table.js" type="text/javascript" defer></script>
 <!-- Modal -->
@@ -53,7 +53,7 @@
 		</div>
 	</div>
 	@endif
-	@include ('admin.partials.advanced-search-form')
+	@include ('itaces::admin.partials.advanced-search-form')
 	<div class="kt-portlet kt-portlet--mobile">
 		<div class="kt-portlet__head kt-portlet__head--lg">
 			<div class="kt-portlet__head-label">

@@ -1,8 +1,8 @@
-@extends('admin.popup')
-@section('content')
+@extends('itaces::admin.popup')
+@section('itaces::content')
 <script src="/assets/admin/js/itaces/popup-table.js" type="text/javascript" defer></script>
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-	@include ('admin.partials.advanced-search-form')
+	@include ('itaces::admin.partials.advanced-search-form')
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__body kt-portlet__body--fit">
             <!--begin: Datatable -->

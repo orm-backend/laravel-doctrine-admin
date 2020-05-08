@@ -7,7 +7,7 @@
 	</div>
 	<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-lg">
 		<!--[html-partial:include:{"file":"partials/_topbar/dropdown/search-dropdown.html"}]/-->
-		@include('admin.partials.topbar.dropdown.search-dropdown')
+		@include('itaces::admin.partials.topbar.dropdown.search-dropdown')
 	</div>
 </div>
 <!--end: Search -->

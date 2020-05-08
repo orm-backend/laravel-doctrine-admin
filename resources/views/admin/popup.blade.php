@@ -47,10 +47,10 @@
     <div class="kt-grid kt-grid--hor kt-grid--root">
     	<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
 			<!--[html-partial:include:{"file":"partials/_content/base.html"}]/-->
-			@yield('content')
+			@yield('itaces::content')
 		</div>
     </div>
     <!-- end:: Page -->
-    @include('admin.partials.scrolltop')
+    @include('itaces::admin.partials.scrolltop')
 </body>
 </html>
