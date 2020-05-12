@@ -4,14 +4,15 @@ namespace ItAces\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use ItAces\SoftDeleteable;
+use ItAces\Controllers\WebController;
+use ItAces\Repositories\WithJoinsRepository;
 use ItAces\Utility\Helper;
 use ItAces\Utility\Str;
 use ItAces\View\FieldContainer;
-use ItAces\Controllers\WebController;
-use ItAces\Repositories\WithJoinsRepository;
 
 class AdminController extends WebController
 {
@@ -47,8 +48,13 @@ class AdminController extends WebController
              * @var \Doctrine\ORM\Mapping\ClassMetadata $metadataInfo
              */
             $metadataInfo = $classMetadata;
+            $classUrlName = Helper::classToUlr($metadataInfo->name);
             
             if ($metadataInfo->isMappedSuperclass) {
+                continue;
+            }
+            
+            if (!Gate::inspect('read', $classUrlName)->allowed()) {
                 continue;
             }
             
@@ -58,8 +64,8 @@ class AdminController extends WebController
 
             $this->menu[] = [
                 'name' => __( Str::pluralCamelWords($className) ),
-                'link' => route('admin.entity.search', Helper::classToUlr($metadataInfo->name), false) . '/',
-                'trash' => $isDeleteable ? route('admin.entity.trash', Helper::classToUlr($metadataInfo->name), false) . '/' : null,
+                'link' => route('admin.entity.search', $classUrlName, false) . '/',
+                'trash' => $isDeleteable ? route('admin.entity.trash', $classUrlName, false) . '/' : null,
                 'title' => $metadataInfo->name
             ];
             
@@ -353,23 +359,7 @@ class AdminController extends WebController
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
         $url = route('admin.entity.search', $classUrlName);
-        $entity = $this->repository->findOrFail($className, $id);
-        
-        if ($entity instanceof SoftDeleteable) {
-            /**
-             * 
-             * @var \ItAces\SoftDeleteable $object
-             */
-            $deleteable = $entity;
-            $deleteable->setDeletedAt(now());
-            
-            if (Auth::id()) {
-                $deleteable->setDeletedBy(Auth::user());
-            }
-        } else {
-            $this->repository->delete($className, $id);
-        }
-        
+        $this->repository->delete($className, $id);
         $this->repository->em()->flush();
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record deleted successfully.'));
@@ -389,18 +379,8 @@ class AdminController extends WebController
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
         $url = route('admin.entity.trash', $classUrlName);
-        $entity = $this->repository->findOrFail($className, $id);
-        
-        if ($entity instanceof SoftDeleteable) {
-            /**
-             *
-             * @var \ItAces\SoftDeleteable $object
-             */
-            $deleteable = $entity;
-            $deleteable->setDeletedAt(null);
-            $deleteable->setDeletedBy(null);
-            $this->repository->em()->flush();
-        }
+        $this->repository->restore($className, $id);
+        $this->repository->em()->flush();
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record was successfully restored.'));
     }
@@ -480,22 +460,7 @@ class AdminController extends WebController
             $ids = explode(',', $selected);
             
             foreach ($ids as $id) {
-                $entity = $this->repository->findOrFail($className, $id);
-                
-                if ($entity instanceof SoftDeleteable) {
-                    /**
-                     *
-                     * @var \ItAces\SoftDeleteable $object
-                     */
-                    $deleteable = $entity;
-                    $deleteable->setDeletedAt(now());
-                    
-                    if (Auth::id()) {
-                        $deleteable->setDeletedBy(Auth::user());
-                    }
-                } else {
-                    $this->repository->delete($className, $id);
-                }
+                $this->repository->delete($className, $id);
             }
             
             $this->repository->em()->flush();
@@ -521,19 +486,9 @@ class AdminController extends WebController
         
         if ($selected) {
             $ids = explode(',', $selected);
-
+            
             foreach ($ids as $id) {
-                $entity = $this->repository->findOrFail($className, $id);
-                
-                if ($entity instanceof SoftDeleteable) {
-                    /**
-                     *
-                     * @var \ItAces\SoftDeleteable $object
-                     */
-                    $deleteable = $entity;
-                    $deleteable->setDeletedAt(null);
-                    $deleteable->setDeletedBy(null);
-                }
+                $this->repository->restore($className, $id);
             }
             
             $this->repository->em()->flush();

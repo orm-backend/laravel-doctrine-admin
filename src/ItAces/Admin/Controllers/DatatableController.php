@@ -36,7 +36,7 @@ class DatatableController extends WebController
      * @param string $classUrlName
      * @return \Illuminate\Http\Response
      */
-    public function metadata(Request  $request, string $classUrlName)
+    public function metadata(Request $request, string $classUrlName)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classMetadata = $this->repository->em()->getClassMetadata($className);

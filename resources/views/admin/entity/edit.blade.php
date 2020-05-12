@@ -67,10 +67,12 @@
 								<i class="la la-file-o"></i>
 								<span class="kt-hidden-mobile">{{ __('View') }}</span>
 							</button>
+							@if ($entity->delitingAllowed)
 							<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#delete_modal" data-url="{{ route('admin.entity.delete', [$meta['classUrlName'], $entity->id()]) }}">
 								<i class="la la-remove"></i>
 								<span class="kt-hidden-mobile">{{ __('Delete') }}</span>
 							</button>
+							@endif
 						</div>
 					</div>
 				</div>

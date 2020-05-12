@@ -3,9 +3,14 @@ namespace ItAces\Admin;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use ItAces\ORM\Entities\EntityBase;
 
 class PackageServiceProvider extends ServiceProvider
 {
+    public function __construct($app) {
+        parent::__construct($app);
+    }
+    
     /**
      * Bootstrap the application services.
      *
@@ -14,7 +19,6 @@ class PackageServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__.'/../../routes.php');
-        
         $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'itaces');
 
         $this->publishes([
@@ -26,8 +30,8 @@ class PackageServiceProvider extends ServiceProvider
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
         ], 'config');
         
-        Gate::define('dashboard-access', function ($user) {
-            return $user->hasDashboardAccess();
+        Gate::define('dashboard', function (EntityBase $user) {
+            return $user->getId() === 1;
         });
     }
     

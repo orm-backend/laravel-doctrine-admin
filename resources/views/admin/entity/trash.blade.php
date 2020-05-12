@@ -33,7 +33,7 @@
 		</div>
 	</div>
 	@endif
-	@include ('admin.partials.advanced-search-form')
+	@include ('itaces::admin.partials.advanced-search-form')
 	<div class="kt-portlet kt-portlet--mobile">
 		<div class="kt-portlet__head kt-portlet__head--lg">
 			<div class="kt-portlet__head-label">
@@ -45,6 +45,7 @@
 				</h3>
 			</div>
 		</div>
+		@can('restore', $meta['classUrlName'])
 		<div class="kt-portlet__body">
 			<!--begin: Selected Rows Group Action Form -->
 			<div class="kt-form kt-form--label-align-right kt-margin-t-20 collapse" id="kt_datatable_group_action_form">
@@ -70,6 +71,7 @@
 			</div>
 			<!--end: Selected Rows Group Action Form -->
 		</div>
+		@endcan
 		<div class="kt-portlet__body kt-portlet__body--fit">
 			<!--begin: Datatable -->
 			<table class="kt-datatable itaces-datatable">
@@ -120,9 +122,11 @@
                         	@endif
                             @endforeach
                             <td>
+                            	@if ($entity->restoringAllowed)
                             	<a href="{{ route('admin.entity.restore', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Restore">
     								<i class="la la-history"></i>
     							</a>
+    							@endif
                             </td>
                         </tr>
                     @endforeach
