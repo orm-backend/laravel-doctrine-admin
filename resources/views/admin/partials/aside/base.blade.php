@@ -5,7 +5,7 @@
 	<!--[html-partial:include:{"file":"partials/_aside/_brand.html"}]/-->
 	@include('itaces::admin.partials.aside.brand')
 	<!--[html-partial:include:{"file":"partials/_aside/_menu.html"}]/-->
-	@include('itaces::admin.partials.aside.menu')
+	<x-admin-menu template="itaces::admin.components.menu" />
 </div>
 
 <!-- end:: Aside -->

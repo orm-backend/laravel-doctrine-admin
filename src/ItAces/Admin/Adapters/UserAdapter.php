@@ -19,7 +19,6 @@ class UserAdapter extends AdminControllerAdapter
     public function create(Request $request)
     {
         return view('itaces::admin.user.create', [
-            'menu' => $this->menu,
             'roles' => $this->repository->getQuery(Role::class)->getResult()
         ]);
     }
@@ -33,7 +32,6 @@ class UserAdapter extends AdminControllerAdapter
     public function edit(Request $request, EntityBase $entity)
     {
         return view('itaces::admin.user.edit', [
-            'menu' => $this->menu,
             'roles' => $this->repository->getQuery(Role::class)->getResult(),
             'user' => $entity
         ]);

@@ -1,0 +1,95 @@
+<?php
+namespace ItAces\Admin\Components;
+
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\View\Component;
+use ItAces\UnderAdminControl;
+
+class BrieflyComponent extends Component
+{
+    /**
+     *
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+    
+    /**
+     *
+     * @var string
+     */
+    protected $template;
+    
+    public function __construct(string $template)
+    {
+        $this->em = app('em');
+        $this->template = $template;
+    }
+    
+    /**
+     *
+     * {@inheritDoc}
+     * @see \Illuminate\View\Component::render()
+     */
+    public function render()
+    {
+        $metadata = $this->em->getMetadataFactory()->getAllMetadata();
+        $total = 0;
+        $controlled = 0;
+        $registered = 0;
+        $confirmed = 0;
+        $userClassName = null;
+        
+        foreach ($metadata as $classMetadata) {
+            if ($classMetadata->isMappedSuperclass) {
+                continue;
+            }
+            
+            $total ++;
+            $reflectionClass = new \ReflectionClass($classMetadata->name);
+            
+            if ($reflectionClass->implementsInterface(UnderAdminControl::class)) {
+                $controlled ++;
+            }
+            
+            if (!$userClassName && $reflectionClass->implementsInterface(Authenticatable::class)) {
+                $userClassName = $classMetadata->name;
+            }
+        }
+        
+        $qb = $this->em->createQueryBuilder();
+        $qb->from($userClassName,'u');
+        $qb->select($qb->expr()->countDistinct('u.id'));
+        $query = $qb->getQuery();
+        
+        if (config('itaces.caches.enabled')) {
+            $query->enableResultCache( config('itaces.caches.result_ttl') );
+            $query->setQueryCacheLifetime( config('itaces.caches.query_ttl') );
+            $query->useQueryCache(true);
+        } else {
+            $query->disableResultCache();
+            $query->useQueryCache(false);
+        }
+        
+        $registered = $query->getSingleScalarResult();
+        $qb->where($qb->expr()->isNotNull('u.emailVerifiedAt'));
+        $query = $qb->getQuery();
+        
+        if (config('itaces.caches.enabled')) {
+            $query->enableResultCache( config('itaces.caches.result_ttl') );
+            $query->setQueryCacheLifetime( config('itaces.caches.query_ttl') );
+            $query->useQueryCache(true);
+        } else {
+            $query->disableResultCache();
+            $query->useQueryCache(false);
+        }
+        
+        $confirmed = $query->getSingleScalarResult();
+
+        return view($this->template, [
+            'entities' => $total,
+            'controlled' => $controlled,
+            'registered' => $registered,
+            'confirmed' => $confirmed
+        ]);
+    }
+}

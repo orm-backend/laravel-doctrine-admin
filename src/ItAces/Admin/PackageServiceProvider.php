@@ -2,8 +2,13 @@
 namespace ItAces\Admin;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use ItAces\Admin\Components\AboutComponent;
+use ItAces\Admin\Components\BreadcrumbsComponent;
+use ItAces\Admin\Components\BrieflyComponent;
 use ItAces\ORM\Entities\EntityBase;
+use ItAces\Admin\Components\MenuComponent;
 
 class PackageServiceProvider extends ServiceProvider
 {
@@ -24,15 +29,20 @@ class PackageServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../../public/admin' => public_path('assets/admin'),
             //__DIR__.'/../../../resources/views' => resource_path('views/vendor/itaces'),
-        ], 'public');
+        ], 'admin-public');
         
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
-        ], 'config');
+        ], 'admin-config');
         
         Gate::define('dashboard', function (EntityBase $user) {
             return $user->getId() === 1;
         });
+        
+        Blade::component('admin-menu', MenuComponent::class);
+        Blade::component('admin-about', AboutComponent::class);
+        Blade::component('admin-breadcrumbs', BreadcrumbsComponent::class);
+        Blade::component('admin-briefly', BrieflyComponent::class);
     }
     
     /**

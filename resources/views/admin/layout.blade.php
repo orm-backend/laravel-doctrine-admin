@@ -56,7 +56,7 @@
     			@include('itaces::admin.partials.header.base')
     			<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
     				<!--[html-partial:include:{"file":"partials/_subheader/subheader-v1.html"}]/-->
-    				@include('itaces::admin.partials.subheader.subheader-v1')
+    				<x-admin-breadcrumbs template="itaces::admin.components.breadcrumbs"/>
     				<!--[html-partial:include:{"file":"partials/_content/base.html"}]/-->
     				@yield('itaces::content')
     			</div>

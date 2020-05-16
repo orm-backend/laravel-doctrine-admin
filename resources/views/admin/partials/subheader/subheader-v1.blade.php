@@ -1,4 +1,3 @@
-
 <!-- begin:: Subheader -->
 <div class="kt-subheader   kt-grid__item" id="kt_subheader">
 	<div class="kt-container  kt-container--fluid ">
@@ -15,5 +14,4 @@
 		</div>
 	</div>
 </div>
-
 <!-- end:: Subheader -->

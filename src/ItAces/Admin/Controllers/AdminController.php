@@ -3,11 +3,8 @@
 namespace ItAces\Admin\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use ItAces\SoftDeleteable;
 use ItAces\Controllers\WebController;
 use ItAces\Repositories\WithJoinsRepository;
 use ItAces\Utility\Helper;
@@ -21,71 +18,20 @@ class AdminController extends WebController
      * 
      * @var array
      */
-    protected $menu = [];
-    
-    /**
-     * 
-     * @var array
-     */
     protected $adapters;
-    
-    /**
-     *
-     * @var \ItAces\Repositories\WithJoinsRepository
-     */
-    protected $withJoins;
 
     public function __construct()
     {
         parent::__construct();
-        $this->withJoins = new WithJoinsRepository();
+        $this->repository = new WithJoinsRepository(true);
         $this->adapters = config('admin.adapters');
-        $metadata = $this->repository->em()->getMetadataFactory()->getAllMetadata();
-
-        foreach ($metadata as $classMetadata) {
-            /**
-             * 
-             * @var \Doctrine\ORM\Mapping\ClassMetadata $metadataInfo
-             */
-            $metadataInfo = $classMetadata;
-            $classUrlName = Helper::classToUlr($metadataInfo->name);
-            
-            if ($metadataInfo->isMappedSuperclass) {
-                continue;
-            }
-            
-            if (!Gate::inspect('read', $classUrlName)->allowed()) {
-                continue;
-            }
-            
-            $reflectionClass = new \ReflectionClass($metadataInfo->name);
-            $className = $reflectionClass->getShortName();
-            $isDeleteable = $reflectionClass->implementsInterface(SoftDeleteable::class);
-
-            $this->menu[] = [
-                'name' => __( Str::pluralCamelWords($className) ),
-                'link' => route('admin.entity.search', $classUrlName, false) . '/',
-                'trash' => $isDeleteable ? route('admin.entity.trash', $classUrlName, false) . '/' : null,
-                'title' => $metadataInfo->name
-            ];
-            
-            usort($this->menu, function($a, $b) {
-                if ($a['name'] == $b['name']) {
-                    return 0;
-                }
-                
-                return ($a['name'] < $b['name']) ? -1 : 1;
-            });
-        }
     }
     
     public function index()
     {
         $metadata = $this->repository->em()->getMetadataFactory()->getAllMetadata();
         
-        return view('itaces::admin.index', [
-            'menu' => $this->menu
-        ]);
+        return view('itaces::admin.index');
     }
     
     /**
@@ -101,7 +47,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$className] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass($this->menu);
+            $adapter = new $adapterClass;
             $response = $adapter->search($request);
             
             if ($response !== null) {
@@ -128,12 +74,11 @@ class AdminController extends WebController
             ];
         }
 
-        $paginator = $this->paginate($this->withJoins->createQuery($className, $parameters, $alias))->appends($request->all());
+        $paginator = $this->paginate($this->repository->createQuery($className, $parameters, $alias))->appends($request->all());
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
 
         return view('itaces::admin.entity.search', [
-            'menu' => $this->menu,
             'paginator' => $paginator,
             'container' => $container,
             'meta' => $meta
@@ -150,12 +95,12 @@ class AdminController extends WebController
     public function details(Request $request, string $classUrlName, int $id)
     {
         $className = Helper::classFromUlr($classUrlName);
-        $entity = $this->withJoins->findOrFail($className, $id);
+        $entity = $this->repository->findOrFail($className, $id);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $adapterClass = $this->adapters[$className] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass($this->menu);
+            $adapter = new $adapterClass;
             $response = $adapter->details($request, $id);
             
             if ($response !== null) {
@@ -173,7 +118,6 @@ class AdminController extends WebController
         ];
 
         return view('itaces::admin.entity.details', [
-            'menu' => $this->menu,
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.entity.update', [$classUrlName, $id])
@@ -190,12 +134,12 @@ class AdminController extends WebController
     public function edit(Request $request, string $classUrlName, int $id)
     {
         $className = Helper::classFromUlr($classUrlName);
-        $entity = $this->withJoins->findOrFail($className, $id);
+        $entity = $this->repository->findOrFail($className, $id);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $adapterClass = $this->adapters[$className] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass($this->menu);
+            $adapter = new $adapterClass;
             $response = $adapter->edit($request, $entity);
             
             if ($response !== null) {
@@ -213,7 +157,6 @@ class AdminController extends WebController
         ];
 
         return view('itaces::admin.entity.edit', [
-            'menu' => $this->menu,
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.entity.update', [$classUrlName, $id])
@@ -233,7 +176,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$className] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass($this->menu);
+            $adapter = new $adapterClass;
             $response = $adapter->create($request);
             
             if ($response !== null) {
@@ -252,7 +195,6 @@ class AdminController extends WebController
         ];
         
         return view('itaces::admin.entity.create', [
-            'menu' => $this->menu,
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.entity.store', [$classUrlName])
@@ -275,7 +217,7 @@ class AdminController extends WebController
         $map = [];
         
         if ($adapterClass) {
-            $adapter = new $adapterClass($this->menu);
+            $adapter = new $adapterClass;
             $response = $adapter->update($request, $id);
             
             if ($response !== null) {
@@ -288,10 +230,10 @@ class AdminController extends WebController
             
             foreach ($map as $className => $data) {
                 Validator::make($data, $className::getRequestValidationRules())->validate();
-                $this->withJoins->createOrUpdate($className, $data, $id); // TODO: ID must be on entity
+                $this->repository->createOrUpdate($className, $data, $id); // TODO: ID must be on entity
             }
             
-            $this->withJoins->em()->flush();
+            $this->repository->em()->flush();
         } catch (ValidationException $e) {
             $messages = FieldContainer::exceptionToMessages($e, $classUrlName);
             
@@ -318,7 +260,7 @@ class AdminController extends WebController
         $map = [];
         
         if ($adapterClass) {
-            $adapter = new $adapterClass($this->menu);
+            $adapter = new $adapterClass;
             $response = $adapter->store($request);
             
             if ($response !== null) {
@@ -331,10 +273,10 @@ class AdminController extends WebController
 
             foreach ($map as $className => $data) {
                 Validator::make($data, $className::getRequestValidationRules())->validate();
-                $this->withJoins->createOrUpdate($className, $data);
+                $this->repository->createOrUpdate($className, $data);
             }
             
-            $this->withJoins->em()->flush();
+            $this->repository->em()->flush();
         } catch (ValidationException $e) {
             $messages = FieldContainer::exceptionToMessages($e, $classUrlName);
             
@@ -400,7 +342,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$className] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass($this->menu);
+            $adapter = new $adapterClass;
             $response = $adapter->search($request);
             
             if ($response !== null) {
@@ -429,12 +371,11 @@ class AdminController extends WebController
             $parameters['order'] = ['-'.$alias.'.id'];
         }
 
-        $paginator = $this->paginate($this->withJoins->createQuery($className, $parameters, $alias))->appends($request->all());
+        $paginator = $this->paginate($this->repository->createQuery($className, $parameters, $alias))->appends($request->all());
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
         
         return view('itaces::admin.entity.trash', [
-            'menu' => $this->menu,
             'paginator' => $paginator,
             'container' => $container,
             'meta' => $meta

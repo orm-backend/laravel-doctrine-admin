@@ -17,12 +17,6 @@ abstract class AdminControllerAdapter implements UnderAdminControl
     
     /**
      * 
-     * @var array
-     */
-    protected $menu;
-    
-    /**
-     * 
      * @var \ItAces\Repositories\Repository
      */
     protected $repository;
@@ -31,8 +25,7 @@ abstract class AdminControllerAdapter implements UnderAdminControl
      * 
      * @param array $menu
      */
-    public function __construct(array $menu) {
-        $this->menu = $menu;
+    public function __construct() {
         $this->repository = new Repository();
     }
     
