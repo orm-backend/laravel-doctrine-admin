@@ -2,8 +2,8 @@
 
 namespace ItAces\Admin\Adapters;
 
-use App\Model\Role;
-use App\Model\User;
+use ItAces\ORM\Entities\Role;
+use ItAces\ORM\Entities\User;
 use Illuminate\Http\Request;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
 use ItAces\ORM\Entities\EntityBase;

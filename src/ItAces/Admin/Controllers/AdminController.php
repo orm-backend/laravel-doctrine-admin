@@ -2,6 +2,7 @@
 
 namespace ItAces\Admin\Controllers;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -302,7 +303,13 @@ class AdminController extends WebController
         $alias = lcfirst($classShortName);
         $url = route('admin.entity.search', $classUrlName);
         $this->repository->delete($className, $id);
-        $this->repository->em()->flush();
+        
+//        try {
+            $this->repository->em()->flush();
+//         } catch (ForeignKeyConstraintViolationException $e) {
+//             $message = config('app.debug') ? $e->getMessage() : __('Cannot delete or update a parent row');
+//             return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('warning', $message);
+//         }
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record deleted successfully.'));
     }
