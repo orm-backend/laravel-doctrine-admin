@@ -27,13 +27,16 @@ class PackageServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'itaces');
 
         $this->publishes([
-            __DIR__.'/../../../public/admin' => public_path('assets/admin'),
-            //__DIR__.'/../../../resources/views' => resource_path('views/vendor/itaces'),
-        ], 'admin-public');
+            __DIR__.'/../../../public/admin' => public_path('assets/admin')
+        ], 'itaces-admin-assets');
+        
+        $this->publishes([
+            __DIR__.'/../../../resources/views' => resource_path('views/vendor/itaces')
+        ], 'itaces-admin-views');
         
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
-        ], 'admin-config');
+        ], 'itaces-admin-config');
         
         Gate::define('dashboard', function (EntityBase $user) {
             return $user->getId() === 1;
