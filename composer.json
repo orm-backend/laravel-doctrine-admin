@@ -11,13 +11,13 @@
         }
     ],
     "require": {
-    	"it-aces/laravel-doctrine": "dev-master"
+    	"it-aces/laravel-doctrine-acl": "dev-master"
     },
     "require-dev": {
     },
     "autoload": {
         "psr-4": {
-        	"ItAces\\Admin\\": "src/ItAces/Admin"
+        	"ItAces\\Admin\\": "src/ItAces/Admin/"
         }
     },
     "extra": {
@@ -26,5 +26,11 @@
 	            "ItAces\\Admin\\PackageServiceProvider"
 	        ]
 	    }
-	}
+	},
+	"repositories": [
+        {
+           "type": "path",
+           "url": "../it-aces/laravel-doctrine-acl/"
+        }
+	]
 }
