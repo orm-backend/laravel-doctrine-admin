@@ -1,13 +1,13 @@
 <?php
 namespace ItAces\Admin;
 
+use App\Model\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use ItAces\Admin\Components\AboutComponent;
 use ItAces\Admin\Components\BreadcrumbsComponent;
 use ItAces\Admin\Components\BrieflyComponent;
-use ItAces\ORM\Entities\EntityBase;
 use ItAces\Admin\Components\MenuComponent;
 
 class PackageServiceProvider extends ServiceProvider
@@ -38,7 +38,11 @@ class PackageServiceProvider extends ServiceProvider
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
         ], 'itaces-admin-config');
         
-        Gate::define('dashboard', function (EntityBase $user) {
+        Gate::define('dashboard', function (User $user) {
+            return $user->getId() === 1 || $user->hasRole(config('itaces.roles.dashboard', 'dashboard'));
+        });
+        
+        Gate::define('settings', function (User $user) {
             return $user->getId() === 1;
         });
         

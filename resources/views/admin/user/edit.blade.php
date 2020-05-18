@@ -54,22 +54,10 @@
 						</button>
 					</div>
 				</div>
-				<form class="kt-form" name="entity-edit" method="post" action="{{ route('admin.entity.update', ['app-model-user', $user->id]) }}">
+				<form class="kt-form" name="entity-edit" method="post" action="{{ route('admin.entity.update', ['app-model-user', $user->id]) }}" autocomplete="off">
     				@csrf
     				<div class="kt-portlet__body">
     					<div class="form-group row">
-    						<div class="col-lg-6">
-    							<label>Name:</label>
-    							<input name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Enter full name" value="{{ old('name', $user->name) }}">
-    							@error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
-    						</div>
-    						<div class="col-lg-6">
-    							<label>Password:</label>
-    							<input name="password" type="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
-    							@error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
-    						</div>
-    					</div>
-						<div class="form-group row">
     						<div class="col-lg-6">
     							<label>Email:</label>
     							<div class="input-group">
@@ -79,12 +67,12 @@
     							</div>
     						</div>
     						<div class="col-lg-6">
-    							<label>Confirm password:</label>
-    							<input name="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" value="{{ old('password_confirmation') }}">
-    							@error('password_confirmation')<div class="invalid-feedback">{{ $message }}</div>@enderror
+    							<label>Password:</label>
+    							<input name="password" type="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" autocomplete="off">
+    							@error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
     						</div>
     					</div>
-    					<div class="form-group row">
+						<div class="form-group row">
     						<div class="col-lg-6">
     							<label>Roles:</label>
     							<div class="input-group">
@@ -98,6 +86,11 @@
 									</select>
 									@error('roles')<div class="invalid-feedback">{{ $message }}</div>@enderror
 								</div>
+    						</div>
+    						<div class="col-lg-6">
+    							<label>Confirm password:</label>
+    							<input name="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" value="{{ old('password_confirmation') }}" autocomplete="off">
+    							@error('password_confirmation')<div class="invalid-feedback">{{ $message }}</div>@enderror
     						</div>
     					</div>
     				</div>

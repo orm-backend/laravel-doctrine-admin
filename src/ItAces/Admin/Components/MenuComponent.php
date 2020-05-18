@@ -96,14 +96,16 @@ class MenuComponent extends Component
                 continue;
             }
             
-            $submenu = [
-                [
+            $submenu = [];
+            
+            if (Gate::inspect('read', $classUrlName)->allowed()) {
+                $submenu[] = [
                     'url' => route('admin.entity.search', $classUrlName, false),
                     'name' => __('Search'),
                     'title' => __('Element List'),
                     'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.search'
-                ]
-            ];
+                ];
+            }
             
             if (Gate::inspect('create', $classUrlName)->allowed()) {
                 $submenu[] = [
@@ -123,7 +125,7 @@ class MenuComponent extends Component
                 ]; 
             }
             
-            if (true /* TODO */) {
+            if (Gate::inspect('settings')->allowed()) {
                 $submenu[] = [
                     'url' => 'javascript:;', // TODO: route('admin.entity.settings', $classUrlName, false);
                     'name' => __('Settings'),

@@ -183,9 +183,11 @@
                         	<td><a href="/{{ $entity->field('path')->value }}" target="_blank"><img src="{{ crop($entity->field('path')->value, 'center', 50, 50) }}"></a></td>
                         	@endif
                             <td>
+                            	@if ($entity->readingAllowed)
                             	<a href="{{ route('admin.entity.details', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Show details">
     								<i class="la la-file-o"></i>
     							</a>
+    							@endif
     							@if ($entity->updatingAllowed)
                             	<a href="{{ route('admin.entity.edit', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
     								<i class="la la-edit"></i>
