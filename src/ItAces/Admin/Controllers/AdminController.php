@@ -2,7 +2,6 @@
 
 namespace ItAces\Admin\Controllers;
 
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
