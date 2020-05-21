@@ -2,6 +2,7 @@
 
 namespace ItAces\Admin\Controllers;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -19,19 +20,24 @@ class AdminController extends WebController
      * @var array
      */
     protected $adapters;
+    
+    /**
+     *
+     * @var array
+     */
+    protected $views;
 
     public function __construct()
     {
         parent::__construct();
         $this->repository = new WithJoinsRepository(true);
         $this->adapters = config('admin.adapters');
+        $this->views = config('admin.views');
     }
     
     public function index()
     {
-        $metadata = $this->repository->em()->getMetadataFactory()->getAllMetadata();
-        
-        return view('itaces::admin.index');
+        return view($this->views['index'] ?? 'itaces::admin.index');
     }
     
     /**
@@ -40,7 +46,7 @@ class AdminController extends WebController
      * @param string $classUrlName
      * @return \Illuminate\Http\Response
      */
-    public function search(Request  $request, string $classUrlName)
+    public function search(Request $request, string $classUrlName)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -78,7 +84,7 @@ class AdminController extends WebController
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
 
-        return view('itaces::admin.entity.search', [
+        return view($this->views[$classUrlName]['search'] ?? 'itaces::admin.entity.search', [
             'paginator' => $paginator,
             'container' => $container,
             'meta' => $meta
@@ -117,7 +123,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view('itaces::admin.entity.details', [
+        return view($this->views[$classUrlName]['details'] ?? 'itaces::admin.entity.details', [
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.entity.update', [$classUrlName, $id])
@@ -156,7 +162,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view('itaces::admin.entity.edit', [
+        return view($this->views[$classUrlName]['edit'] ?? 'itaces::admin.entity.edit', [
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.entity.update', [$classUrlName, $id])
@@ -194,10 +200,65 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
         
-        return view('itaces::admin.entity.create', [
+        return view($this->views[$classUrlName]['create'] ?? 'itaces::admin.entity.create', [
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.entity.store', [$classUrlName])
+        ]);
+    }
+    
+    /**
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param string $classUrlName
+     * @return \Illuminate\Http\Response
+     */
+    public function trash(Request $request, string $classUrlName)
+    {
+        $this->repository->em()->getFilters()->disable('softdelete');
+        $className = Helper::classFromUlr($classUrlName);
+        $classShortName = (new \ReflectionClass($className))->getShortName();
+        $alias = lcfirst($classShortName);
+        $adapterClass = $this->adapters[$className] ?? null;
+        
+        if ($adapterClass) {
+            $adapter = new $adapterClass;
+            $response = $adapter->search($request);
+            
+            if ($response !== null) {
+                return $response;
+            }
+        }
+        
+        $classMetadata = $this->repository->em()->getClassMetadata($className);
+        $container = new FieldContainer($this->repository->em());
+        
+        $meta = [
+            'class' => $className,
+            'title' => __( Str::pluralCamelWords($classShortName) ),
+            'classUrlName' => $classUrlName
+        ];
+        
+        $parameters = [
+            'filter' => [
+                [$alias.'.deletedAt', 'isNotNull']
+            ]
+        ];
+        
+        $order = $request->get('order');
+        
+        if (!$order) {
+            $parameters['order'] = ['-'.$alias.'.id'];
+        }
+        
+        $paginator = $this->paginate($this->repository->createQuery($className, $parameters, $alias))->appends($request->all());
+        $container->buildMetaFields($classMetadata);
+        $container->addCollection($paginator->items());
+        
+        return view($this->views[$classUrlName]['trash'] ?? 'itaces::admin.entity.trash', [
+            'paginator' => $paginator,
+            'container' => $container,
+            'meta' => $meta
         ]);
     }
     
@@ -214,7 +275,6 @@ class AdminController extends WebController
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
         $adapterClass = $this->adapters[$className] ?? null;
-        $map = [];
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
@@ -303,12 +363,12 @@ class AdminController extends WebController
         $url = route('admin.entity.search', $classUrlName);
         $this->repository->delete($className, $id);
         
-//        try {
+        try {
             $this->repository->em()->flush();
-//         } catch (ForeignKeyConstraintViolationException $e) {
-//             $message = config('app.debug') ? $e->getMessage() : __('Cannot delete or update a parent row');
-//             return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('warning', $message);
-//         }
+        } catch (ForeignKeyConstraintViolationException $e) {
+            $message = config('app.debug') ? $e->getMessage() : __('Cannot delete or update a parent row');
+            return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('warning', $message);
+        }
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record deleted successfully.'));
     }
@@ -331,62 +391,6 @@ class AdminController extends WebController
         $this->repository->em()->flush();
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record was successfully restored.'));
-    }
-    
-    /**
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param string $classUrlName
-     * @return \Illuminate\Http\Response
-     */
-    public function trash(Request $request, string $classUrlName)
-    {
-        $this->repository->em()->getFilters()->disable('softdelete');
-        $className = Helper::classFromUlr($classUrlName);
-        $classShortName = (new \ReflectionClass($className))->getShortName();
-        $alias = lcfirst($classShortName);
-        $adapterClass = $this->adapters[$className] ?? null;
-        
-        if ($adapterClass) {
-            $adapter = new $adapterClass;
-            $response = $adapter->search($request);
-            
-            if ($response !== null) {
-                return $response;
-            }
-        }
-        
-        $classMetadata = $this->repository->em()->getClassMetadata($className);
-        $container = new FieldContainer($this->repository->em());
-        
-        $meta = [
-            'class' => $className,
-            'title' => __( Str::pluralCamelWords($classShortName) ),
-            'classUrlName' => $classUrlName
-        ];
-
-        $parameters = [
-            'filter' => [
-                [$alias.'.deletedAt', 'isNotNull']
-            ]
-        ];
-        
-        $order = $request->get('order');
-        
-        if (!$order) {
-            $parameters['order'] = ['-'.$alias.'.id'];
-        }
-
-        $paginator = $this->paginate($this->repository->createQuery($className, $parameters, $alias))->appends($request->all());
-        $container->buildMetaFields($classMetadata);
-        $container->addCollection($paginator->items());
-        
-        return view('itaces::admin.entity.trash', [
-            'paginator' => $paginator,
-            'container' => $container,
-            'meta' => $meta
-        ]);
-        
     }
     
     /**

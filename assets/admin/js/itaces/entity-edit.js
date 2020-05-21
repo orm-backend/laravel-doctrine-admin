@@ -68,7 +68,10 @@ jQuery(document).ready(function() {
         max: 10000000
 	});
 	
+	$('[data-switch=true]').bootstrapSwitch();
+	
 	autosize($('textarea'));
+	
 	$('.kt-avatar').each(function() {
 		new KTAvatar($(this).closest('.kt-avatar').attr('id'));
 	});

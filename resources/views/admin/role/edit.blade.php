@@ -19,7 +19,21 @@
 							<div class="col-xl-8">
 								<div class="kt-section">
 									<div class="kt-section__body">
-										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'message' => $message ?? null])
+										@php ($field = $entity->field('id'))
+										<div class="form-group row">
+											<label class="col-3 col-form-label">{{ $field->title }}</label>
+											<div class="col-8">
+												<div class="input-group bootstrap-touchspin">
+													<input type="text" class="form-control" name="{{ $field->fullname }}" value="{{ $field->value }}" disabled>
+												</div>
+											</div>
+										</div>
+										@if ($entity->field('code')->value == config('itaces.roles.guest', 'guest'))
+											@include('itaces::admin.fields.guest-permission', ['field' => $entity->field('permission'), 'message' => $message ?? null])
+										@else
+											@include('itaces::admin.fields.group-permission', ['field' => $entity->field('permission'), 'message' => $message ?? null])
+										@endif
+										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'message' => $message ?? null, 'exclude' => ['app-model-role.id', 'app-model-role.permission']])
 									</div>
 								</div>
 							</div>
