@@ -31,8 +31,14 @@ class PackageServiceProvider extends ServiceProvider
         ], 'itaces-admin-assets');
         
         $this->publishes([
-            __DIR__.'/../../../resources/views' => resource_path('views/vendor/itaces')
+            __DIR__.'/../../../resources/views/admin' => resource_path('views/vendor/itaces/admin')
         ], 'itaces-admin-views');
+        
+        $this->publishes([
+            __DIR__.'/../../../resources/views/auth' => resource_path('views/auth'),
+            __DIR__.'/../../../resources/views/account' => resource_path('views/account'),
+            __DIR__.'/../../../app/Http/Controllers' => app_path('Http/Controllers')
+        ], 'itaces-auth');
         
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
