@@ -19,21 +19,16 @@
 							<div class="col-xl-8">
 								<div class="kt-section">
 									<div class="kt-section__body">
-										@php ($field = $entity->field('id'))
-										<div class="form-group row">
-											<label class="col-3 col-form-label">{{ $field->title }}</label>
-											<div class="col-8">
-												<div class="input-group bootstrap-touchspin">
-													<input type="text" class="form-control" name="{{ $field->fullname }}" value="{{ $field->value }}" disabled>
-												</div>
-											</div>
-										</div>
+										@php ($id = $entity->field('id'))
+										@php ($permission = $entity->field('permission'))
+										@include('itaces::admin.fields.id', ['field' => $id])
+										@php ($old = old($entity->classUrlName))
 										@if ($entity->field('code')->value == config('itaces.roles.guest', 'guest'))
-											@include('itaces::admin.fields.guest-permission', ['field' => $entity->field('permission'), 'message' => $message ?? null])
+											@include('itaces::admin.fields.guest-permission', ['field' => $permission, 'old' => $old, 'message' => $message ?? null])
 										@else
-											@include('itaces::admin.fields.group-permission', ['field' => $entity->field('permission'), 'message' => $message ?? null])
+											@include('itaces::admin.fields.group-permission', ['field' => $permission, 'old' => $old, 'message' => $message ?? null])
 										@endif
-										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'message' => $message ?? null, 'exclude' => ['app-model-role.id', 'app-model-role.permission']])
+										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'old' => $old, 'message' => $message ?? null, 'exclude' => [$id->fullname, $permission->fullname]])
 									</div>
 								</div>
 							</div>

@@ -3,28 +3,7 @@
 <!-- begin:: Content -->
 <script src="/assets/admin/js/itaces/entity-edit.js" type="text/javascript" defer></script>
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-	@if ($errors->any())
-	<div class="row">
-		<div class="col">
-			<div class="alert alert-warning fade show" role="alert">
-                <div class="alert-icon"><i class="flaticon-warning"></i></div>
-                <div class="alert-text">
-                    <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                    </ul>
-                </div>
-                <div class="alert-close">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"><i class="la la-close"></i></span>
-                    </button>
-                </div>
-            </div>
-		</div>
-	</div>
-	@endif
-
+	@include('itaces::admin.includes.alert', ['errors' => $errors])
 	<div class="row">
 		<div class="col-lg-12">
 			<!--begin::Portlet-->

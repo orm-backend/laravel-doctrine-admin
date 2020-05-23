@@ -1,2 +1,2 @@
-<textarea class="form-control @error($field->fullname) is-invalid @enderror" name="{{ $field->fullname }}" @if ($field->disabled) disabled @endif>{{ oldd($field->fullname, $field->value) }}</textarea>
+<textarea class="form-control @error($field->fullname) is-invalid @enderror" name="{{ $field->fullname }}" @if ($field->disabled) disabled @endif>{{ $old[$field->name] ?? $field->value }}</textarea>
 @error($field->fullname)<div class="invalid-feedback">{{ $message }}</div>@enderror

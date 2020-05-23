@@ -53,29 +53,24 @@ class RoleAdapter extends AdminControllerAdapter
         $classUrlName = Helper::classToUlr(Role::class);
         $classShortName = (new \ReflectionClass(Role::class))->getShortName();
         $alias = lcfirst($classShortName);
-        $data = $request->post();
-        $inputPermission = $classUrlName . '_permission';
-        $inputSystem = $classUrlName . '_system';
-        $data[$inputPermission] = 0;
+        $data = $request->post($classUrlName);
+        $permissions = $request->post('permissions', []);
+        $data['permission'] = 0;
         
-        if (!isset($data[$inputSystem])) {
-            $data[$inputSystem] = 0;
+        if (!isset($data['system'])) {
+            $data['system'] = 0;
         }
-        
-        if (!empty($data['permissions'])) {
-            foreach ($data['permissions'] as $permission) {
-                $data[$inputPermission] = $data[$inputPermission] | (int) $permission;
-            }
-            
-            unset($data['permissions']);
+
+        foreach ($permissions as $permission) {
+            $data['permission'] = $data['permission'] | (int) $permission;
         }
         
         try {
-            $map = FieldContainer::readRequest($data);
+            $map = FieldContainer::readRequest([$classUrlName => $data]);
 
             foreach ($map as $className => $data) {
                 Validator::make($data, $className::getRequestValidationRules())->validate();
-                $this->repository->createOrUpdate($className, $data, $id); // TODO: ID must be on entity
+                $this->repository->createOrUpdate($className, $data);
             }
             
             $this->repository->em()->flush();

@@ -20,14 +20,7 @@
     							<div class="kt-section">
 									<div class="kt-section__body">
 										@php ($field = $entity->field('id'))
-										<div class="form-group row">
-											<label class="col-3 col-form-label">{{ $field->title }}</label>
-											<div class="col-8">
-												<div class="input-group bootstrap-touchspin">
-													<input type="text" class="form-control" name="{{ $field->fullname }}" value="{{ $field->value }}" disabled>
-												</div>
-											</div>
-										</div>
+										@include('itaces::admin.fields.id', ['field' => $field])
 										<div class="form-group row">
 											<label class="col-3 col-form-label">{{ __('File') }}</label>
 											<div class="col-8">
@@ -45,7 +38,8 @@
                 								@error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
         									</div>
         								</div>
-										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'message' => $message ?? null, 'exclude' => ['app-model-image.id']])
+        								@php ($old = old($entity->classUrlName))
+										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'old' => $old, 'message' => $message ?? null, 'exclude' => [$field->fullname]])
 									</div>
 								</div>
     						</div>

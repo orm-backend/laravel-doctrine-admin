@@ -4,8 +4,6 @@ namespace ItAces\Admin\Controllers;
 
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use ItAces\Controllers\WebController;
 use ItAces\Repositories\WithJoinsRepository;
 use ItAces\Utility\Helper;
@@ -192,14 +190,15 @@ class AdminController extends WebController
 
         $classMetadata = $this->repository->em()->getClassMetadata($className);
         $container = new FieldContainer($this->repository->em());
-        $container->buildMetaFields($classMetadata);
+        $container->addEntity(new $className());
+        //$container->buildMetaFields($classMetadata);
         
         $meta = [
             'class' => $className,
             'title' => __( Str::pluralCamelWords($classShortName, 1) ),
             'classUrlName' => $classUrlName
         ];
-        
+
         return view($this->views[$classUrlName]['create'] ?? 'itaces::admin.entity.create', [
             'container' => $container,
             'meta' => $meta,
@@ -285,21 +284,7 @@ class AdminController extends WebController
             }
         }
 
-        try {
-            $map = FieldContainer::readRequest($request->post());
-            
-            foreach ($map as $className => $data) {
-                Validator::make($data, $className::getRequestValidationRules())->validate();
-                $this->repository->createOrUpdate($className, $data, $id); // TODO: ID must be on entity
-            }
-            
-            $this->repository->em()->flush();
-        } catch (ValidationException $e) {
-            $messages = FieldContainer::exceptionToMessages($e, $classUrlName);
-            
-            throw ValidationException::withMessages($messages);
-        }
-        
+        $this->repository->saveContainer($request->post());
         $url = route('admin.entity.search', $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.updatedAt')->with('success', __('Record updated successfully.'));
@@ -317,8 +302,7 @@ class AdminController extends WebController
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
         $adapterClass = $this->adapters[$className] ?? null;
-        $map = [];
-        
+
         if ($adapterClass) {
             $adapter = new $adapterClass;
             $response = $adapter->store($request);
@@ -328,21 +312,7 @@ class AdminController extends WebController
             }
         }
 
-        try {
-            $map = FieldContainer::readRequest($request->post());
-
-            foreach ($map as $className => $data) {
-                Validator::make($data, $className::getRequestValidationRules())->validate();
-                $this->repository->createOrUpdate($className, $data);
-            }
-            
-            $this->repository->em()->flush();
-        } catch (ValidationException $e) {
-            $messages = FieldContainer::exceptionToMessages($e, $classUrlName);
-            
-            throw ValidationException::withMessages($messages);
-        }
-
+        $this->repository->saveContainer($request->post());
         $url = route('admin.entity.search', $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record created successfully.'));

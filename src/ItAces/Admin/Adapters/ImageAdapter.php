@@ -67,10 +67,10 @@ class ImageAdapter extends AdminControllerAdapter
             }
 
             $request->validate(['image' => $rules['image']]); // Validate only file
-            $data['app-model-image_name'] = $request->filled('app-model-image_name') ? $request->post('app-model-image_name') : $request->file('image')->getClientOriginalName();
-            $data['app-model-image_path'] = $request->file('image')->store(config('itaces.upload.img'));
+            $data['app-model-image']['name'] = $data['app-model-image']['name'] ?? $request->file('image')->getClientOriginalName();
+            $data['app-model-image']['path'] = $request->file('image')->store(config('itaces.upload.img'));
             
-            if (!$data['app-model-image_path']) {
+            if (!$data['app-model-image']['path']) {
                 throw ValidationException::withMessages([
                     'image' => [__('Failed to store file.')],
                 ]);
@@ -82,7 +82,7 @@ class ImageAdapter extends AdminControllerAdapter
         try {
             $map = FieldContainer::readRequest($data);
             Validator::make($map[Image::class], $rules)->validate(); // Validate other fields
-            $this->repository->createOrUpdate(Image::class, $map[Image::class], $id); // TODO: ID must be on entity
+            $this->repository->createOrUpdate(Image::class, $map[Image::class]);
             $this->repository->em()->flush();
             
             if ($stored) {

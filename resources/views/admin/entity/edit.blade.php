@@ -19,7 +19,10 @@
 							<div class="col-xl-8">
 								<div class="kt-section">
 									<div class="kt-section__body">
-										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'message' => $message ?? null])
+										@php ($old = old($entity->classUrlName))
+										@php ($field = $entity->field('id'))
+										@include('itaces::admin.fields.id', ['field' => $field])
+										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'old' => $old, 'message' => $message ?? null, 'exclude' => [$field->fullname]])
 									</div>
 								</div>
 							</div>
