@@ -33,6 +33,17 @@
 composer require it-aces/laravel-doctrine-admin
 ```
 
+```BASH
+npm install cross-env
+npm install bootstrap
+```
+
+* Publising
+
+```BASH
+php artisan vendor:publish --provider="ItAces\Admin\PackageServiceProvider"
+```
+
 ## Configuration
 
 config/app.php
@@ -50,6 +61,23 @@ routes/web.php
 
 ```BASH
 Auth::routes(['verify' => true])
+```
+
+.env
+
+```BASH
+DOCTRINE_PROXY_AUTOGENERATE=1
+DOCTRINE_CACHE=file
+DOCTRINE_RESULT_CACHE=array
+DOCTRINE_SECOND_CACHE_TTL=3600
+DOCTRINE_RESULT_CACHE_TTL=120
+```
+
+## Start
+
+```BASH
+npm run dev
+php artisan serve
 ```
 
 
