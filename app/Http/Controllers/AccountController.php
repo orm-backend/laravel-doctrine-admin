@@ -29,7 +29,7 @@ class AccountController extends Controller
      */
     public function editPassword()
     {
-        return view('account.password');
+        return view('auth.account.password');
     }
     
     /**
@@ -57,7 +57,7 @@ class AccountController extends Controller
         $user->setPassword(  Hash::make( $data['password'] ) );
         $this->em->flush();
         
-        return view('account.passwordchanged');
+        return view('auth.account.passwordchanged');
     }
     
     /**
@@ -73,7 +73,7 @@ class AccountController extends Controller
             abort(404, 'Not found.');
         }
         
-        return view('account.email', ['user' => $user]);
+        return view('auth.account.email', ['user' => $user]);
     }
     
     /**

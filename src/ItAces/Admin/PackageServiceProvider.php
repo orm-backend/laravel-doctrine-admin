@@ -37,6 +37,9 @@ class PackageServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../../resources/views/auth' => resource_path('views/auth'),
             __DIR__.'/../../../resources/views/account' => resource_path('views/account'),
+            __DIR__.'/../../../resources/views/home' => resource_path('views/home'),
+            __DIR__.'/../../../resources/views/layouts' => resource_path('views/layouts'),
+            __DIR__.'/../../../resources/views/shared' => resource_path('views/shared'),
             __DIR__.'/../../../app/Http/Controllers' => app_path('Http/Controllers')
         ], 'itaces-auth');
         

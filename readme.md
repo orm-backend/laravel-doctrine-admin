@@ -46,4 +46,10 @@ LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
 ItAces\ORM\DoctrineServiceProvider::class,
 LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
 ```
+routes/web.php
+
+```BASH
+Auth::routes(['verify' => true])
+```
+
 
