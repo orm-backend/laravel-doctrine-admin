@@ -5,7 +5,7 @@ return [
     'adapters' => [
         App\Model\Role::class => ItAces\Admin\Adapters\RoleAdapter::class,
         App\Model\User::class => ItAces\Admin\Adapters\UserAdapter::class,
-        //App\Model\Image::class => ItAces\Admin\Adapters\ImageAdapter::class,
+        App\Model\Image::class => ItAces\Admin\Adapters\ImageAdapter::class,
     ],
 
     'icons' => [
@@ -15,7 +15,8 @@ return [
 
     'views' => [
         'app-model-role' => [
-            'edit' => 'itaces::admin.role.edit'
+            'edit' => 'itaces::admin.role.edit',
+            'create' => 'itaces::admin.role.create'
         ]
     ]
     
