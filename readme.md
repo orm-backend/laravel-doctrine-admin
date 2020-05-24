@@ -1,10 +1,11 @@
-# Admin Panel for Laravel Framework with Doctrine ORM
+# Admin Panel from IT Aces team for Laravel Framework with Doctrine ORM
 
 ## Requirements
 
-* laravel-ui
 * it-aces/laravel-doctrine
 * it-aces/laravel-doctrine-acl
+
+If you are building an application from scratch you may need to install the **it-aces/laravel-doctrine-web package**. It contains basic controllers and resources for registration and authorization. In other case your application must have implemented login page.
 
 ## Installation
 
@@ -22,6 +23,10 @@
     },
     {
        "type": "vcs",
+       "url": "git@bitbucket.org:vitaliy_kovalenko/laravel-doctrine-web.git"
+    },
+    {
+       "type": "vcs",
        "url": "git@bitbucket.org:vitaliy_kovalenko/laravel-doctrine-admin.git"
     }
 ]
@@ -30,12 +35,13 @@
 * Install packages
 
 ```BASH
-composer require it-aces/laravel-doctrine-admin
+composer require it-aces/laravel-doctrine-web
 ```
 
+See the installation instructions for the required packages for how to install and compile them.
+
 ```BASH
-npm install cross-env
-npm install bootstrap
+composer require it-aces/laravel-doctrine-admin
 ```
 
 * Publising
@@ -57,11 +63,6 @@ LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
 ItAces\ORM\DoctrineServiceProvider::class,
 LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
 ```
-routes/web.php
-
-```BASH
-Auth::routes(['verify' => true])
-```
 
 .env
 
@@ -76,7 +77,6 @@ DOCTRINE_RESULT_CACHE_TTL=120
 ## Start
 
 ```BASH
-npm run dev
 php artisan serve
 ```
 
