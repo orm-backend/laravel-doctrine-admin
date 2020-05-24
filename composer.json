@@ -11,7 +11,6 @@
         }
     ],
     "require": {
-    	"laravel/ui": "^2.0",
     	"it-aces/laravel-doctrine-acl": "dev-master"
     },
     "require-dev": {
