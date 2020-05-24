@@ -43,6 +43,11 @@ class PackageServiceProvider extends ServiceProvider
         ], 'itaces-auth');
         
         $this->publishes([
+            __DIR__.'/../../../resources/js' => resource_path('js'),
+            __DIR__.'/../../../resources/sass' => resource_path('sass')
+        ], 'itaces-resources');
+        
+        $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
         ], 'itaces-admin-config');
         

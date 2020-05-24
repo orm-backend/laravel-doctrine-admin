@@ -41,7 +41,8 @@ class AccountController extends Controller
     {
         $data = $request->validate([
             'old_password' => ['required', new PasswordMatch],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
+            'password' => ['required', 'string', 'min:8'],
+            'password_confirmation' => ['required', 'string', 'min:8', 'same:password']
         ]);
 
         /**
