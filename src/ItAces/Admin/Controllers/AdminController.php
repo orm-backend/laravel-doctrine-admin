@@ -330,6 +330,17 @@ class AdminController extends WebController
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
+        $adapterClass = $this->adapters[$className] ?? null;
+        
+        if ($adapterClass) {
+            $adapter = new $adapterClass;
+            $response = $adapter->delete($request, $id);
+            
+            if ($response !== null) {
+                return $response;
+            }
+        }
+        
         $url = route('admin.entity.search', $classUrlName);
         $this->repository->delete($className, $id);
         

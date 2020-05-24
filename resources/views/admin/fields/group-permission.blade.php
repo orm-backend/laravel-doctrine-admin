@@ -40,7 +40,7 @@
 	<label class="col-3 col-form-label">{{ __('Access is blocked to any data, other permissions are ignored') }}</label>
 	<div class="col-8">
 		<input type="checkbox" name="permissions[]" value="{{ config('itaces.perms.forbidden') }}"
-			@if ($value & config('itaces.perms.entity.forbidden')) checked @endif
+			@if ($value & config('itaces.perms.forbidden')) checked @endif
 			data-switch="true" data-on-text="forbidden" data-handle-width="70" data-off-text="forbidden" data-on-color="danger">
 	</div>
 	@error($field->fullname)<div class="invalid-feedback">{{ $message }}</div>@enderror

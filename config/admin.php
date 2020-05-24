@@ -5,7 +5,7 @@ return [
     'adapters' => [
         App\Model\Role::class => ItAces\Admin\Adapters\RoleAdapter::class,
         App\Model\User::class => ItAces\Admin\Adapters\UserAdapter::class,
-        App\Model\Image::class => ItAces\Admin\Adapters\ImageAdapter::class,
+        //App\Model\Image::class => ItAces\Admin\Adapters\ImageAdapter::class,
     ],
 
     'icons' => [
