@@ -17,16 +17,10 @@ use ItAces\View\FieldContainer;
  */
 class DatatableController extends WebController
 {
-    /**
-     *
-     * @var \ItAces\Repositories\WithJoinsRepository
-     */
-    protected $withJoins;
     
     public function __construct()
     {
-        parent::__construct();
-        $this->withJoins = new WithJoinsRepository();
+        $this->repository = new WithJoinsRepository();
     }
     
     /**
@@ -68,8 +62,8 @@ class DatatableController extends WebController
             ];
         }
         
-        $paginator = $this->paginate($this->withJoins->createQuery($className, $parameters, $alias))->appends($request->all());
-        $serializer = new DatatableSerializer($this->withJoins->em(), $paginator);
+        $paginator = $this->paginate($this->repository->createQuery($className, $parameters, $alias))->appends($request->all());
+        $serializer = new DatatableSerializer($this->repository->em(), $paginator);
         
         return response()->json( $serializer, 200);
     }
@@ -104,7 +98,7 @@ class DatatableController extends WebController
             ];
         }
         
-        $paginator = $this->paginate($this->withJoins->createQuery($className, $parameters, $alias))->appends($request->all());
+        $paginator = $this->paginate($this->repository->createQuery($className, $parameters, $alias))->appends($request->all());
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
         

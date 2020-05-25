@@ -25,9 +25,28 @@
 										@php ($old = old($entity->classUrlName))
 										@if ($entity->field('code')->value == config('itaces.roles.guest', 'guest'))
 											@include('itaces::admin.fields.guest-permission', ['field' => $permission, 'old' => $old, 'message' => $message ?? null])
-										@else
+										@elseif ($entity->field('code')->value != config('itaces.roles.dashboard', 'dashboard'))
 											@include('itaces::admin.fields.group-permission', ['field' => $permission, 'old' => $old, 'message' => $message ?? null])
+											@if ($entity->field('code')->value != config('itaces.roles.administrator', 'admin'))
+											<div class="form-group row">
+                                            	<label class="col-3 col-form-label">{{ __('Access is blocked to any data, other permissions are ignored') }}</label>
+                                            	<div class="col-8">
+                                            		@php ($value = $old[$permission->name] ?? $permission->value)
+                                            		<input type="checkbox" name="permissions[]" value="{{ config('itaces.perms.forbidden') }}"
+                                            			@if ($value & config('itaces.perms.forbidden')) checked @endif
+                                            			data-switch="true" data-on-text="forbidden" data-handle-width="70" data-off-text="forbidden" data-on-color="danger">
+                                            	</div>
+                                            </div>
+                                            @endif
 										@endif
+										@error($permission->fullname)
+											<div class="form-group row">
+												<div class="col-3"></div>
+												<div class="col-8">
+													<div class="invalid-feedback">{{ $message }}</div>
+												</div>
+											</div>
+										@enderror
 										@include('itaces::admin.includes.fields', ['fields' => $entity->fields(), 'old' => $old, 'message' => $message ?? null, 'exclude' => [$id->fullname, $permission->fullname]])
 									</div>
 								</div>

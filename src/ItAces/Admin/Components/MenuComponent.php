@@ -127,10 +127,10 @@ class MenuComponent extends Component
             
             if (Gate::inspect('settings')->allowed()) {
                 $submenu[] = [
-                    'url' => 'javascript:;', // TODO: route('admin.entity.settings', $classUrlName, false);
+                    'url' => route('admin.entity.settings', $classUrlName, false),
                     'name' => __('Settings'),
                     'title' => __('Entity Settings'),
-                    'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.setings'
+                    'active' => $activeModel == $classUrlName && Str::startsWith($currentRoute, 'admin.entity.settings')
                 ];
             }
             

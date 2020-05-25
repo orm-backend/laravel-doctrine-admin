@@ -38,6 +38,8 @@ Route::group(array(
         Route::get('/{model}/delete/{id}', 'AdminController@delete')->name('admin.entity.delete')->middleware('can:delete,model');
         Route::post('/{model}/batch-delete', 'AdminController@batchDelete')->name('admin.entity.batchDelete')->middleware('can:delete,model');
         Route::get('/{model}/trash', 'AdminController@trash')->name('admin.entity.trash')->middleware('can:restore,model');
+        Route::get('/{model}/settings', 'SettingsController@settings')->name('admin.entity.settings')->middleware('can:settings');
+        Route::post('/{model}/settings/permissions', 'SettingsController@updatePermissions')->name('admin.entity.settings.permissions.update')->middleware('can:settings');
     });
     
     Route::group(array(

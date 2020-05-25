@@ -27,7 +27,6 @@ class AdminController extends WebController
 
     public function __construct()
     {
-        parent::__construct();
         $this->repository = new WithJoinsRepository(true);
         $this->adapters = config('admin.adapters');
         $this->views = config('admin.views');
@@ -284,7 +283,7 @@ class AdminController extends WebController
             }
         }
 
-        $this->repository->saveContainer($request->post(), $classUrlName);
+        $this->repository->saveFieldContainer($request->post(), $classUrlName);
         $url = route('admin.entity.search', $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.updatedAt')->with('success', __('Record updated successfully.'));
@@ -312,7 +311,7 @@ class AdminController extends WebController
             }
         }
 
-        $this->repository->saveContainer($request->post(), $classUrlName);
+        $this->repository->saveFieldContainer($request->post(), $classUrlName);
         $url = route('admin.entity.search', $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record created successfully.'));
