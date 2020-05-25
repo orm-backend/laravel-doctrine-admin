@@ -3,7 +3,7 @@
 	<div class="kt-radio-inline">
 		@foreach ($field->options as $value => $option)
 		<label class="kt-radio">
-			<input class="@error($field->fullname) is-invalid @enderror" type="radio" name="{{ $field->fullname }}" value="{{ $value }}" @if ($field->disabled) disabled @endif @if (oldValue == $value) checked @endif> {{ $option }}
+			<input class="@error($field->fullname) is-invalid @enderror" type="radio" name="{{ $field->fullname }}" value="{{ $value }}" @if ($field->disabled) disabled @endif @if ($oldValue == $value) checked @endif> {{ $option }}
 			<span></span>
 		</label>
 		@endforeach

@@ -113,7 +113,7 @@ class ImageAdapter extends AdminControllerAdapter
         $request->validate(Image::getRequestValidationRules());
         $data['name'] = $request->filled('name') ? $request->post('name') : $request->file('image')->getClientOriginalName();
         $data['path'] = $request->file('image')->store(config('itaces.upload.img'));
-        
+
         if (!$data['path']) {
             throw ValidationException::withMessages([
                 'image' => [__('Failed to store file.')],

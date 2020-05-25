@@ -114,7 +114,7 @@ class AdminController extends WebController
 
         $container = new FieldContainer($this->repository->em());
         $container->addEntity($entity);
-        
+
         $meta = [
             'class' => $className,
             'title' => __( Str::pluralCamelWords($classShortName, 1) ),
@@ -284,7 +284,7 @@ class AdminController extends WebController
             }
         }
 
-        $this->repository->saveContainer($request->post());
+        $this->repository->saveContainer($request->post(), $classUrlName);
         $url = route('admin.entity.search', $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.updatedAt')->with('success', __('Record updated successfully.'));
@@ -312,7 +312,7 @@ class AdminController extends WebController
             }
         }
 
-        $this->repository->saveContainer($request->post());
+        $this->repository->saveContainer($request->post(), $classUrlName);
         $url = route('admin.entity.search', $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record created successfully.'));

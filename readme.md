@@ -1,5 +1,7 @@
 # Admin Panel from IT Aces team for Laravel Framework with Doctrine ORM
 
+![Screenshot](Screenshot.png)
+
 ## Dependencies
 
  * [it-aces/laravel-doctrine](https://bitbucket.org/vitaliy_kovalenko/laravel-doctrine/src/master/)

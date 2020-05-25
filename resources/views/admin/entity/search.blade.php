@@ -180,7 +180,7 @@
                         	@endif
                             @endforeach
                             @if ($entity->type() == 'image')
-                        	<td><a href="/{{ $entity->field('path')->value }}" target="_blank"><img src="{{ crop($entity->field('path')->value, 'center', 50, 50) }}"></a></td>
+                        	<td><a href="{{ $entity->url }}" target="_blank"><img src="{{ crop($entity->field('path')->value, 'center', 50, 50) }}"></a></td>
                         	@endif
                             <td>
                             	@if ($entity->readingAllowed)

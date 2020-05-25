@@ -68,7 +68,7 @@
 							<h1 class="entity-detail__title">{{ $entity->field('name') ? $entity->field('name')->value : ($entity->field('code') ? $entity->field('code')->value : '') }}</h1>
 							@if ($entity->type() == 'image')
 							<div class="entity-detail__logo">
-    							<a href="/{{ $entity->field('path')->value }}" target="_blank"><img src="{{ crop($entity->field('path')->value, 'center', 400, 225) }}"></a>
+    							<a href="{{ $entity->url }}" target="_blank"><img src="{{ crop($entity->field('path')->value, 'center', 400, 225) }}"></a>
     							<span class="entity-detail__desc">
     								<span>{{ file_mimetype(public_path($entity->field('path')->value)) }}</span>
     								<span>{{ file_human_size(public_path($entity->field('path')->value)) }}</span>
