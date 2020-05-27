@@ -70,8 +70,10 @@
 							<div class="entity-detail__logo">
     							<a href="{{ $entity->url }}" target="_blank"><img src="{{ crop($entity->field('path')->value, 'center', 400, 225) }}"></a>
     							<span class="entity-detail__desc">
-    								<span>{{ file_mimetype(public_path($entity->field('path')->value)) }}</span>
-    								<span>{{ file_human_size(public_path($entity->field('path')->value)) }}</span>
+    								@php ($disk = config('filesystems.default'))
+    								@php ($rootPath = config("filesystems.disks.{$disk}.root"))
+    								<span>{{ file_mimetype($rootPath . '/' . $entity->field('path')->value) }}</span>
+    								<span>{{ file_human_size($rootPath . '/' . $entity->field('path')->value) }}</span>
     							</span>
     						</div>
     						@endif
