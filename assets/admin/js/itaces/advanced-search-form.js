@@ -162,18 +162,10 @@ jQuery(document).ready(function() {
 			allLinks = JSON.parse(allLinks);
 
 			$.each(allLinks, function(i, link) {
-				var $li = $("<li class=\"kt-menu__item\" aria-haspopup=\"true\"><a class=\"kt-menu__link\"><i class=\"kt-menu__link-bullet kt-menu__link-bullet--dot\"><span></span></i><span class=\"kt-menu__link-text\"></span></a></li>");
+				var $li = $("<li class=\"kt-menu__item\" aria-haspopup=\"true\"><a class=\"kt-menu__link\"><i class=\"kt-menu__link-icon flaticon-interface\"></i><span <span class=\"kt-menu__link-text\"></span></a></li");
 				$("a", $li).attr("href", link.url).attr("title", link.title);
 				$("span.kt-menu__link-text", $li).text(link.title);
-				
-				if (link.url == window.location.pathname + window.location.search) {
-					var $asideMenu = $("#kt_aside_menu_wrapper");
-					$("li.kt-menu__item", $asideMenu).removeClass("kt-menu__item--here").removeClass("kt-menu__item--active");
-					$li.addClass("kt-menu__item--active");
-					$("#savedMenuItems").closest("li").addClass("kt-menu__item--open kt-menu__item--here");
-				}
-				
-				$("#savedMenuItems").append($li);
+				$("#quick-links").append($li);
 			});
 		}
 	}
