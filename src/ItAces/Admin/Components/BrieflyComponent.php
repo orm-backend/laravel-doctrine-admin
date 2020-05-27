@@ -59,31 +59,14 @@ class BrieflyComponent extends Component
         $qb = $this->em->createQueryBuilder();
         $qb->from($userClassName,'u');
         $qb->select($qb->expr()->countDistinct('u.id'));
-        $query = $qb->getQuery();
-        
-        if (config('itaces.caches.enabled')) {
-            $query->enableResultCache( config('itaces.caches.result_ttl') );
-            $query->setQueryCacheLifetime( config('itaces.caches.query_ttl') );
-            $query->useQueryCache(true);
-        } else {
-            $query->disableResultCache();
-            $query->useQueryCache(false);
-        }
-        
-        $registered = $query->getSingleScalarResult();
+        $registered = $qb->getQuery()
+            ->enableResultCache(config('itaces.caches.result_ttl'))
+            ->getSingleScalarResult();
+
         $qb->where($qb->expr()->isNotNull('u.emailVerifiedAt'));
-        $query = $qb->getQuery();
-        
-        if (config('itaces.caches.enabled')) {
-            $query->enableResultCache( config('itaces.caches.result_ttl') );
-            $query->setQueryCacheLifetime( config('itaces.caches.query_ttl') );
-            $query->useQueryCache(true);
-        } else {
-            $query->disableResultCache();
-            $query->useQueryCache(false);
-        }
-        
-        $confirmed = $query->getSingleScalarResult();
+        $confirmed = $qb->getQuery()
+            ->enableResultCache(config('itaces.caches.result_ttl'))
+            ->getSingleScalarResult();
 
         return view($this->template, [
             'entities' => $total,
