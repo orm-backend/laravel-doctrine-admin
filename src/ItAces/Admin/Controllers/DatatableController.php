@@ -20,7 +20,7 @@ class DatatableController extends WebController
     
     public function __construct()
     {
-        $this->repository = new WithJoinsRepository();
+        $this->repository = new WithJoinsRepository(false, true);
     }
     
     /**

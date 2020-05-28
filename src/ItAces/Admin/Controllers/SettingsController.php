@@ -15,7 +15,7 @@ class SettingsController extends WebController
     
     public function __construct()
     {
-        $this->repository = new WithJoinsRepository(true);
+        $this->repository = new WithJoinsRepository(false, true);
     }
     
     /**
