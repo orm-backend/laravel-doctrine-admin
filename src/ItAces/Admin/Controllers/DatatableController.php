@@ -58,7 +58,7 @@ class DatatableController extends WebController
         
         if (!$order) {
             $parameters = [
-                'order' => ['-'.$alias.'.id']
+                'order' => ['-'.$alias.'.'.$className::getIdentifierName()]
             ];
         }
         
@@ -94,7 +94,7 @@ class DatatableController extends WebController
         
         if (!$order) {
             $parameters = [
-                'order' => ['-'.$alias.'.id']
+                'order' => ['-'.$alias.'.'.$className::getIdentifierName()]
             ];
         }
         

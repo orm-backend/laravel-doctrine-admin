@@ -73,7 +73,7 @@ class AdminController extends WebController
         
         if (!$order) {
             $parameters = [
-                'order' => ['-'.$alias.'.id']
+                'order' => ['-'.$alias.'.'.$classMetadata->getSingleIdentifierColumnName()]
             ];
         }
 
@@ -246,7 +246,7 @@ class AdminController extends WebController
         $order = $request->get('order');
         
         if (!$order) {
-            $parameters['order'] = ['-'.$alias.'.id'];
+            $parameters['order'] = ['-'.$alias.'.'.$classMetadata->getSingleIdentifierColumnName()];
         }
         
         $paginator = $this->paginate($this->repository->createQuery($className, $parameters, $alias))->appends($request->all());
