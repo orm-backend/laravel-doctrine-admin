@@ -7,7 +7,7 @@ use Illuminate\Validation\ValidationException;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
 use ItAces\ORM\Entities\EntityBase;
 use ItAces\Utility\Helper;
-use ItAces\View\FieldContainer;
+use ItAces\Web\Fields\FieldContainer;
 use App\Model\Role;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
@@ -49,7 +49,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, $id)
     {
         [$url, $alias] = $this->saveOrUpdate($request);
         
@@ -61,7 +61,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, int $id)
+    public function details(Request $request, $id)
     {
         return null;
     }
@@ -83,7 +83,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
      */
-    public function delete(Request $request, int $id)
+    public function delete(Request $request, $id)
     {
         $classUrlName = Helper::classToUlr(Role::class);
         $classShortName = (new \ReflectionClass(Role::class))->getShortName();

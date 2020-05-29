@@ -39,10 +39,10 @@ abstract class AdminControllerAdapter implements UnderAdminControl
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param integer $id
+     * @param mixed $id
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function details(Request $request, int $id);
+    abstract public function details(Request $request, $id);
     
     /**
      *
@@ -62,10 +62,10 @@ abstract class AdminControllerAdapter implements UnderAdminControl
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param mixed $id
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function update(Request $request, int $id);
+    abstract public function update(Request $request, $id);
     
     /**
      *
@@ -77,9 +77,9 @@ abstract class AdminControllerAdapter implements UnderAdminControl
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param mixed $id
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function delete(Request $request, int $id);
+    abstract public function delete(Request $request, $id);
     
 }

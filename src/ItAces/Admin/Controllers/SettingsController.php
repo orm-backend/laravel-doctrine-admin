@@ -8,7 +8,7 @@ use ItAces\Controllers\WebController;
 use ItAces\Repositories\WithJoinsRepository;
 use ItAces\Utility\Helper;
 use ItAces\Utility\Str;
-use ItAces\View\EntityContainer;
+use ItAces\Web\Fields\EntityContainer;
 
 class SettingsController extends WebController
 {

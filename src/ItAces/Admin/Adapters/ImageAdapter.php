@@ -9,21 +9,37 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
 use ItAces\ORM\Entities\EntityBase;
-use ItAces\View\FieldContainer;
+use ItAces\Web\Fields\FieldContainer;
 
+/**
+ * @author Vitaliy Kovalenko vvk@kola.cloud
+ *
+ */
 class ImageAdapter extends AdminControllerAdapter
 {
     
-    public function details(Request $request, int $id)
+    /**
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
+     */
+    public function details(Request $request, $id)
     {
         return null;
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::search()
+     */
     public function search(Request $request)
     {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
+     */
     public function edit(Request $request, EntityBase $entity)
     {
         $container = new FieldContainer($this->repository->em());
@@ -40,6 +56,10 @@ class ImageAdapter extends AdminControllerAdapter
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::create()
+     */
     public function create(Request $request)
     {
         return view('itaces::admin.image.create', [
@@ -47,7 +67,11 @@ class ImageAdapter extends AdminControllerAdapter
         ]);
     }
 
-    public function update(Request $request, int $id)
+    /**
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
+     */
+    public function update(Request $request, $id)
     {
         // Example with FieldContainer
         /**
@@ -99,6 +123,10 @@ class ImageAdapter extends AdminControllerAdapter
         return redirect($url.'?order[]=-image.updatedAt')->with('success', __('Record updated successfully.'));
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::store()
+     */
     public function store(Request $request)
     {
         // Without FieldContainer
@@ -127,7 +155,11 @@ class ImageAdapter extends AdminControllerAdapter
         return redirect($url.'?order[]=-image.createdAt')->with('success', __('Image created successfully.'));
     }
 
-    public function delete(Request $request, int $id)
+    /**
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
+     */
+    public function delete(Request $request, $id)
     {
         return null;
     }

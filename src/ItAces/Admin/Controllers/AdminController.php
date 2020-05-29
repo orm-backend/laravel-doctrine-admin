@@ -8,7 +8,7 @@ use ItAces\Controllers\WebController;
 use ItAces\Repositories\WithJoinsRepository;
 use ItAces\Utility\Helper;
 use ItAces\Utility\Str;
-use ItAces\View\FieldContainer;
+use ItAces\Web\Fields\FieldContainer;
 
 class AdminController extends WebController
 {
@@ -92,10 +92,10 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
-     * @param integer $id
+     * @param mixed $id
      * @return \Illuminate\Http\Response
      */
-    public function details(Request $request, string $classUrlName, int $id)
+    public function details(Request $request, string $classUrlName, $id)
     {
         $className = Helper::classFromUlr($classUrlName);
         $entity = $this->repository->findOrFail($className, $id);
@@ -131,10 +131,10 @@ class AdminController extends WebController
      * 
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
-     * @param integer $id
+     * @param mixed $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, string $classUrlName, int $id)
+    public function edit(Request $request, string $classUrlName, $id)
     {
         $className = Helper::classFromUlr($classUrlName);
         $entity = $this->repository->findOrFail($className, $id);
@@ -264,10 +264,10 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
-     * @param integer $id
+     * @param mixed $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $classUrlName, int $id)
+    public function update(Request $request, string $classUrlName, $id)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -321,10 +321,10 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
-     * @param integer $id
+     * @param mixed $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request, string $classUrlName, int $id)
+    public function delete(Request $request, string $classUrlName, $id)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -357,10 +357,10 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
-     * @param integer $id
+     * @param mixed $id
      * @return \Illuminate\Http\Response
      */
-    public function restore(Request $request, string $classUrlName, int $id)
+    public function restore(Request $request, string $classUrlName, $id)
     {
         $this->repository->em()->getFilters()->disable('softdelete');
         $className = Helper::classFromUlr($classUrlName);

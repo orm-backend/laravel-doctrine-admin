@@ -8,7 +8,7 @@ use ItAces\Json\DatatableSerializer;
 use ItAces\Repositories\WithJoinsRepository;
 use ItAces\Utility\Helper;
 use ItAces\Utility\Str;
-use ItAces\View\FieldContainer;
+use ItAces\Web\Fields\FieldContainer;
 
 /**
  * 

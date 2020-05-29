@@ -9,13 +9,16 @@ use Illuminate\Http\Request;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
 use ItAces\ORM\Entities\EntityBase;
 
+/**
+ * @author Vitaliy Kovalenko vvk@kola.cloud
+ *
+ */
 class UserAdapter extends AdminControllerAdapter
 {
-
+    
     /**
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::create()
      */
     public function create(Request $request)
     {
@@ -24,11 +27,10 @@ class UserAdapter extends AdminControllerAdapter
         ]);
     }
     
+    
     /**
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @param \ItAces\ORM\Entities\EntityBase $entity
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
      */
     public function edit(Request $request, EntityBase $entity)
     {
@@ -38,21 +40,19 @@ class UserAdapter extends AdminControllerAdapter
         ]);
     }
 
+    
     /**
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return NULL
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, int $id)
+    public function details(Request $request, $id)
     {
         return null;
     }
 
     /**
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @return NULL
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::search()
      */
     public function search(Request $request)
     {
@@ -60,9 +60,8 @@ class UserAdapter extends AdminControllerAdapter
     }
 
     /**
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::store()
      */
     public function store(Request $request)
     {
@@ -75,12 +74,10 @@ class UserAdapter extends AdminControllerAdapter
     }
 
     /**
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, $id)
     {
         $rules = User::getRequestValidationRules();
         $data = $request->post();
@@ -99,12 +96,10 @@ class UserAdapter extends AdminControllerAdapter
     }   
 
     /**
-     * 
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return NULL
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
      */
-    public function delete(Request $request, int $id)
+    public function delete(Request $request, $id)
     {
         return null;
     }
