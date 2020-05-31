@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Gate;
 use ItAces\Admin\Components\AboutComponent;
 use ItAces\Admin\Components\BreadcrumbsComponent;
 use ItAces\Admin\Components\BrieflyComponent;
-use ItAces\Admin\Components\MenuComponent;
 
 class PackageServiceProvider extends ServiceProvider
 {
@@ -45,8 +44,7 @@ class PackageServiceProvider extends ServiceProvider
         Gate::define('settings', function (User $user) {
             return $user->getId() === 1;
         });
-        
-        Blade::component('admin-menu', MenuComponent::class);
+
         Blade::component('admin-about', AboutComponent::class);
         Blade::component('admin-breadcrumbs', BreadcrumbsComponent::class);
         Blade::component('admin-briefly', BrieflyComponent::class);

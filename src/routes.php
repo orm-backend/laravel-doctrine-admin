@@ -13,7 +13,8 @@ Route::group(array(
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'auth',
         'verified',
-        'can:dashboard'
+        'can:dashboard',
+        'menu'
     ]
 ), function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
