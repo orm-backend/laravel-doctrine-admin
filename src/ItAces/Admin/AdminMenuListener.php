@@ -4,7 +4,7 @@ namespace ItAces\Admin;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\Gate;
 use ItAces\SoftDeleteable;
-use ItAces\UnderAdminControl;
+use ItAces\Publishable;
 use ItAces\Utility\Helper;
 use ItAces\Utility\Str;
 use ItAces\Web\Events\BeforMenu;
@@ -44,22 +44,24 @@ class AdminMenuListener
             'icon' => config('admin.icons.dashboard')
         ]);
         
-        $entities = new Menu([
+        $isActive = Str::startsWith($currentRoute, 'admin.entity');
+        
+        $publishable = new Menu([
             'url' => 'javascript:;',
-            'name' => __('Entities'),
+            'name' => __('Publishable'),
             'title' => __('Entity List'),
-            'active' => Str::startsWith($currentRoute, 'admin.entity'),
+            'active' => $isActive,
             'icon' => config('admin.icons.entities'),
-            'open' => true
+            'open' => $isActive
         ]);
 
         foreach ($this->getEntitiesItems($currentRoute) as $key => $menu) {
-            $entities->addSubmenuElement($key, $menu);
+            $publishable->addSubmenuElement($key, $menu);
         }
         
         $admin = new Menu();
         $admin->addSubmenuElement('dashboard', $dashboard);
-        $admin->addSubmenuElement('entities', $entities);
+        $admin->addSubmenuElement('entities', $publishable);
 
         $this->factory->addMenu('admin', $admin);
         //dd($this->factory->getMenuValue('admin'));
@@ -96,7 +98,7 @@ class AdminMenuListener
             $className = $reflectionClass->getShortName();
             $isDeleteable = $reflectionClass->implementsInterface(SoftDeleteable::class);
             
-            if (!$reflectionClass->implementsInterface(UnderAdminControl::class)) {
+            if (!$reflectionClass->implementsInterface(Publishable::class)) {
                 continue;
             }
             

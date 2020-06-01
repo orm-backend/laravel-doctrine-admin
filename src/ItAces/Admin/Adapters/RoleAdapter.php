@@ -1,15 +1,14 @@
 <?php
 namespace ItAces\Admin\Adapters;
 
+use App\Model\Role;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
 use ItAces\ORM\Entities\EntityBase;
-use ItAces\Utility\Helper;
 use ItAces\Web\Fields\FieldContainer;
-use App\Model\Role;
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
 class RoleAdapter extends AdminControllerAdapter
 {
@@ -19,7 +18,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::search()
      */
-    public function search(Request $request)
+    public function search(Request $request, string $classUrlName)
     {
         return null;
     }
@@ -39,7 +38,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::create()
      */
-    public function create(Request $request)
+    public function create(Request $request, string $classUrlName)
     {
         return null;
     }
@@ -49,9 +48,9 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $classUrlName, $id)
     {
-        [$url, $alias] = $this->saveOrUpdate($request);
+        [$url, $alias] = $this->saveOrUpdate($request, $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.updatedAt')->with('success', __('Record updated successfully.'));
     }
@@ -61,7 +60,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, $id)
+    public function details(Request $request, EntityBase $entity)
     {
         return null;
     }
@@ -71,9 +70,9 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::store()
      */
-    public function store(Request $request)
+    public function store(Request $request, string $classUrlName)
     {
-        [$url, $alias] = $this->saveOrUpdate($request);
+        [$url, $alias] = $this->saveOrUpdate($request, $classUrlName);
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record created successfully.'));
     }
@@ -83,9 +82,8 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, string $classUrlName, $id)
     {
-        $classUrlName = Helper::classToUlr(Role::class);
         $classShortName = (new \ReflectionClass(Role::class))->getShortName();
         $alias = lcfirst($classShortName);
         $url = route('admin.entity.search', $classUrlName);
@@ -100,7 +98,7 @@ class RoleAdapter extends AdminControllerAdapter
             throw ValidationException::withMessages([ __('Unable to remove the system role.')]);
         }
         
-        $this->repository->delete($className, $id);
+        $this->repository->delete(Role::class, $id);
         
         try {
             $this->repository->em()->flush();
@@ -113,9 +111,8 @@ class RoleAdapter extends AdminControllerAdapter
     }
 
     
-    private function saveOrUpdate(Request $request)
+    private function saveOrUpdate(Request $request, string $classUrlName)
     {
-        $classUrlName = Helper::classToUlr(Role::class);
         $classShortName = (new \ReflectionClass(Role::class))->getShortName();
         $alias = lcfirst($classShortName);
         $data = $request->post($classUrlName);

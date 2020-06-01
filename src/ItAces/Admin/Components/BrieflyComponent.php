@@ -3,7 +3,7 @@ namespace ItAces\Admin\Components;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\View\Component;
-use ItAces\UnderAdminControl;
+use ItAces\Publishable;
 
 class BrieflyComponent extends Component
 {
@@ -47,7 +47,7 @@ class BrieflyComponent extends Component
             $total ++;
             $reflectionClass = new \ReflectionClass($classMetadata->name);
             
-            if ($reflectionClass->implementsInterface(UnderAdminControl::class)) {
+            if ($reflectionClass->implementsInterface(Publishable::class)) {
                 $controlled ++;
             }
             

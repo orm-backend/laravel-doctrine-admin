@@ -4,7 +4,7 @@ namespace ItAces\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use ItAces\ORM\Entities\EntityBase;
-use ItAces\UnderAdminControl;
+use ItAces\Publishable;
 use ItAces\Repositories\Repository;
 
 /**
@@ -12,7 +12,7 @@ use ItAces\Repositories\Repository;
  * @author Vitaliy Kovalenko vvk@kola.cloud
  *
  */
-abstract class AdminControllerAdapter implements UnderAdminControl
+abstract class AdminControllerAdapter implements Publishable
 {
     
     /**
@@ -32,17 +32,18 @@ abstract class AdminControllerAdapter implements UnderAdminControl
     /**
      *
      * @param \Illuminate\Http\Request $request
+     * @param  string $classUrlName
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function search(Request $request);
+    abstract public function search(Request $request, string $classUrlName);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param mixed $id
+     * @param \ItAces\ORM\Entities\EntityBase $entity
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function details(Request $request, $id);
+    abstract public function details(Request $request, EntityBase $entity);
     
     /**
      *
@@ -55,31 +56,35 @@ abstract class AdminControllerAdapter implements UnderAdminControl
     /**
      *
      * @param \Illuminate\Http\Request $request
+     * @param  string $classUrlName
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function create(Request $request);
+    abstract public function create(Request $request, string $classUrlName);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
+     * @param  string $classUrlName
      * @param mixed $id
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function update(Request $request, $id);
+    abstract public function update(Request $request, string $classUrlName, $id);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
+     * @param  string $classUrlName
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function store(Request $request);
+    abstract public function store(Request $request, string $classUrlName);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
+     * @param  string $classUrlName
      * @param mixed $id
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function delete(Request $request, $id);
+    abstract public function delete(Request $request, string $classUrlName, $id);
     
 }

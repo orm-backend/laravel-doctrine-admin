@@ -1,7 +1,5 @@
 <?php
-
 namespace ItAces\Admin\Adapters;
-
 
 use App\Model\Role;
 use App\Model\User;
@@ -20,13 +18,12 @@ class UserAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::create()
      */
-    public function create(Request $request)
+    public function create(Request $request, string $classUrlName)
     {
         return view('itaces::admin.user.create', [
             'roles' => $this->repository->getQuery(Role::class)->getResult()
         ]);
     }
-    
     
     /**
      * {@inheritDoc}
@@ -39,13 +36,12 @@ class UserAdapter extends AdminControllerAdapter
             'user' => $entity
         ]);
     }
-
     
     /**
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, $id)
+    public function details(Request $request, EntityBase $entity)
     {
         return null;
     }
@@ -54,7 +50,7 @@ class UserAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::search()
      */
-    public function search(Request $request)
+    public function search(Request $request, string $classUrlName)
     {
         return null;
     }
@@ -63,7 +59,7 @@ class UserAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::store()
      */
-    public function store(Request $request)
+    public function store(Request $request, string $classUrlName)
     {
         $request->validate(User::getRequestValidationRules());
         $this->repository->createOrUpdate(User::class, $request->all());
@@ -77,7 +73,7 @@ class UserAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $classUrlName, $id)
     {
         $rules = User::getRequestValidationRules();
         $data = $request->post();
@@ -99,7 +95,7 @@ class UserAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, string $classUrlName, $id)
     {
         return null;
     }

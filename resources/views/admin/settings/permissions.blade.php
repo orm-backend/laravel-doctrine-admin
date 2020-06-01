@@ -30,7 +30,7 @@
         										<div class="accordion accordion-toggle-arrow" id="accordionGroup">
         											@foreach ($container->entities() as $entity)
         											@php ($old = old($entity->classUrlName))
-        											@php ($old = $old[$loop->index])
+        											@php ($old = $old[$loop->index] ?? null)
             										@php ($permission = $entity->field('permission'))
         											<div class="card">
         												<div class="card-header" id="heading{{ $loop->index }}">

@@ -47,11 +47,11 @@ class AdminController extends WebController
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->search($request);
+            $response = $adapter->search($request, $classUrlName);
             
             if ($response !== null) {
                 return $response;
@@ -100,11 +100,11 @@ class AdminController extends WebController
         $className = Helper::classFromUlr($classUrlName);
         $entity = $this->repository->findOrFail($className, $id);
         $classShortName = (new \ReflectionClass($className))->getShortName();
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->details($request, $id);
+            $response = $adapter->details($request, $entity);
             
             if ($response !== null) {
                 return $response;
@@ -122,8 +122,7 @@ class AdminController extends WebController
 
         return view($this->views[$classUrlName]['details'] ?? 'itaces::admin.entity.details', [
             'container' => $container,
-            'meta' => $meta,
-            'formAction' => route('admin.entity.update', [$classUrlName, $id])
+            'meta' => $meta
         ]);
     }
     
@@ -139,7 +138,7 @@ class AdminController extends WebController
         $className = Helper::classFromUlr($classUrlName);
         $entity = $this->repository->findOrFail($className, $id);
         $classShortName = (new \ReflectionClass($className))->getShortName();
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
@@ -176,18 +175,17 @@ class AdminController extends WebController
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->create($request);
+            $response = $adapter->create($request, $classUrlName);
             
             if ($response !== null) {
                 return $response;
             }
         }
 
-        $classMetadata = $this->repository->em()->getClassMetadata($className);
         $container = new FieldContainer($this->repository->em());
         $container->addEntity(new $className());
         //$container->buildMetaFields($classMetadata);
@@ -217,11 +215,11 @@ class AdminController extends WebController
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->search($request);
+            $response = $adapter->search($request, $classUrlName);
             
             if ($response !== null) {
                 return $response;
@@ -272,11 +270,11 @@ class AdminController extends WebController
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->update($request, $id);
+            $response = $adapter->update($request, $classUrlName, $id);
             
             if ($response !== null) {
                 return $response;
@@ -300,11 +298,11 @@ class AdminController extends WebController
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
 
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->store($request);
+            $response = $adapter->store($request, $classUrlName);
             
             if ($response !== null) {
                 return $response;
@@ -329,11 +327,11 @@ class AdminController extends WebController
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
-        $adapterClass = $this->adapters[$className] ?? null;
+        $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->delete($request, $id);
+            $response = $adapter->delete($request, $classUrlName, $id);
             
             if ($response !== null) {
                 return $response;
