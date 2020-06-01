@@ -4,7 +4,6 @@ namespace ItAces\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use ItAces\ORM\Entities\EntityBase;
-use ItAces\Publishable;
 use ItAces\Repositories\Repository;
 
 /**
@@ -12,7 +11,7 @@ use ItAces\Repositories\Repository;
  * @author Vitaliy Kovalenko vvk@kola.cloud
  *
  */
-abstract class AdminControllerAdapter implements Publishable
+abstract class AdminControllerAdapter
 {
     
     /**
@@ -33,58 +32,74 @@ abstract class AdminControllerAdapter implements Publishable
      *
      * @param \Illuminate\Http\Request $request
      * @param  string $classUrlName
+     * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function search(Request $request, string $classUrlName);
-    
-    /**
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \ItAces\ORM\Entities\EntityBase $entity
-     * @return \Illuminate\Contracts\Support\Responsable
-     */
-    abstract public function details(Request $request, EntityBase $entity);
-    
-    /**
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \ItAces\ORM\Entities\EntityBase $entity
-     * @return \Illuminate\Contracts\Support\Responsable
-     */
-    abstract public function edit(Request $request, EntityBase $entity);
+    abstract public function search(Request $request, string $classUrlName, string $group);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
      * @param  string $classUrlName
+     * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function create(Request $request, string $classUrlName);
+    abstract public function trash(Request $request, string $classUrlName, string $group);
+    
+    /**
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \ItAces\ORM\Entities\EntityBase $entity
+     * @param string $group
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
+    abstract public function details(Request $request, EntityBase $entity, string $group);
+    
+    /**
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \ItAces\ORM\Entities\EntityBase $entity
+     * @param string $group
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
+    abstract public function edit(Request $request, EntityBase $entity, string $group);
+    
+    /**
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param  string $classUrlName
+     * @param string $group
+     * @return \Illuminate\Contracts\Support\Responsable
+     */
+    abstract public function create(Request $request, string $classUrlName, string $group);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
      * @param  string $classUrlName
      * @param mixed $id
+     * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function update(Request $request, string $classUrlName, $id);
+    abstract public function update(Request $request, string $classUrlName, $id, string $group);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
      * @param  string $classUrlName
+     * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function store(Request $request, string $classUrlName);
+    abstract public function store(Request $request, string $classUrlName, string $group);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
      * @param  string $classUrlName
      * @param mixed $id
+     * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function delete(Request $request, string $classUrlName, $id);
+    abstract public function delete(Request $request, string $classUrlName, $id, string $group);
     
 }

@@ -2,26 +2,7 @@
 @section('itaces::content')
 <!-- begin:: Content -->
 <script src="/assets/admin/js/itaces/entity-table.js" type="text/javascript" defer></script>
-<!-- Modal -->
-<div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Are your sure?</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button>
-			</div>
-			<div class="modal-body">
-				<p>If you continue, the record will be deleted from the database.
-				</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Yes, delete</button>
-			</div>
-		</div>
-	</div>
-</div>
+@include('itaces::admin.includes.delete-modal')
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 	@if (session('success'))
 	<div class="row">
@@ -93,7 +74,7 @@
 						</div>
 					</div>
 					@can('create', $meta['classUrlName'])
-					<a href="{{ route('admin.entity.create', $meta['classUrlName']) }}" class="btn btn-brand btn-elevate btn-icon-sm">
+					<a href="{{ route('admin.'.$meta['group'].'.create', [$meta['classUrlName']]) }}" class="btn btn-brand btn-elevate btn-icon-sm">
 						<i class="la la-plus"></i> New Record
 					</a>
 					@endcan
@@ -106,7 +87,7 @@
 			<div class="kt-form kt-form--label-align-right kt-margin-t-20 collapse" id="kt_datatable_group_action_form">
 				<div class="row align-items-center">
 					<div class="col-xl-12">
-						<form action="{{ route('admin.entity.batchDelete', [$meta['classUrlName']]) }}" method="post" name="selected-rows">
+						<form action="{{ route('admin.'.$meta['group'].'.batchDelete', [$meta['classUrlName']]) }}" method="post" name="selected-rows">
 							@csrf
 							<input type="hidden" name="selected" value="">
     						<div class="kt-form__group kt-form__group--inline">
@@ -150,7 +131,7 @@
                         	@if ($field->type == 'image_collection')
                         	<td>
                         		@foreach ($field->value as $element)
-                        		<a class="kt-media" href="{{ route('admin.entity.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">
+                        		<a class="kt-media" href="{{ route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">
                         			<img src="{{ crop($element->path, 'center', 50, 50) }}" alt="{{ $element->name }}">
                         		</a>
                         		@endforeach
@@ -158,20 +139,20 @@
                         	@elseif ($field->type == 'file_collection')
                         	<td>
                         		@foreach ($field->value as $element)
-                        		<a href="{{ route('admin.entity.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
+                        		<a href="{{ route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
                         		@endforeach
                         	</td>
                         	@elseif ($field->type == 'collection')
                         	<td>
                         		@foreach ($field->value as $element)
-                        		<a href="{{ route('admin.entity.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
+                        		<a href="{{ route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
                         		@endforeach
                         	</td>
                         	@elseif ($field->type == 'reference')
-                        	<td><a href="{{ $field->value ? route('admin.entity.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">{{ $field->valueName }}</a></td>
+                        	<td><a href="{{ $field->value ? route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">{{ $field->valueName }}</a></td>
                         	@elseif ($field->type == 'image')
                         	<td>
-                        		<a class="kt-media" href="{{ $field->value ? route('admin.entity.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">
+                        		<a class="kt-media" href="{{ $field->value ? route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">
                         			<img src="{{ crop($field->path, 'center', 50, 50) }}" alt="{{ $field->valueName }}">
                         		</a>
                         	</td>
@@ -184,17 +165,17 @@
                         	@endif
                             <td>
                             	@if ($entity->readingAllowed)
-                            	<a href="{{ route('admin.entity.details', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Show details">
+                            	<a href="{{ route('admin.'.$meta['group'].'.details', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Show details">
     								<i class="la la-file-o"></i>
     							</a>
     							@endif
     							@if ($entity->updatingAllowed)
-                            	<a href="{{ route('admin.entity.edit', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
+                            	<a href="{{ route('admin.'.$meta['group'].'.edit', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
     								<i class="la la-edit"></i>
     							</a>
     							@endif
     							@if ($entity->delitingAllowed)
-    							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="modal" data-target="#delete_modal" data-url="{{ route('admin.entity.delete', [$meta['classUrlName'], $entity->id()]) }}" title="Delete">
+    							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="modal" data-target="#delete_modal" data-url="{{ route('admin.'.$meta['group'].'.delete', [$meta['classUrlName'], $entity->id()]) }}" title="Delete">
     								<i class="la la-trash"></i>
     							</a>
     							@endif

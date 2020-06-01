@@ -35,7 +35,7 @@ class AdminMenuListener
     public function handle(BeforMenu $event)
     {
         $currentRoute = request()->route()->action['as'];
-        
+
         $dashboard = new Menu([
             'url' => route('admin.index', [], false),
             'name' => __('Dashboard'),
@@ -48,7 +48,7 @@ class AdminMenuListener
         
         $publishable = new Menu([
             'url' => 'javascript:;',
-            'name' => __('Publishable'),
+            'name' => __('Entities'),
             'title' => __('Entity List'),
             'active' => $isActive,
             'icon' => config('admin.icons.entities'),
@@ -111,7 +111,7 @@ class AdminMenuListener
             
             if (Gate::inspect('read', $classUrlName)->allowed()) {
                 $menu->addSubmenuElement('search', new Menu([
-                    'url' => route('admin.entity.search', $classUrlName, false),
+                    'url' => route('admin.entity.search', [$classUrlName], false),
                     'name' => __('Search'),
                     'title' => __('Element List'),
                     'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.search'
@@ -120,7 +120,7 @@ class AdminMenuListener
             
             if (Gate::inspect('create', $classUrlName)->allowed()) {
                 $menu->addSubmenuElement('create', new Menu([
-                    'url' => route('admin.entity.create', $classUrlName, false),
+                    'url' => route('admin.entity.create', [$classUrlName], false),
                     'name' => __('Create'),
                     'title' => __('Add New Element'),
                     'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.create'
@@ -129,7 +129,7 @@ class AdminMenuListener
             
             if ($isDeleteable && Gate::inspect('restore', $classUrlName)->allowed()) {
                 $menu->addSubmenuElement('trash', new Menu([
-                    'url' => route('admin.entity.trash', $classUrlName, false),
+                    'url' => route('admin.entity.trash', [$classUrlName], false),
                     'name' => __('Trash'),
                     'title' => __('Removed Elements'),
                     'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.trash'
@@ -138,7 +138,7 @@ class AdminMenuListener
             
             if (Gate::inspect('settings')->allowed()) {
                 $menu->addSubmenuElement('settings', new Menu([
-                    'url' => route('admin.entity.settings', $classUrlName, false),
+                    'url' => route('admin.entity.settings', [$classUrlName], false),
                     'name' => __('Settings'),
                     'title' => __('Entity Settings'),
                     'active' => $activeModel == $classUrlName && Str::startsWith($currentRoute, 'admin.entity.settings')

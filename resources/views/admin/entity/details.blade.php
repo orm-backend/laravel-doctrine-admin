@@ -39,19 +39,19 @@
 				<h3 class="kt-portlet__head-title">{{ $meta['title'] }} <small>{{ $meta['class'] }}</small></h3>
 			</div>
 			<div class="kt-portlet__head-toolbar">
-				<a href="{{ route('admin.entity.search', $meta['classUrlName']) }}" class="btn btn-clean kt-margin-r-10">
+				<a href="{{ route('admin.'.$meta['group'].'.search', [$meta['classUrlName']]) }}" class="btn btn-clean kt-margin-r-10">
 					<i class="la la-arrow-left"></i>
 					<span class="kt-hidden-mobile">Back</span>
 				</a>
 				<div class="btn-group">
 					@if ($entity->updatingAllowed)
-					<button type="button" class="btn btn-brand goto" data-url="{{ route('admin.entity.edit', [$meta['classUrlName'], $entity->id()]) }}">
+					<button type="button" class="btn btn-brand goto" data-url="{{ route('admin.'.$meta['group'].'.edit', [$meta['classUrlName'], $entity->id()]) }}">
 						<i class="la la-edit"></i>
 						<span class="kt-hidden-mobile">{{ __('Edit') }}</span>
 					</button>
 					@endif
 					@if ($entity->delitingAllowed)
-					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#delete_modal" data-url="{{ route('admin.entity.delete', [$meta['classUrlName'], $entity->id()]) }}">
+					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#delete_modal" data-url="{{ route('admin.'.$meta['group'].'.delete', [$meta['classUrlName'], $entity->id()]) }}">
 						<i class="la la-remove"></i>
 						<span class="kt-hidden-mobile">{{ __('Delete') }}</span>
 					</button>

@@ -25,7 +25,7 @@
     										@endif
 										@endforeach
 										@php ($old = old($entity->classUrlName))
-										@include('itaces::admin.includes.fields', ['fields' => $fields, 'old' => $old, 'message' => $message ?? null])
+										@include('itaces::admin.includes.fields', ['meta' => $meta, 'fields' => $fields, 'old' => $old, 'message' => $message ?? null])
 									</div>
 								</div>
 							</div>
@@ -38,7 +38,7 @@
     		            		<div class="col-xl-4"></div>
     		            		<div class="col-xl-8">
     								<button type="submit" class="btn btn-brand"><i class="la la-check"></i> {{ __('Save') }}</button>
-    								<button type="button" class="btn btn-secondary goto" data-url="{{ route('admin.entity.search', $meta['classUrlName']) }}"><i class="fa fa-undo"></i>{{ __('Cancel') }}</button>
+    								<button type="button" class="btn btn-secondary goto" data-url="{{ route('admin.'.$meta['group'].'.search', [$meta['classUrlName']]) }}"><i class="fa fa-undo"></i>{{ __('Cancel') }}</button>
     		            		</div>
     		            	</div>
     					</div>

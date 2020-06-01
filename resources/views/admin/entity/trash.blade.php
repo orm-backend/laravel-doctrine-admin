@@ -51,7 +51,7 @@
 			<div class="kt-form kt-form--label-align-right kt-margin-t-20 collapse" id="kt_datatable_group_action_form">
 				<div class="row align-items-center">
 					<div class="col-xl-12">
-						<form action="{{ route('admin.entity.batchRestore', [$meta['classUrlName']]) }}" method="post" name="selected-rows">
+						<form action="{{ route('admin.'.$meta['group'].'.batchRestore', [$meta['classUrlName']]) }}" method="post" name="selected-rows">
 							@csrf
 							<input type="hidden" name="selected" value="">
 							<div class="kt-form__group kt-form__group--inline">
@@ -92,7 +92,7 @@
                         	@if ($field->type == 'image_collection')
                         	<td>
                         		@foreach ($field->value as $element)
-                        		<a class="kt-media" href="{{ route('admin.entity.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">
+                        		<a class="kt-media" href="{{ route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">
                         			<img src="{{ crop($element->path, 'center', 50, 50) }}" alt="{{ $element->name }}">
                         		</a>
                         		@endforeach
@@ -100,20 +100,20 @@
                         	@elseif ($field->type == 'file_collection')
                         	<td>
                         		@foreach ($field->value as $element)
-                        		<a href="{{ route('admin.entity.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
+                        		<a href="{{ route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
                         		@endforeach
                         	</td>
                         	@elseif ($field->type == 'collection')
                         	<td>
                         		@foreach ($field->value as $element)
-                        		<a href="{{ route('admin.entity.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
+                        		<a href="{{ route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $element->id]) }}" target="_blank">{{ $element->name }}</a>
                         		@endforeach
                         	</td>
                         	@elseif ($field->type == 'reference')
-                        	<td><a href="{{ $field->value ? route('admin.entity.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">{{ $field->valueName }}</a></td>
+                        	<td><a href="{{ $field->value ? route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">{{ $field->valueName }}</a></td>
                         	@elseif ($field->type == 'image')
                         	<td>
-                        		<a class="kt-media" href="{{ $field->value ? route('admin.entity.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">
+                        		<a class="kt-media" href="{{ $field->value ? route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">
                         			<img src="{{ crop($field->path, 'center', 50, 50) }}" alt="{{ $field->valueName }}">
                         		</a>
                         	</td>
@@ -123,7 +123,7 @@
                             @endforeach
                             <td>
                             	@if ($entity->restoringAllowed)
-                            	<a href="{{ route('admin.entity.restore', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Restore">
+                            	<a href="{{ route('admin.'.$meta['group'].'.restore', [$meta['classUrlName'], $entity->id()]) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Restore">
     								<i class="la la-history"></i>
     							</a>
     							@endif

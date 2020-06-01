@@ -22,7 +22,7 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, EntityBase $entity)
+    public function details(Request $request, EntityBase $entity, string $group)
     {
         return null;
     }
@@ -31,7 +31,7 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::search()
      */
-    public function search(Request $request, string $classUrlName)
+    public function search(Request $request, string $classUrlName, string $group)
     {
         return null;
     }
@@ -40,7 +40,7 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
      */
-    public function edit(Request $request, EntityBase $entity)
+    public function edit(Request $request, EntityBase $entity, string $group)
     {
         $container = new FieldContainer($this->repository->em());
         $container->addEntity($entity);
@@ -48,11 +48,12 @@ class ImageAdapter extends AdminControllerAdapter
         return view('itaces::admin.image.edit', [
             'container' => $container,
             'meta' => [
+                'group' => $group,
                 'class' => get_class($entity),
                 'title' => __('Image'),
                 'classUrlName' => 'app-model-image'
             ],
-            'formAction' => route('admin.entity.update', ['app-model-image', $entity->getPrimary()])
+            'formAction' => route('admin.'.$group.'.update', ['app-model-image', $entity->getPrimary()])
         ]);
     }
 
@@ -60,10 +61,10 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::create()
      */
-    public function create(Request $request, string $classUrlName)
+    public function create(Request $request, string $classUrlName, string $group)
     {
         return view('itaces::admin.image.create', [
-            'action' => route('admin.entity.store', 'app-model-image'),
+            'action' => route('admin.'.$group.'.store', 'app-model-image'),
         ]);
     }
 
@@ -71,7 +72,7 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
      */
-    public function update(Request $request, string $classUrlName, $id)
+    public function update(Request $request, string $classUrlName, $id, string $group)
     {
         // Example with FieldContainer
         $className = Helper::classFromUlr($classUrlName);
@@ -115,7 +116,7 @@ class ImageAdapter extends AdminControllerAdapter
             throw ValidationException::withMessages($messages);
         }
         
-        $url = route('admin.entity.search', 'app-model-image');
+        $url = route('admin.'.$group.'.search', 'app-model-image');
         
         return redirect($url.'?order[]=-image.updatedAt')->with('success', __('Record updated successfully.'));
     }
@@ -124,7 +125,7 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::store()
      */
-    public function store(Request $request, string $classUrlName)
+    public function store(Request $request, string $classUrlName, string $group)
     {
         // Without FieldContainer
         $className = Helper::classFromUlr($classUrlName);
@@ -148,7 +149,7 @@ class ImageAdapter extends AdminControllerAdapter
         
         $this->repository->createOrUpdate($className, $data);
         $this->repository->em()->flush();
-        $url = route('admin.entity.search', 'app-model-image');
+        $url = route('admin.'.$group.'.search', 'app-model-image');
         
         return redirect($url.'?order[]=-image.createdAt')->with('success', __('Image created successfully.'));
     }
@@ -157,7 +158,17 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
      */
-    public function delete(Request $request, string $classUrlName, $id)
+    public function delete(Request $request, string $classUrlName, $id, string $group)
+    {
+        return null;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::trash()
+     */
+    public function trash(Request $request, string $classUrlName, string $group)
     {
         return null;
     }

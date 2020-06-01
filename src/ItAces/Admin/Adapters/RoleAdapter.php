@@ -18,7 +18,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::search()
      */
-    public function search(Request $request, string $classUrlName)
+    public function search(Request $request, string $classUrlName, string $group)
     {
         return null;
     }
@@ -28,7 +28,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
      */
-    public function edit(Request $request, EntityBase $entity)
+    public function edit(Request $request, EntityBase $entity, string $group)
     {
         return null;
     }
@@ -38,7 +38,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::create()
      */
-    public function create(Request $request, string $classUrlName)
+    public function create(Request $request, string $classUrlName, string $group)
     {
         return null;
     }
@@ -48,9 +48,9 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
      */
-    public function update(Request $request, string $classUrlName, $id)
+    public function update(Request $request, string $classUrlName, $id, string $group)
     {
-        [$url, $alias] = $this->saveOrUpdate($request, $classUrlName);
+        [$url, $alias] = $this->saveOrUpdate($request, $classUrlName, $group);
         
         return redirect($url.'?order[]=-'.$alias.'.updatedAt')->with('success', __('Record updated successfully.'));
     }
@@ -60,7 +60,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, EntityBase $entity)
+    public function details(Request $request, EntityBase $entity, string $group)
     {
         return null;
     }
@@ -70,7 +70,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::store()
      */
-    public function store(Request $request, string $classUrlName)
+    public function store(Request $request, string $classUrlName, string $group)
     {
         [$url, $alias] = $this->saveOrUpdate($request, $classUrlName);
         
@@ -82,11 +82,11 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
      */
-    public function delete(Request $request, string $classUrlName, $id)
+    public function delete(Request $request, string $classUrlName, $id, string $group)
     {
         $classShortName = (new \ReflectionClass(Role::class))->getShortName();
         $alias = lcfirst($classShortName);
-        $url = route('admin.entity.search', $classUrlName);
+        $url = route('admin.'.$group.'.search', $classUrlName);
         
         /**
          * 
@@ -111,7 +111,7 @@ class RoleAdapter extends AdminControllerAdapter
     }
 
     
-    private function saveOrUpdate(Request $request, string $classUrlName)
+    private function saveOrUpdate(Request $request, string $classUrlName, string $group)
     {
         $classShortName = (new \ReflectionClass(Role::class))->getShortName();
         $alias = lcfirst($classShortName);
@@ -142,8 +142,19 @@ class RoleAdapter extends AdminControllerAdapter
             throw ValidationException::withMessages($messages);
         }
         
-        $url = route('admin.entity.search', $classUrlName);
+        $url = route('admin.'.$group.'.search', $classUrlName);
         
         return [$url, $alias];
     }
+    
+    /**
+     *
+     * {@inheritDoc}
+     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::trash()
+     */
+    public function trash(Request $request, string $classUrlName, string $group)
+    {
+        return null;
+    }
+
 }

@@ -41,9 +41,10 @@ class AdminController extends WebController
      * 
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request, string $classUrlName)
+    public function search(Request $request, string $classUrlName, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -51,7 +52,7 @@ class AdminController extends WebController
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->search($request, $classUrlName);
+            $response = $adapter->search($request, $classUrlName, $group);
             
             if ($response !== null) {
                 return $response;
@@ -63,6 +64,7 @@ class AdminController extends WebController
         $container = new FieldContainer($this->repository->em());
         
         $meta = [
+            'group' => $group,
             'class' => $className,
             'title' => __( Str::pluralCamelWords($classShortName) ),
             'classUrlName' => $classUrlName
@@ -93,9 +95,10 @@ class AdminController extends WebController
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
      * @param mixed $id
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function details(Request $request, string $classUrlName, $id)
+    public function details(Request $request, string $classUrlName, $id, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $entity = $this->repository->findOrFail($className, $id);
@@ -104,7 +107,7 @@ class AdminController extends WebController
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->details($request, $entity);
+            $response = $adapter->details($request, $entity, $group);
             
             if ($response !== null) {
                 return $response;
@@ -115,6 +118,7 @@ class AdminController extends WebController
         $container->addEntity($entity);
 
         $meta = [
+            'group' => $group,
             'class' => $className,
             'title' => __( Str::pluralCamelWords($classShortName, 1) ),
             'classUrlName' => $classUrlName
@@ -131,9 +135,10 @@ class AdminController extends WebController
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
      * @param mixed $id
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, string $classUrlName, $id)
+    public function edit(Request $request, string $classUrlName, $id, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $entity = $this->repository->findOrFail($className, $id);
@@ -142,7 +147,7 @@ class AdminController extends WebController
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->edit($request, $entity);
+            $response = $adapter->edit($request, $entity, $group);
             
             if ($response !== null) {
                 return $response;
@@ -153,6 +158,7 @@ class AdminController extends WebController
         $container->addEntity($entity);
         
         $meta = [
+            'group' => $group,
             'class' => $className,
             'title' => __( Str::pluralCamelWords($classShortName, 1) ),
             'classUrlName' => $classUrlName
@@ -161,7 +167,7 @@ class AdminController extends WebController
         return view($this->views[$classUrlName]['edit'] ?? 'itaces::admin.entity.edit', [
             'container' => $container,
             'meta' => $meta,
-            'formAction' => route('admin.entity.update', [$classUrlName, $id])
+            'formAction' => route('admin.'.$group.'.update', [$classUrlName, $id])
         ]);
     }
     
@@ -169,9 +175,10 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, string $classUrlName)
+    public function create(Request $request, string $classUrlName, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -179,7 +186,7 @@ class AdminController extends WebController
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->create($request, $classUrlName);
+            $response = $adapter->create($request, $classUrlName, $group);
             
             if ($response !== null) {
                 return $response;
@@ -191,6 +198,7 @@ class AdminController extends WebController
         //$container->buildMetaFields($classMetadata);
         
         $meta = [
+            'group' => $group,
             'class' => $className,
             'title' => __( Str::pluralCamelWords($classShortName, 1) ),
             'classUrlName' => $classUrlName
@@ -199,7 +207,7 @@ class AdminController extends WebController
         return view($this->views[$classUrlName]['create'] ?? 'itaces::admin.entity.create', [
             'container' => $container,
             'meta' => $meta,
-            'formAction' => route('admin.entity.store', [$classUrlName])
+            'formAction' => route('admin.'.$group.'.store', [$classUrlName])
         ]);
     }
     
@@ -207,9 +215,10 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request, string $classUrlName)
+    public function trash(Request $request, string $classUrlName, string $group)
     {
         $this->repository->em()->getFilters()->disable('softdelete');
         $className = Helper::classFromUlr($classUrlName);
@@ -219,7 +228,7 @@ class AdminController extends WebController
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->search($request, $classUrlName);
+            $response = $adapter->trash($request, $classUrlName, $group);
             
             if ($response !== null) {
                 return $response;
@@ -230,6 +239,7 @@ class AdminController extends WebController
         $container = new FieldContainer($this->repository->em());
         
         $meta = [
+            'group' => $group,
             'class' => $className,
             'title' => __( Str::pluralCamelWords($classShortName) ),
             'classUrlName' => $classUrlName
@@ -263,9 +273,10 @@ class AdminController extends WebController
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
      * @param mixed $id
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $classUrlName, $id)
+    public function update(Request $request, string $classUrlName, $id, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -274,7 +285,7 @@ class AdminController extends WebController
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->update($request, $classUrlName, $id);
+            $response = $adapter->update($request, $classUrlName, $id, $group);
             
             if ($response !== null) {
                 return $response;
@@ -282,7 +293,7 @@ class AdminController extends WebController
         }
 
         $this->repository->saveFieldContainer($request->post(), $classUrlName);
-        $url = route('admin.entity.search', $classUrlName);
+        $url = route('admin.'.$group.'.search', [$classUrlName]);
         
         return redirect($url.'?order[]=-'.$alias.'.updatedAt')->with('success', __('Record updated successfully.'));
     }
@@ -291,9 +302,10 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, string $classUrlName)
+    public function store(Request $request, string $classUrlName, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -302,7 +314,7 @@ class AdminController extends WebController
 
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->store($request, $classUrlName);
+            $response = $adapter->store($request, $classUrlName, $group);
             
             if ($response !== null) {
                 return $response;
@@ -310,7 +322,7 @@ class AdminController extends WebController
         }
 
         $this->repository->saveFieldContainer($request->post(), $classUrlName);
-        $url = route('admin.entity.search', $classUrlName);
+        $url = route('admin.'.$group.'.search', [$classUrlName]);
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record created successfully.'));
     }
@@ -320,9 +332,10 @@ class AdminController extends WebController
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
      * @param mixed $id
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request, string $classUrlName, $id)
+    public function delete(Request $request, string $classUrlName, $id, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
@@ -331,14 +344,14 @@ class AdminController extends WebController
         
         if ($adapterClass) {
             $adapter = new $adapterClass;
-            $response = $adapter->delete($request, $classUrlName, $id);
+            $response = $adapter->delete($request, $classUrlName, $id, $group);
             
             if ($response !== null) {
                 return $response;
             }
         }
         
-        $url = route('admin.entity.search', $classUrlName);
+        $url = route('admin.'.$group.'.search', [$classUrlName]);
         $this->repository->delete($className, $id);
         
         try {
@@ -356,15 +369,16 @@ class AdminController extends WebController
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
      * @param mixed $id
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function restore(Request $request, string $classUrlName, $id)
+    public function restore(Request $request, string $classUrlName, $id, string $group)
     {
         $this->repository->em()->getFilters()->disable('softdelete');
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
-        $url = route('admin.entity.trash', $classUrlName);
+        $url = route('admin.'.$group.'.trash', [$classUrlName]);
         $this->repository->restore($className, $id);
         $this->repository->em()->flush();
         
@@ -375,14 +389,15 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function batchDelete(Request  $request, string $classUrlName)
+    public function batchDelete(Request $request, string $classUrlName, string $group)
     {
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
-        $url = route('admin.entity.search', $classUrlName);
+        $url = route('admin.'.$group.'.search', [$classUrlName]);
         $selected = $request->post('selected');
         
         if ($selected) {
@@ -402,15 +417,16 @@ class AdminController extends WebController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param string $classUrlName
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function batchRestore(Request $request, string $classUrlName)
+    public function batchRestore(Request $request, string $classUrlName, string $group)
     {
         $this->repository->em()->getFilters()->disable('softdelete');
         $className = Helper::classFromUlr($classUrlName);
         $classShortName = (new \ReflectionClass($className))->getShortName();
         $alias = lcfirst($classShortName);
-        $url = route('admin.entity.trash', $classUrlName);
+        $url = route('admin.'.$group.'.trash', [$classUrlName]);
         $selected = $request->post('selected');
         
         if ($selected) {

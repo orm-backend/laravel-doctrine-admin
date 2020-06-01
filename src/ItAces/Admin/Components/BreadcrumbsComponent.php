@@ -38,20 +38,21 @@ class BreadcrumbsComponent extends Component
      */
     public function render()
     {
+        $activeGroup = request()->route()->parameters['group'] ?? 'entity';
         $activeModel = request()->route()->parameters['model'] ?? null;
         $currentRoute = request()->route()->action['as'];
         
         if ($currentRoute == 'admin.index') {
             $this->menu[] = [
-                'url' => route('admin.index', [], false),
+                'url' => route('admin.index', [$activeGroup], false),
                 'name' => __('Dashboard'),
                 'title' => __('Administrator Dashboard'),
                 'icon' => config('admin.icons.dashboard')
             ];
-        } else if (Str::startsWith($currentRoute, 'admin.entity')) {
+        } else {
             $this->menu[] = [
                 'url' => 'javascript:;', // TODO: route('admin.entity', [], false)
-                'name' => __('Entities'),
+                'name' => __(ucfirst(Str::plural($activeGroup))),
                 'title' => __('Entity List'),
                 'icon' => config('admin.icons.entities')
             ];
@@ -62,38 +63,38 @@ class BreadcrumbsComponent extends Component
                 $classShortName = $reflectionClass->getShortName();
                 
                 $this->menu[] = [
-                    'url' => route('admin.entity.search', $activeModel, false),
+                    'url' => route('admin.'.$activeGroup.'.search', [$activeModel], false),
                     'name' => __( Str::pluralCamelWords($classShortName) ),
                     'title' => $className
                 ];
                 
                 switch ($currentRoute) {
-                    case 'admin.entity.search':
+                    case 'admin.'.$activeGroup.'.search':
                         $this->menu[] = [
                             'name' => __( 'Search' )
                         ];
                         break;
-                    case 'admin.entity.trash':
+                    case 'admin.'.$activeGroup.'.trash':
                         $this->menu[] = [
                             'name' => __( 'Trash' )
                         ];
                         break;
-                    case 'admin.entity.settings':
+                    case 'admin.'.$activeGroup.'.settings':
                         $this->menu[] = [
                             'name' => __( 'Settings' )
                         ];
                         break;
-                    case 'admin.entity.create':
+                    case 'admin.'.$activeGroup.'.create':
                         $this->menu[] = [
                             'name' => __( 'Create' )
                         ];
                         break;
-                    case 'admin.entity.edit':
+                    case 'admin.'.$activeGroup.'.edit':
                         $this->menu[] = [
                             'name' => __( 'Edit' )
                         ];
                         break;
-                    case 'admin.entity.details':
+                    case 'admin.'.$activeGroup.'.details':
                         $this->menu[] = [
                             'name' => __( 'Details' )
                         ];

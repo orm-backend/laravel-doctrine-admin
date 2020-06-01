@@ -22,9 +22,10 @@ class SettingsController extends WebController
      *
      * @param \Illuminate\Http\Request  $request
      * @param string $classUrlName
+     * @param string $group
      * @return \Illuminate\Http\Response
      */
-    public function settings(Request $request, string $classUrlName)
+    public function settings(Request $request, string $classUrlName, string $group)
     {
         $alias = Helper::aliasFromClass(EntityPermission::class);
         
@@ -76,20 +77,28 @@ class SettingsController extends WebController
         $container->addCollection($permissions);
         
         $meta = [
+            'group' => $group,
             'class' => Helper::classFromUlr($classUrlName),
             'title' => __( Str::pluralCamelWords(Helper::classShortFromUrl($classUrlName)) ),
             'classUrlName' => $classUrlName
         ];
-        
+
         return view($this->views[$classUrlName]['settings']['permissions'] ?? 'itaces::admin.settings.permissions', [
             'container' => $container,
             'meta' => $meta,
-            'formAction' => route('admin.entity.settings.permissions.update', [$classUrlName]),
+            'formAction' => route('admin.'.$group.'.settings.permissions.update', [$classUrlName], false),
             'guestId' => $guestId
         ]);
     }
     
-    public function updatePermissions(Request $request, string $classUrlName)
+    /**
+     * 
+     * @param Request $request
+     * @param string $group
+     * @param string $classUrlName
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function updatePermissions(Request $request, string $classUrlName, string $group)
     {
         $model = Helper::classToUrl(EntityPermission::class);
         $data = $request->post($model);
@@ -159,7 +168,7 @@ class SettingsController extends WebController
          */
         $request->merge([$model => $data]);
         $this->repository->saveEntityContainer([$model => $save], [EntityPermission::class => $delete]);
-        $url = route('admin.entity.search', $classUrlName);
+        $url = route('admin.'.$group.'.search', [$classUrlName], false);
         
         return redirect($url)->with('success', __('Settings updated successfully.'));
     }

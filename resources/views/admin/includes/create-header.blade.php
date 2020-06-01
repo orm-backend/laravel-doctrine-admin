@@ -3,7 +3,7 @@
 		<h3 class="kt-portlet__head-title">New {{ $meta['title'] }} <small>{{ $meta['class'] }}</small></h3>
 	</div>
 	<div class="kt-portlet__head-toolbar">
-		<a href="{{ route('admin.entity.search', $meta['classUrlName']) }}" class="btn btn-clean kt-margin-r-10">
+		<a href="{{ route('admin.'.$meta['group'].'.search', [$meta['classUrlName']]) }}" class="btn btn-clean kt-margin-r-10">
 			<i class="la la-arrow-left"></i>
 			<span class="kt-hidden-mobile">Back</span>
 		</a>
