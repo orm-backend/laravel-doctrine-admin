@@ -2,6 +2,7 @@
 namespace ItAces\Admin;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Illuminate\Support\Facades\Gate;
 use ItAces\SoftDeleteable;
 use ItAces\Publishable;
@@ -10,6 +11,9 @@ use ItAces\Utility\Str;
 use ItAces\Web\Events\BeforMenu;
 use ItAces\Web\Menu\Menu;
 use ItAces\Web\Menu\MenuFactory;
+use ItAces\Types\FileType;
+use ItAces\ORM\Entities\User;
+use ItAces\ORM\Entities\Role;
 
 class AdminMenuListener
 {
@@ -26,126 +30,128 @@ class AdminMenuListener
      */
     protected $em;
     
+    /**
+     * 
+     * @var \Doctrine\ORM\Mapping\ClassMetadata[]
+     */
+    protected $classMetadataMap;
+    
+    /**
+     * 
+     * @var string
+     */
+    protected $activeModel;
+    
+    /**
+     *
+     * @var string
+     */
+    protected $currentRoute;
+    
     public function __construct(MenuFactory $factory, EntityManager $em)
     {
         $this->factory = $factory;
         $this->em = $em;
+        $this->activeModel = request()->route()->parameters['model'] ?? null;
+        $this->currentRoute = request()->route()->action['as'];
+        $this->classMetadataMap = $this->initClassMetadataMap();
     }
     
     public function handle(BeforMenu $event)
     {
-        $currentRoute = request()->route()->action['as'];
+        $admin = new Menu();
+        $isActive = $this->currentRoute == 'admin.index';
 
         $dashboard = new Menu([
             'url' => route('admin.index', [], false),
             'name' => __('Dashboard'),
             'title' => __('Administrator Dashboard'),
-            'active' => $currentRoute == 'admin.index',
+            'active' => $isActive,
             'icon' => config('admin.icons.dashboard')
         ]);
         
-        $isActive = Str::startsWith($currentRoute, 'admin.entity');
+        $admin->addSubmenuElement('dashboard', $dashboard);
+        $group = $this->getGroupMenu('user');
         
-        $publishable = new Menu([
-            'url' => 'javascript:;',
-            'name' => __('Entities'),
-            'title' => __('Entity List'),
-            'active' => $isActive,
-            'icon' => config('admin.icons.entities'),
-            'open' => $isActive
-        ]);
+        if ($group) {
+            $isActive = Str::startsWith($this->currentRoute, 'admin.user');
+            
+            $publishable = new Menu([
+                'url' => 'javascript:;',
+                'name' => __('Users'),
+                'title' => __('Entity List'),
+                'active' => $isActive,
+                'icon' => config('admin.icons.users', 'flaticon2-user'),
+                'open' => $isActive
+            ]);
 
-        foreach ($this->getEntitiesItems($currentRoute) as $key => $menu) {
-            $publishable->addSubmenuElement($key, $menu);
+            foreach ($group as $key => $menu) {
+                $publishable->addSubmenuElement($key, $menu);
+            }
+            
+            $admin->addSubmenuElement('users', $publishable);
+        }
+
+        $group = $this->getGroupMenu('entity');
+        
+        if ($group) {
+            $isActive = Str::startsWith($this->currentRoute, 'admin.entity');
+            
+            $publishable = new Menu([
+                'url' => 'javascript:;',
+                'name' => __('Entities'),
+                'title' => __('Entity List'),
+                'active' => $isActive,
+                'icon' => config('admin.icons.entities'),
+                'open' => $isActive
+            ]);
+            
+            foreach ($group as $key => $menu) {
+                $publishable->addSubmenuElement($key, $menu);
+            }
+            
+            $admin->addSubmenuElement('entities', $publishable);
         }
         
-        $admin = new Menu();
-        $admin->addSubmenuElement('dashboard', $dashboard);
-        $admin->addSubmenuElement('entities', $publishable);
-
+       $group = $this->getGroupMenu('file');
+        
+        if ($group) {
+            $isActive = Str::startsWith($this->currentRoute, 'admin.file');
+            
+            $publishable = new Menu([
+                'url' => 'javascript:;',
+                'name' => __('Files'),
+                'title' => __('Entity List'),
+                'active' => $isActive,
+                'icon' => config('admin.icons.files', 'flaticon2-file'),
+                'open' => $isActive
+            ]);
+            
+            foreach ($group as $key => $menu) {
+                $publishable->addSubmenuElement($key, $menu);
+            }
+            
+            $admin->addSubmenuElement('files', $publishable);
+        }
+        
         $this->factory->addMenu('admin', $admin);
-        //dd($this->factory->getMenuValue('admin'));
     }
     
     /**
      * 
-     * @param string $currentRoute
-     * @return \ItAces\Web\Menu\Menu[]
+     * @return \ItAces\Web\Menu\Menu[]|NULL
      */
-    protected function getEntitiesItems(string $currentRoute)
+    protected function getGroupMenu(string $group)
     {
-        $elements = [];
-        $activeModel = request()->route()->parameters['model'] ?? null;
-        $metadata = $this->em->getMetadataFactory()->getAllMetadata();
+        if (!array_key_exists($group, $this->classMetadataMap)) {
+            return null;
+        }
         
-        foreach ($metadata as $classMetadata) {
-            /**
-             *
-             * @var \Doctrine\ORM\Mapping\ClassMetadata $metadataInfo
-             */
-            $metadataInfo = $classMetadata;
-            $classUrlName = Helper::classToUrl($metadataInfo->name);
-            
-            if ($metadataInfo->isMappedSuperclass) {
-                continue;
-            }
-            
-            if (!Gate::inspect('read', $classUrlName)->allowed()) {
-                continue;
-            }
-            
-            $reflectionClass = new \ReflectionClass($metadataInfo->name);
-            $className = $reflectionClass->getShortName();
-            $isDeleteable = $reflectionClass->implementsInterface(SoftDeleteable::class);
-            
-            if (!$reflectionClass->implementsInterface(Publishable::class)) {
-                continue;
-            }
-            
-            $menu = new Menu([
-                'url' => 'javascript:;',
-                'name' => __( Str::pluralCamelWords($className) ),
-                'title' => $metadataInfo->name,
-                'active' => $activeModel == $classUrlName
-            ]);
-            
-            if (Gate::inspect('read', $classUrlName)->allowed()) {
-                $menu->addSubmenuElement('search', new Menu([
-                    'url' => route('admin.entity.search', [$classUrlName], false),
-                    'name' => __('Search'),
-                    'title' => __('Element List'),
-                    'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.search'
-                ]));
-            }
-            
-            if (Gate::inspect('create', $classUrlName)->allowed()) {
-                $menu->addSubmenuElement('create', new Menu([
-                    'url' => route('admin.entity.create', [$classUrlName], false),
-                    'name' => __('Create'),
-                    'title' => __('Add New Element'),
-                    'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.create'
-                ]));
-            }
-            
-            if ($isDeleteable && Gate::inspect('restore', $classUrlName)->allowed()) {
-                $menu->addSubmenuElement('trash', new Menu([
-                    'url' => route('admin.entity.trash', [$classUrlName], false),
-                    'name' => __('Trash'),
-                    'title' => __('Removed Elements'),
-                    'active' => $activeModel == $classUrlName && $currentRoute == 'admin.entity.trash'
-                ]));
-            }
-            
-            if (Gate::inspect('settings')->allowed()) {
-                $menu->addSubmenuElement('settings', new Menu([
-                    'url' => route('admin.entity.settings', [$classUrlName], false),
-                    'name' => __('Settings'),
-                    'title' => __('Entity Settings'),
-                    'active' => $activeModel == $classUrlName && Str::startsWith($currentRoute, 'admin.entity.settings')
-                ]));
-            }
-            
-            $elements[$classUrlName] = $menu;
+        $elements = [];
+        
+        foreach ($this->classMetadataMap[$group] as $classMetadata) {
+            $classUrlName = Helper::classToUrl($classMetadata->name);
+            $elements[$classUrlName] = $this->getEntityMenu($classMetadata, $classUrlName, $group);
         }
         
         uasort($elements, function($a, $b) {
@@ -158,4 +164,118 @@ class AdminMenuListener
         
         return $elements;
     }
+    
+    protected function getEntityMenu(ClassMetadata $classMetadata, string $classUrlName, string $group) : Menu
+    {
+        $classShortName = Helper::classShortFromUrl($classUrlName);
+        $isDeleteable = is_subclass_of($classMetadata->name, SoftDeleteable::class);
+        
+        $menu = new Menu([
+            'url' => 'javascript:;',
+            'name' => __( Str::pluralCamelWords($classShortName) ),
+            'title' => $classMetadata->name,
+            'active' => $this->activeModel == $classUrlName
+        ]);
+        
+        if (Gate::inspect('read', $classUrlName)->allowed()) {
+            $routeName = 'admin.'.$group.'.search';
+            $menu->addSubmenuElement('search', new Menu([
+                'url' => route($routeName, [$classUrlName], false),
+                'name' => __('Search'),
+                'title' => __('Element List'),
+                'active' => $this->activeModel == $classUrlName && $this->currentRoute == $routeName
+            ]));
+        }
+        
+        if (Gate::inspect('create', $classUrlName)->allowed()) {
+            $routeName = 'admin.'.$group.'.create';
+            $menu->addSubmenuElement('create', new Menu([
+                'url' => route($routeName, [$classUrlName], false),
+                'name' => __('Create'),
+                'title' => __('Add New Element'),
+                'active' => $this->activeModel == $classUrlName && $this->currentRoute == $routeName
+            ]));
+        }
+        
+        if ($isDeleteable && Gate::inspect('restore', $classUrlName)->allowed()) {
+            $routeName = 'admin.'.$group.'.trash';
+            $menu->addSubmenuElement('trash', new Menu([
+                'url' => route($routeName, [$classUrlName], false),
+                'name' => __('Trash'),
+                'title' => __('Removed Elements'),
+                'active' => $this->activeModel == $classUrlName && $this->currentRoute == $routeName
+            ]));
+        }
+        
+        if (Gate::inspect('settings')->allowed()) {
+            $routeName = 'admin.'.$group.'.settings';
+            $menu->addSubmenuElement('settings', new Menu([
+                'url' => route($routeName, [$classUrlName], false),
+                'name' => __('Settings'),
+                'title' => __('Entity Settings'),
+                'active' => $this->activeModel == $classUrlName && Str::startsWith($this->currentRoute, $routeName)
+            ]));
+        }
+        
+        return $menu;
+    }
+    
+    /**
+     * 
+     * @return \Doctrine\ORM\Mapping\ClassMetadata[]
+     */
+    protected function initClassMetadataMap()
+    {
+        $classMetadataMap = [];
+        /**
+         * 
+         * @var \Doctrine\ORM\Mapping\ClassMetadata[] $classMetadata
+         */
+        $allMetadata = $this->em->getMetadataFactory()->getAllMetadata();
+
+        foreach ($allMetadata as $classMetadata) {
+            $classUrlName = Helper::classToUrl($classMetadata->name);
+            
+            if ($classMetadata->isMappedSuperclass) {
+                continue;
+            }
+            
+            if (!Gate::inspect('read', $classUrlName)->allowed()) {
+                continue;
+            }
+
+            if (!is_subclass_of($classMetadata->name, Publishable::class)) {
+                continue;
+            }
+
+            if (is_subclass_of($classMetadata->name, FileType::class)) {
+                if (!array_key_exists('file', $classMetadataMap)) {
+                    $classMetadataMap['file'] = [];
+                }
+                
+                $classMetadataMap['file'][] = $classMetadata;
+                
+                continue;
+            }
+            
+            if (is_subclass_of($classMetadata->name, User::class) || is_subclass_of($classMetadata->name, Role::class)) {
+                if (!array_key_exists('user', $classMetadataMap)) {
+                    $classMetadataMap['user'] = [];
+                }
+                
+                $classMetadataMap['user'][] = $classMetadata;
+                
+                continue;
+            }
+            
+            if (!array_key_exists('entity', $classMetadataMap)) {
+                $classMetadataMap['entity'] = [];
+            }
+            
+            $classMetadataMap['entity'][] = $classMetadata;
+        }
+        
+        return $classMetadataMap;
+    }
+
 }

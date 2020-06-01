@@ -12,6 +12,8 @@ return [
         'dashboard' => 'flaticon2-architecture-and-city',
         'entities' => 'flaticon2-menu-4',
         'oauth' => 'flaticon2-shield',
+        'files' => 'flaticon2-file',
+        'users' => 'flaticon2-user',
     ],
 
     'views' => [

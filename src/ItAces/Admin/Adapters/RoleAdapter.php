@@ -72,7 +72,7 @@ class RoleAdapter extends AdminControllerAdapter
      */
     public function store(Request $request, string $classUrlName, string $group)
     {
-        [$url, $alias] = $this->saveOrUpdate($request, $classUrlName);
+        [$url, $alias] = $this->saveOrUpdate($request, $classUrlName, $group);
         
         return redirect($url.'?order[]=-'.$alias.'.createdAt')->with('success', __('Record created successfully.'));
     }
