@@ -91,7 +91,7 @@ class SettingsController extends WebController
     
     public function updatePermissions(Request $request, string $classUrlName)
     {
-        $model = Helper::classToUlr(EntityPermission::class);
+        $model = Helper::classToUrl(EntityPermission::class);
         $data = $request->post($model);
         $permissions = $request->post('permissions');
         $reset = $request->post('reset');

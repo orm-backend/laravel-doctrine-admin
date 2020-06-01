@@ -84,7 +84,7 @@ class AdminMenuListener
              * @var \Doctrine\ORM\Mapping\ClassMetadata $metadataInfo
              */
             $metadataInfo = $classMetadata;
-            $classUrlName = Helper::classToUlr($metadataInfo->name);
+            $classUrlName = Helper::classToUrl($metadataInfo->name);
             
             if ($metadataInfo->isMappedSuperclass) {
                 continue;
