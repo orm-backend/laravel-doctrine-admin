@@ -47,14 +47,16 @@ class BreadcrumbsComponent extends Component
                 'url' => route('admin.index', [$activeGroup], false),
                 'name' => __('Dashboard'),
                 'title' => __('Administrator Dashboard'),
-                'icon' => config('admin.icons.dashboard')
+                'icon' => config('admin.icons.dashboard', 'flaticon2-architecture-and-city')
             ];
         } else {
+            $icon = config('admin.icons.'.$activeGroup, 'flaticon2-menu-4');
+
             $this->menu[] = [
                 'url' => 'javascript:;', // TODO: route('admin.entity', [], false)
                 'name' => __(ucfirst(Str::plural($activeGroup))),
                 'title' => __('Entity List'),
-                'icon' => config('admin.icons.entities')
+                'icon' => $icon
             ];
             
             if ($activeModel) {

@@ -67,7 +67,7 @@ class AdminMenuListener
             'name' => __('Dashboard'),
             'title' => __('Administrator Dashboard'),
             'active' => $isActive,
-            'icon' => config('admin.icons.dashboard')
+            'icon' => config('admin.icons.dashboard', 'flaticon2-architecture-and-city')
         ]);
         
         $admin->addSubmenuElement('dashboard', $dashboard);
@@ -81,7 +81,7 @@ class AdminMenuListener
                 'name' => __('Users'),
                 'title' => __('Entity List'),
                 'active' => $isActive,
-                'icon' => config('admin.icons.users', 'flaticon2-user'),
+                'icon' => config('admin.icons.user', 'flaticon2-user'),
                 'open' => $isActive
             ]);
 
@@ -102,7 +102,7 @@ class AdminMenuListener
                 'name' => __('Entities'),
                 'title' => __('Entity List'),
                 'active' => $isActive,
-                'icon' => config('admin.icons.entities'),
+                'icon' => config('admin.icons.entity', 'flaticon2-menu-4'),
                 'open' => $isActive
             ]);
             
@@ -123,7 +123,7 @@ class AdminMenuListener
                 'name' => __('Files'),
                 'title' => __('Entity List'),
                 'active' => $isActive,
-                'icon' => config('admin.icons.files', 'flaticon2-file'),
+                'icon' => config('admin.icons.file', 'flaticon2-file'),
                 'open' => $isActive
             ]);
             
