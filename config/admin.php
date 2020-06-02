@@ -20,7 +20,10 @@ return [
         'app-model-role' => [
             'edit' => 'itaces::admin.role.edit',
             'create' => 'itaces::admin.role.create'
-        ]
+        ],
+        'it_aces-oauth-entities-client' => [
+            'create' => 'oauth::client.create'
+        ],
     ]
     
 ];

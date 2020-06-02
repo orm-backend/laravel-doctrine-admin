@@ -42,6 +42,7 @@ class ImageAdapter extends AdminControllerAdapter
      */
     public function edit(Request $request, EntityBase $entity, string $group)
     {
+        $classUrlName = Helper::classToUrl(get_class($entity));
         $container = new FieldContainer($this->repository->em());
         $container->addEntity($entity);
         
@@ -51,9 +52,9 @@ class ImageAdapter extends AdminControllerAdapter
                 'group' => $group,
                 'class' => get_class($entity),
                 'title' => __('Image'),
-                'classUrlName' => 'app-model-image'
+                'classUrlName' => $classUrlName
             ],
-            'formAction' => route('admin.'.$group.'.update', ['app-model-image', $entity->getPrimary()])
+            'formAction' => route('admin.'.$group.'.update', [$classUrlName, $entity->getPrimary()])
         ]);
     }
 
@@ -64,7 +65,7 @@ class ImageAdapter extends AdminControllerAdapter
     public function create(Request $request, string $classUrlName, string $group)
     {
         return view('itaces::admin.image.create', [
-            'action' => route('admin.'.$group.'.store', 'app-model-image'),
+            'action' => route('admin.'.$group.'.store', $classUrlName),
         ]);
     }
 
@@ -89,10 +90,10 @@ class ImageAdapter extends AdminControllerAdapter
             }
 
             $request->validate(['image' => $rules['image']]); // Validate only file
-            $data['app-model-image']['name'] = $data['app-model-image']['name'] ?? $request->file('image')->getClientOriginalName();
-            $data['app-model-image']['path'] = $request->file('image')->store(config('itaces.upload.img'));
+            $data[$classUrlName]['name'] = $data[$classUrlName]['name'] ?? $request->file('image')->getClientOriginalName();
+            $data[$classUrlName]['path'] = $request->file('image')->store(config('itaces.upload.img'));
             
-            if (!$data['app-model-image']['path']) {
+            if (!$data[$classUrlName]['path']) {
                 throw ValidationException::withMessages([
                     'image' => [__('Failed to store file.')],
                 ]);
@@ -111,12 +112,12 @@ class ImageAdapter extends AdminControllerAdapter
                 Storage::delete($stored);
             }
         } catch (ValidationException $e) {
-            $messages = FieldContainer::exceptionToMessages($e, 'app-model-image');
+            $messages = FieldContainer::exceptionToMessages($e, $classUrlName);
             
             throw ValidationException::withMessages($messages);
         }
         
-        $url = route('admin.'.$group.'.search', 'app-model-image');
+        $url = route('admin.'.$group.'.search', $classUrlName);
         
         return redirect($url.'?order[]=-image.updatedAt')->with('success', __('Record updated successfully.'));
     }
@@ -149,7 +150,7 @@ class ImageAdapter extends AdminControllerAdapter
         
         $this->repository->createOrUpdate($className, $data);
         $this->repository->em()->flush();
-        $url = route('admin.'.$group.'.search', 'app-model-image');
+        $url = route('admin.'.$group.'.search', $classUrlName);
         
         return redirect($url.'?order[]=-image.createdAt')->with('success', __('Image created successfully.'));
     }
