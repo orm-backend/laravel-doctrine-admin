@@ -23,11 +23,30 @@
                         <tr>
                         	<td>{{ $entity->id() }}</td>
                         	@foreach ($entity->fields() as $field)
-                        	@if ($field->type == 'collection')
-                        		@php ($value = implode(', ', array_column($field->value, 'name')))
-                        	<td>{{ $value }}</td>
+                        	@if ($field->type == 'image_collection')
+                        	<td>
+                        		@foreach ($field->value as $element)
+                        		<img src="{{ crop($element->path, 'center', 50, 50) }}" alt="{{ $element->name }}">
+                        		@endforeach
+                        	</td>
+                        	@elseif ($field->type == 'file_collection')
+                        	<td>
+                        		@foreach ($field->value as $element)
+                        		<span>{{ $element->name }}</span>
+                        		@endforeach
+                        	</td>
+                        	@elseif ($field->type == 'collection')
+                        	<td>
+                        		@foreach ($field->value as $element)
+                        		<span>{{ $element->name }}</span>
+                        		@endforeach
+                        	</td>
                         	@elseif ($field->type == 'reference')
-                        	<td><a href="{{ $field->value ? route('admin.entity.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">{{ $field->valueName }}</a></td>
+                        	<td><span>{{ $field->valueName }}</span></td>
+                        	@elseif ($field->type == 'image')
+                        	<td>
+                        		<img src="{{ crop($field->path, 'center', 50, 50) }}" alt="{{ $field->valueName }}">
+                        	</td>
                         	@else
                         	<td>{{ $field->value }}</td>
                         	@endif
