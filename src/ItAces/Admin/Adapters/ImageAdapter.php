@@ -99,7 +99,9 @@ class ImageAdapter extends AdminControllerAdapter
                 ]);
             }
             
-            $replaced = $old->getPath();
+            if ($data[$classUrlName]['path'] != $old->getPath()) {
+                $replaced = $old->getPath();
+            }
         }
 
         unset($rules['image']); // Unset allways (uploaded or not)
