@@ -78,7 +78,7 @@ class ImageAdapter extends AdminControllerAdapter
         // Example with FieldContainer
         $className = Helper::classFromUlr($classUrlName);
         $old = $this->repository->findOrFail($className, $id);
-        $stored = $old->getPath();
+        $replaced = null;
         $data = $request->post();
         $rules = $className::getRequestValidationRules();
         
@@ -98,6 +98,8 @@ class ImageAdapter extends AdminControllerAdapter
                     'image' => [__('Failed to store file.')],
                 ]);
             }
+            
+            $replaced = $old->getPath();
         }
 
         unset($rules['image']); // Unset allways (uploaded or not)
@@ -108,8 +110,8 @@ class ImageAdapter extends AdminControllerAdapter
             $this->repository->createOrUpdate($className, $map[$className]);
             $this->repository->em()->flush();
             
-            if ($stored) {
-                Storage::delete($stored);
+            if ($replaced) {
+                Storage::delete($replaced);
             }
         } catch (ValidationException $e) {
             $messages = FieldContainer::exceptionToMessages($e, $classUrlName);
