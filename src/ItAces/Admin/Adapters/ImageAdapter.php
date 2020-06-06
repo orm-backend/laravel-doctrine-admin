@@ -10,6 +10,7 @@ use ItAces\Admin\Controllers\AdminControllerAdapter;
 use ItAces\ORM\Entities\EntityBase;
 use ItAces\Utility\Helper;
 use ItAces\Web\Fields\FieldContainer;
+use ItAces\Uploader;
 
 /**
  * @author Vitaliy Kovalenko vvk@kola.cloud
@@ -91,7 +92,7 @@ class ImageAdapter extends AdminControllerAdapter
 
             $request->validate(['image' => $rules['image']]); // Validate only file
             $data[$classUrlName]['name'] = $data[$classUrlName]['name'] ?? $request->file('image')->getClientOriginalName();
-            $data[$classUrlName]['path'] = $request->file('image')->store(config('itaces.upload.img'));
+            $data[$classUrlName]['path'] = Uploader::storeImage($request->file('image'), 'image');
             
             if (!$data[$classUrlName]['path']) {
                 throw ValidationException::withMessages([
@@ -144,7 +145,7 @@ class ImageAdapter extends AdminControllerAdapter
         
         $request->validate($className::getRequestValidationRules());
         $data['name'] = $request->filled('name') ? $request->post('name') : $request->file('image')->getClientOriginalName();
-        $data['path'] = $request->file('image')->store(config('itaces.upload.img'));
+        $data['path'] = Uploader::storeImage($request->file('image'), 'image');
 
         if (!$data['path']) {
             throw ValidationException::withMessages([
