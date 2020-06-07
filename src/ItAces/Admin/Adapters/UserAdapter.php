@@ -5,7 +5,7 @@ use App\Model\Role;
 use App\Model\User;
 use Illuminate\Http\Request;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
-use ItAces\ORM\Entities\EntityBase;
+use ItAces\ORM\Entities\Entity;
 
 /**
  * @author Vitaliy Kovalenko vvk@kola.cloud
@@ -29,7 +29,7 @@ class UserAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
      */
-    public function edit(Request $request, EntityBase $entity, string $group)
+    public function edit(Request $request, Entity $entity, string $group)
     {
         return view('itaces::admin.user.edit', [
             'roles' => $this->repository->getQuery(Role::class)->getResult(),
@@ -41,7 +41,7 @@ class UserAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, EntityBase $entity, string $group)
+    public function details(Request $request, Entity $entity, string $group)
     {
         return null;
     }

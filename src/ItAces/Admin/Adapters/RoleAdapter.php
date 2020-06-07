@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
-use ItAces\ORM\Entities\EntityBase;
+use ItAces\ORM\Entities\Entity;
 use ItAces\Web\Fields\FieldContainer;
 
 class RoleAdapter extends AdminControllerAdapter
@@ -28,7 +28,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
      */
-    public function edit(Request $request, EntityBase $entity, string $group)
+    public function edit(Request $request, Entity $entity, string $group)
     {
         return null;
     }
@@ -60,7 +60,7 @@ class RoleAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, EntityBase $entity, string $group)
+    public function details(Request $request, Entity $entity, string $group)
     {
         return null;
     }

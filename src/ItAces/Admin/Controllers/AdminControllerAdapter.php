@@ -3,7 +3,7 @@
 namespace ItAces\Admin\Controllers;
 
 use Illuminate\Http\Request;
-use ItAces\ORM\Entities\EntityBase;
+use ItAces\ORM\Entities\Entity;
 use ItAces\Repositories\Repository;
 
 /**
@@ -49,20 +49,20 @@ abstract class AdminControllerAdapter
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param \ItAces\ORM\Entities\EntityBase $entity
+     * @param \ItAces\ORM\Entities\Entity $entity
      * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function details(Request $request, EntityBase $entity, string $group);
+    abstract public function details(Request $request, Entity $entity, string $group);
     
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param \ItAces\ORM\Entities\EntityBase $entity
+     * @param \ItAces\ORM\Entities\Entity $entity
      * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
-    abstract public function edit(Request $request, EntityBase $entity, string $group);
+    abstract public function edit(Request $request, Entity $entity, string $group);
     
     /**
      *

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
-use ItAces\ORM\Entities\EntityBase;
+use ItAces\ORM\Entities\Entity;
 use ItAces\Utility\Helper;
 use ItAces\Web\Fields\FieldContainer;
 use ItAces\Uploader;
@@ -23,7 +23,7 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
      */
-    public function details(Request $request, EntityBase $entity, string $group)
+    public function details(Request $request, Entity $entity, string $group)
     {
         return null;
     }
@@ -41,7 +41,7 @@ class ImageAdapter extends AdminControllerAdapter
      * {@inheritDoc}
      * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
      */
-    public function edit(Request $request, EntityBase $entity, string $group)
+    public function edit(Request $request, Entity $entity, string $group)
     {
         $classUrlName = Helper::classToUrl(get_class($entity));
         $container = new FieldContainer($this->repository->em());
