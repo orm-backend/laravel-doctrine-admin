@@ -13,7 +13,7 @@
 						<h3 class="kt-portlet__head-title">New User <small>App\Model\User</small></h3>
 					</div>
 					<div class="kt-portlet__head-toolbar">
-						<a href="{{ route('admin.entity.search', 'app-model-user') }}" class="btn btn-clean kt-margin-r-10">
+						<a href="{{ route('admin.user.search', 'app-model-user') }}" class="btn btn-clean kt-margin-r-10">
 							<i class="la la-arrow-left"></i>
 							<span class="kt-hidden-mobile">Back</span>
 						</a>
@@ -72,16 +72,17 @@
     					</div>
     				</div>
     				<div class="kt-portlet__foot kt-portlet__foot--solid">
-    					<div class="kt-form__actions">
-    						<div class="row">
-    		            		<div class="col-xl-4"></div>
-    		            		<div class="col-xl-8">
-    								<button type="submit" class="btn btn-brand"><i class="la la-check"></i> {{ __('Save') }}</button>
-    								<button type="button" class="btn btn-secondary goto" data-url="{{ route('admin.entity.search', 'app-model-user') }}"><i class="fa fa-undo"></i>{{ __('Cancel') }}</button>
-    		            		</div>
-    		            	</div>
-    					</div>
-    				</div>
+                        <div class="kt-form__actions">
+                            <div class="row">
+                                <div class="col-lg-12 kt-align-center">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-brand"><i class="la la-check"></i> {{ __('Save') }}</button>
+                                        <button type="button" class="btn btn-secondary goto" data-url="{{ route('admin.user.search', 'app-model-user') }}"><i class="fa fa-undo"></i>{{ __('Cancel') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</form>
 			</div>
 			<!--end::Portlet-->
