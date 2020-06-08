@@ -6,6 +6,7 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use ItAces\Admin\Controllers\AdminControllerAdapter;
 use ItAces\ORM\Entities\Entity;
+use ItAces\Utility\Helper;
 
 /**
  * @author Vitaliy Kovalenko vvk@kola.cloud
@@ -20,7 +21,7 @@ class UserAdapter extends AdminControllerAdapter
      */
     public function create(Request $request, string $classUrlName, string $group)
     {
-        return view('itaces::admin.user.create', [
+        return view($this->views[$classUrlName]['create'] ?? 'itaces::admin.user.create', [
             'roles' => $this->repository->getQuery(Role::class)->getResult()
         ]);
     }
@@ -31,7 +32,9 @@ class UserAdapter extends AdminControllerAdapter
      */
     public function edit(Request $request, Entity $entity, string $group)
     {
-        return view('itaces::admin.user.edit', [
+        $classUrlName = Helper::classToUrl(get_class($entity));
+        
+        return view($this->views[$classUrlName]['edit'] ?? 'itaces::admin.user.edit', [
             'roles' => $this->repository->getQuery(Role::class)->getResult(),
             'user' => $entity
         ]);
