@@ -51,7 +51,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->search($request, $classUrlName, $group);
             
             if ($response !== null) {
@@ -106,7 +106,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->details($request, $entity, $group);
             
             if ($response !== null) {
@@ -146,7 +146,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->edit($request, $entity, $group);
             
             if ($response !== null) {
@@ -185,7 +185,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->create($request, $classUrlName, $group);
             
             if ($response !== null) {
@@ -227,7 +227,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->trash($request, $classUrlName, $group);
             
             if ($response !== null) {
@@ -284,7 +284,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->update($request, $classUrlName, $id, $group);
             
             if ($response !== null) {
@@ -313,7 +313,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
 
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->store($request, $classUrlName, $group);
             
             if ($response !== null) {
@@ -343,7 +343,7 @@ class AdminController extends WebController
         $adapterClass = $this->adapters[$classUrlName] ?? null;
         
         if ($adapterClass) {
-            $adapter = new $adapterClass;
+            $adapter = new $adapterClass($this->views);
             $response = $adapter->delete($request, $classUrlName, $id, $group);
             
             if ($response !== null) {

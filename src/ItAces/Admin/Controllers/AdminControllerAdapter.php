@@ -21,11 +21,18 @@ abstract class AdminControllerAdapter
     protected $repository;
     
     /**
+     *
+     * @var array
+     */
+    protected $views;
+    
+    /**
      * 
      * @param array $menu
      */
-    public function __construct() {
+    public function __construct(array $views = []) {
         $this->repository = new Repository();
+        $this->views = $views;
     }
     
     /**
