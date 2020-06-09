@@ -102,11 +102,12 @@
             				<div class="kt-portlet__foot kt-portlet__foot--solid">
             					<div class="kt-form__actions">
             						<div class="row">
-            		            		<div class="col-xl-4"></div>
-            		            		<div class="col-xl-8">
-            								<button type="submit" class="btn btn-brand"><i class="la la-check"></i> {{ __('Save') }}</button>
-            								<button type="button" class="btn btn-secondary goto" data-url="{{ route('admin.'.$meta['group'].'.search', [$meta['classUrlName']]) }}"><i class="fa fa-undo"></i>{{ __('Cancel') }}</button>
-            		            		</div>
+            		            		<div class="col-lg-12 kt-align-center">
+                                        	<div class="btn-group">
+                								<button type="submit" class="btn btn-brand"><i class="la la-check"></i> {{ __('Save') }}</button>
+                								<button type="button" class="btn btn-secondary goto" data-url="{{ route('admin.'.$meta['group'].'.search', [$meta['classUrlName']]) }}"><i class="fa fa-undo"></i>{{ __('Cancel') }}</button>
+                		            		</div>
+                		            	</div>
             		            	</div>
             					</div>
             				</div>
