@@ -4,6 +4,6 @@
 			<i class="la la-clock-o"></i>
 		</span>
 	</div>
-	<input type="text" class="form-control @error($field->fullname) is-invalid @enderror" name="{{ $field->fullname }}" placeholder="00:00:00" value="{{ $old[$field->name] ?? $field->value->toTimeString() }}" @if ($field->disabled) disabled @endif>
+	<input type="text" class="form-control @error($field->fullname) is-invalid @enderror" name="{{ $field->fullname }}" placeholder="00:00:00" value="{{ $old[$field->name] ?? ($field->value ? $field->value->toTimeString() : '') }}" @if ($field->disabled) disabled @endif>
 </div>
 @error($field->fullname)<div class="invalid-feedback">{{ $message }}</div>@enderror

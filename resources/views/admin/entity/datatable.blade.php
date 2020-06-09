@@ -47,6 +47,12 @@
                         	<td>
                         		<img src="{{ crop($field->path, 'center', 50, 50) }}" alt="{{ $field->valueName }}">
                         	</td>
+                        	@elseif ($field->value && $field->type == 'datetime')
+                        	<td>{{ $field->value->toDateTimeString() }}</td>
+                        	@elseif ($field->value && $field->type == 'date')
+                        	<td>{{ $field->value->toDateString() }}</td>
+                        	@elseif ($field->value && $field->type == 'time')
+                        	<td>{{ $field->value->toTimeString() }}</td>
                         	@else
                         	<td>{{ $field->value }}</td>
                         	@endif
