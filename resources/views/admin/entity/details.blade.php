@@ -117,8 +117,14 @@
 										<td>
 											@if ($field->type == 'image')
 											<img src="{{ crop($field->path, 'center', 80, 80) }}" alt="{{ $field->valueName }}">
+											@elseif ($field->value && $field->type == 'datetime')
+                                        		{{ $field->value->toDateTimeString() }}
+                                        	@elseif ($field->value && $field->type == 'date')
+                                        		{{ $field->value->toDateString() }}
+                                        	@elseif ($field->value && $field->type == 'time')
+                                        		{{ $field->value->toTimeString() }}
 											@else
-											{{ $field->value }}
+												{{ $field->value }}
 											@endif
 										</td>
 									</tr>
