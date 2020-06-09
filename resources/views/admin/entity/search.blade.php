@@ -57,7 +57,7 @@
                         		</a>
                         	</td>
                         	@else
-                        	<td>{{ $field->value }}</td>
+                        	<td>{{ (string) $field->value }}</td>
                         	@endif
                             @endforeach
                             @if ($entity->type() == 'image')
