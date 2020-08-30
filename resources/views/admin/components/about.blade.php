@@ -8,7 +8,7 @@
     			This Admin Panel ({{ $admin }}) runs on Laravel Framework ({{ $laravel }}) with Doctrine ORM ({{ $doctrine }}).
     		</p>
     		<p class="kt-widget14__desc">
-    			Developed by <a href="https://it-aces.com/" target="_blank">It-Aces</a> team.
+    			Developed by <a href="https://vvk.com/" target="_blank">It-Aces</a> team.
     		</p>
     	</div>
     </div>

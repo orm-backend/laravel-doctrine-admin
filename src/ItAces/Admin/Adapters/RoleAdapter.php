@@ -1,14 +1,14 @@
 <?php
-namespace ItAces\Admin\Adapters;
+namespace VVK\Admin\Adapters;
 
 use App\Model\Role;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use ItAces\Admin\Controllers\AdminControllerAdapter;
-use ItAces\ORM\Entities\Entity;
-use ItAces\Web\Fields\FieldContainer;
+use VVK\Admin\Controllers\AdminControllerAdapter;
+use VVK\ORM\Entities\Entity;
+use VVK\Web\Fields\FieldContainer;
 
 class RoleAdapter extends AdminControllerAdapter
 {
@@ -16,7 +16,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      * 
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::search()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::search()
      */
     public function search(Request $request, string $classUrlName, string $group)
     {
@@ -26,7 +26,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      * 
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::edit()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::edit()
      */
     public function edit(Request $request, Entity $entity, string $group)
     {
@@ -36,7 +36,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      * 
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::create()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::create()
      */
     public function create(Request $request, string $classUrlName, string $group)
     {
@@ -46,7 +46,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      * 
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::update()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::update()
      */
     public function update(Request $request, string $classUrlName, $id, string $group)
     {
@@ -58,7 +58,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      * 
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::details()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::details()
      */
     public function details(Request $request, Entity $entity, string $group)
     {
@@ -68,7 +68,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      * 
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::store()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::store()
      */
     public function store(Request $request, string $classUrlName, string $group)
     {
@@ -80,7 +80,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      * 
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::delete()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::delete()
      */
     public function delete(Request $request, string $classUrlName, $id, string $group)
     {
@@ -150,7 +150,7 @@ class RoleAdapter extends AdminControllerAdapter
     /**
      *
      * {@inheritDoc}
-     * @see \ItAces\Admin\Controllers\AdminControllerAdapter::trash()
+     * @see \VVK\Admin\Controllers\AdminControllerAdapter::trash()
      */
     public function trash(Request $request, string $classUrlName, string $group)
     {

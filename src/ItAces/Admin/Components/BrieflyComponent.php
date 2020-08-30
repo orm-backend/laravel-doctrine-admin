@@ -1,9 +1,9 @@
 <?php
-namespace ItAces\Admin\Components;
+namespace VVK\Admin\Components;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\View\Component;
-use ItAces\Publishable;
+use VVK\Publishable;
 
 class BrieflyComponent extends Component
 {

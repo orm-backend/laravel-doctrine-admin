@@ -4,10 +4,10 @@
 
 ## Dependencies
 
- * [it-aces/laravel-doctrine](https://bitbucket.org/vitaliy_kovalenko/laravel-doctrine/src/master/)
- * [it-aces/laravel-doctrine-acl](https://bitbucket.org/vitaliy_kovalenko/laravel-doctrine-acl/src/master/)
+ * [vvk/laravel-doctrine](https://github.com/vvk-kolsky/laravel-doctrine)
+ * [vvk/laravel-doctrine-acl](https://github.com/vvk-kolsky/laravel-doctrine-acl)
 
-If you are building an application from scratch you may need to install the [it-aces/laravel-doctrine-web](https://bitbucket.org/vitaliy_kovalenko/laravel-doctrine-web/src/master/). It contains basic controllers and resources for registration and authorization. In other case your application must have implemented login page.
+If you are building an application from scratch you may need to install the [vvk/laravel-doctrine-web](https://github.com/vvk-kolsky/laravel-doctrine-web). It contains basic controllers and resources for registration and authorization. In other case your application must have implemented login page.
 
 ## Install
 
@@ -17,39 +17,39 @@ If you are building an application from scratch you may need to install the [it-
 "repositories": [
 	{
        "type": "vcs",
-       "url": "git@bitbucket.org:vitaliy_kovalenko/laravel-doctrine.git"
+       "url": "git@github.com:vvk-kolsky/laravel-doctrine.git"
     },
     {
        "type": "vcs",
-       "url": "git@bitbucket.org:vitaliy_kovalenko/laravel-doctrine-acl.git"
+       "url": "git@github.com:vvk-kolsky/laravel-doctrine-acl.git"
     },
     {
        "type": "vcs",
-       "url": "git@bitbucket.org:vitaliy_kovalenko/laravel-doctrine-web.git"
+       "url": "git@github.com:vvk-kolsky/laravel-doctrine-web.git"
     },
     {
        "type": "vcs",
-       "url": "git@bitbucket.org:vitaliy_kovalenko/laravel-doctrine-admin.git"
+       "url": "git@github.com:vvk-kolsky/laravel-doctrine-admin.git"
     }
 ]
 ```
 
 * Install packages
 
-If you have not previously installed the [it-aces/laravel-doctrine-web](https://bitbucket.org/vitaliy_kovalenko/laravel-doctrine-web/src/master/) package, do it now. See the installation instructions for the required packages for how to install and compile them.
+If you have not previously installed the [vvk/laravel-doctrine-web](https://github.com/vvk-kolsky/laravel-doctrine-web) package, do it now. See the installation instructions for the required packages for how to install and compile them.
 
 ```BASH
-composer require it-aces/laravel-doctrine-web
+composer require vvk/laravel-doctrine-web
 ```
 
 ```BASH
-composer require it-aces/laravel-doctrine-admin
+composer require vvk/laravel-doctrine-admin
 ```
 
 * Publising
 
 ```BASH
-php artisan vendor:publish --provider="ItAces\Admin\PackageServiceProvider"
+php artisan vendor:publish --provider="VVK\Admin\PackageServiceProvider"
 ```
 
 ## Setting up
@@ -62,7 +62,7 @@ LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
 ```
 
 ```BASH
-ItAces\ORM\DoctrineServiceProvider::class,
+VVK\ORM\DoctrineServiceProvider::class,
 LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
 ```
 

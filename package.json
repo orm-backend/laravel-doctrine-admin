@@ -80,7 +80,7 @@
         "jszip": "^3.2.2",
         "markdown": "^0.5.0",
         "moment": "^2.24.0",
-        "nested-criteria-builder": "git+ssh://git@bitbucket.org/vitaliy_kovalenko/nested-criteria-builder.git",
+        "nested-criteria-builder": "git+ssh://git@github.com/vvk-kolsky/nested-criteria-builder.git",
         "nouislider": "^13.1.0",
         "owl.carousel": "^2.3.4",
         "pace": "0.0.4",

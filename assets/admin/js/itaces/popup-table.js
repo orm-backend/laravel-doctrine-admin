@@ -1,6 +1,6 @@
 "use strict";
 jQuery(document).ready(function() {
-	var datatable = $('.itaces-datatable').ItAcesDatatable({
+	var datatable = $('.itaces-datatable').VVKDatatable({
 		data: {
 			type: 'local',
 			saveState: false,

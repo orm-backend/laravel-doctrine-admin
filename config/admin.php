@@ -3,9 +3,9 @@
 return [
 
     'adapters' => [
-        'app-model-role' => ItAces\Admin\Adapters\RoleAdapter::class,
-        'app-model-user' => ItAces\Admin\Adapters\UserAdapter::class,
-        'app-model-image' => ItAces\Admin\Adapters\ImageAdapter::class,
+        'app-model-role' => VVK\Admin\Adapters\RoleAdapter::class,
+        'app-model-user' => VVK\Admin\Adapters\UserAdapter::class,
+        'app-model-image' => VVK\Admin\Adapters\ImageAdapter::class,
     ],
 
     'icons' => [

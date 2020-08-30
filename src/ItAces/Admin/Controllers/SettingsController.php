@@ -1,14 +1,14 @@
 <?php
-namespace ItAces\Admin\Controllers;
+namespace VVK\Admin\Controllers;
 
 use App\Model\EntityPermission;
 use App\Model\Role;
 use Illuminate\Http\Request;
-use ItAces\Controllers\WebController;
-use ItAces\Repositories\WithJoinsRepository;
-use ItAces\Utility\Helper;
-use ItAces\Utility\Str;
-use ItAces\Web\Fields\EntityContainer;
+use VVK\Controllers\WebController;
+use VVK\Repositories\WithJoinsRepository;
+use VVK\Utility\Helper;
+use VVK\Utility\Str;
+use VVK\Web\Fields\EntityContainer;
 
 class SettingsController extends WebController
 {

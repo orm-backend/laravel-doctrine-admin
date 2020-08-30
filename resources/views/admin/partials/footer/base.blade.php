@@ -6,7 +6,7 @@
 			2020&nbsp;&copy;&nbsp;<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">It-Aces</a>
 		</div>
 		<div class="kt-footer__menu">
-			<a href="https://it-aces.com/" target="_blank" class="kt-footer__menu-link kt-link">Team</a>
+			<a href="https://vvk.com/" target="_blank" class="kt-footer__menu-link kt-link">Team</a>
 		</div>
 	</div>
 </div>

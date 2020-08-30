@@ -1,7 +1,7 @@
 "use strict";
 jQuery(document).ready(function() {
 	var selectedRows = [];
-	var datatable = $('.itaces-datatable').ItAcesDatatable({
+	var datatable = $('.itaces-datatable').VVKDatatable({
 		data: {
 			type: 'local',
 			saveState: false,

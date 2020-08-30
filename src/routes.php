@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => '/admin',
-    'namespace' => '\ItAces\Admin\Controllers',
+    'namespace' => '\VVK\Admin\Controllers',
     'middleware' => [
         'web',
         'auth',

@@ -1,9 +1,9 @@
 {
-    "name": "it-aces/laravel-doctrine-admin",
+    "name": "vvk/laravel-doctrine-admin",
     "description": "Administrative dashboard for Laravel Doctrine",
     "type": "library",
     "license": "MIT",
-    "keywords": ["it-aces", "laravel-doctrine-admin", "laravel admin", "doctrine"],
+    "keywords": ["vvk", "laravel-doctrine-admin", "laravel admin", "doctrine"],
     "authors": [
         {
             "name": "Vitaliy Kovalenko",
@@ -12,19 +12,19 @@
     ],
     "require": {
     	"laravel/ui": "^2.0",
-    	"it-aces/laravel-doctrine-acl": "dev-master"
+    	"vvk/laravel-doctrine-acl": "dev-master"
     },
     "require-dev": {
     },
     "autoload": {
         "psr-4": {
-        	"ItAces\\Admin\\": "src/ItAces/Admin/"
+        	"VVK\\Admin\\": "src/VVK/Admin/"
         }
     },
     "extra": {
 	    "laravel": {
 	        "providers": [
-	            "ItAces\\Admin\\PackageServiceProvider"
+	            "VVK\\Admin\\PackageServiceProvider"
 	        ]
 	    }
 	}

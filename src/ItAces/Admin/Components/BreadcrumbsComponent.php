@@ -1,9 +1,9 @@
 <?php
-namespace ItAces\Admin\Components;
+namespace VVK\Admin\Components;
 
 use Illuminate\View\Component;
-use ItAces\Utility\Helper;
-use ItAces\Utility\Str;
+use VVK\Utility\Helper;
+use VVK\Utility\Str;
 
 class BreadcrumbsComponent extends Component
 {

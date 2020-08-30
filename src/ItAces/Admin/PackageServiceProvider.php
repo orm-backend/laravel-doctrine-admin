@@ -1,13 +1,13 @@
 <?php
-namespace ItAces\Admin;
+namespace VVK\Admin;
 
 use App\Model\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
-use ItAces\Admin\Components\AboutComponent;
-use ItAces\Admin\Components\BreadcrumbsComponent;
-use ItAces\Admin\Components\BrieflyComponent;
+use VVK\Admin\Components\AboutComponent;
+use VVK\Admin\Components\BreadcrumbsComponent;
+use VVK\Admin\Components\BrieflyComponent;
 
 class PackageServiceProvider extends ServiceProvider
 {

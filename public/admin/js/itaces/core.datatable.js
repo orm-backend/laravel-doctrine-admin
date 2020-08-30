@@ -1,7 +1,7 @@
 'use strict';
 (function($) {
 
-	var pluginName = 'ItAcesDatatable';
+	var pluginName = 'VVKDatatable';
 	var pfx = 'kt-';
 	var util = KTUtil;
 	var app = KTApp;
