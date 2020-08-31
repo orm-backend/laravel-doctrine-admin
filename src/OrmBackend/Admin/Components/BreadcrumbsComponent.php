@@ -1,9 +1,9 @@
 <?php
-namespace VVK\Admin\Components;
+namespace OrmBackend\Admin\Components;
 
 use Illuminate\View\Component;
-use VVK\Utility\Helper;
-use VVK\Utility\Str;
+use OrmBackend\Utility\Helper;
+use OrmBackend\Utility\Str;
 
 class BreadcrumbsComponent extends Component
 {

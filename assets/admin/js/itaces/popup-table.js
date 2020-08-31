@@ -1,6 +1,6 @@
 "use strict";
 jQuery(document).ready(function() {
-	var datatable = $('.itaces-datatable').VVKDatatable({
+	var datatable = $('.itaces-datatable').OrmBackendDatatable({
 		data: {
 			type: 'local',
 			saveState: false,

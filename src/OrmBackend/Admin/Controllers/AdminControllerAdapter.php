@@ -1,10 +1,10 @@
 <?php
 
-namespace VVK\Admin\Controllers;
+namespace OrmBackend\Admin\Controllers;
 
 use Illuminate\Http\Request;
-use VVK\ORM\Entities\Entity;
-use VVK\Repositories\Repository;
+use OrmBackend\ORM\Entities\Entity;
+use OrmBackend\Repositories\Repository;
 
 /**
  * 
@@ -16,7 +16,7 @@ abstract class AdminControllerAdapter
     
     /**
      * 
-     * @var \VVK\Repositories\Repository
+     * @var \OrmBackend\Repositories\Repository
      */
     protected $repository;
     
@@ -56,7 +56,7 @@ abstract class AdminControllerAdapter
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param \VVK\ORM\Entities\Entity $entity
+     * @param \OrmBackend\ORM\Entities\Entity $entity
      * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */
@@ -65,7 +65,7 @@ abstract class AdminControllerAdapter
     /**
      *
      * @param \Illuminate\Http\Request $request
-     * @param \VVK\ORM\Entities\Entity $entity
+     * @param \OrmBackend\ORM\Entities\Entity $entity
      * @param string $group
      * @return \Illuminate\Contracts\Support\Responsable
      */

@@ -1,9 +1,9 @@
 <?php
-namespace VVK\Admin\Components;
+namespace OrmBackend\Admin\Components;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\View\Component;
-use VVK\Publishable;
+use OrmBackend\Publishable;
 
 class BrieflyComponent extends Component
 {

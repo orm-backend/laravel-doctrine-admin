@@ -3,9 +3,9 @@
 return [
 
     'adapters' => [
-        'app-model-role' => VVK\Admin\Adapters\RoleAdapter::class,
-        'app-model-user' => VVK\Admin\Adapters\UserAdapter::class,
-        'app-model-image' => VVK\Admin\Adapters\ImageAdapter::class,
+        'app-model-role' => OrmBackend\Admin\Adapters\RoleAdapter::class,
+        'app-model-user' => OrmBackend\Admin\Adapters\UserAdapter::class,
+        'app-model-image' => OrmBackend\Admin\Adapters\ImageAdapter::class,
     ],
 
     'icons' => [

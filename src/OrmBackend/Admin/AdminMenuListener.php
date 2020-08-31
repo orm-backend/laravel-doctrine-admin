@@ -1,26 +1,26 @@
 <?php
-namespace VVK\Admin;
+namespace OrmBackend\Admin;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Illuminate\Support\Facades\Gate;
-use VVK\SoftDeleteable;
-use VVK\Publishable;
-use VVK\Utility\Helper;
-use VVK\Utility\Str;
-use VVK\Web\Events\BeforMenu;
-use VVK\Web\Menu\Menu;
-use VVK\Web\Menu\MenuFactory;
-use VVK\Types\FileType;
-use VVK\ORM\Entities\User;
-use VVK\ORM\Entities\Role;
+use OrmBackend\SoftDeleteable;
+use OrmBackend\Publishable;
+use OrmBackend\Utility\Helper;
+use OrmBackend\Utility\Str;
+use OrmBackend\Web\Events\BeforMenu;
+use OrmBackend\Web\Menu\Menu;
+use OrmBackend\Web\Menu\MenuFactory;
+use OrmBackend\Types\FileType;
+use OrmBackend\ORM\Entities\User;
+use OrmBackend\ORM\Entities\Role;
 
 class AdminMenuListener
 {
     
     /**
      * 
-     * @var \VVK\Web\Menu\MenuFactory
+     * @var \OrmBackend\Web\Menu\MenuFactory
      */
     protected $factory;
     
@@ -139,7 +139,7 @@ class AdminMenuListener
     
     /**
      * 
-     * @return \VVK\Web\Menu\Menu[]|NULL
+     * @return \OrmBackend\Web\Menu\Menu[]|NULL
      */
     protected function getGroupMenu(string $group)
     {

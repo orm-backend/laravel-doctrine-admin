@@ -4,10 +4,10 @@
 
 ## Dependencies
 
- * [vvk/laravel-doctrine](https://github.com/vvk-kolsky/laravel-doctrine)
- * [vvk/laravel-doctrine-acl](https://github.com/vvk-kolsky/laravel-doctrine-acl)
+ * [orm-backend/laravel-doctrine](https://github.com/vvk-kolsky/laravel-doctrine)
+ * [orm-backend/laravel-doctrine-acl](https://github.com/vvk-kolsky/laravel-doctrine-acl)
 
-If you are building an application from scratch you may need to install the [vvk/laravel-doctrine-web](https://github.com/vvk-kolsky/laravel-doctrine-web). It contains basic controllers and resources for registration and authorization. In other case your application must have implemented login page.
+If you are building an application from scratch you may need to install the [orm-backend/laravel-doctrine-web](https://github.com/vvk-kolsky/laravel-doctrine-web). It contains basic controllers and resources for registration and authorization. In other case your application must have implemented login page.
 
 ## Install
 
@@ -36,20 +36,20 @@ If you are building an application from scratch you may need to install the [vvk
 
 * Install packages
 
-If you have not previously installed the [vvk/laravel-doctrine-web](https://github.com/vvk-kolsky/laravel-doctrine-web) package, do it now. See the installation instructions for the required packages for how to install and compile them.
+If you have not previously installed the [orm-backend/laravel-doctrine-web](https://github.com/vvk-kolsky/laravel-doctrine-web) package, do it now. See the installation instructions for the required packages for how to install and compile them.
 
 ```BASH
-composer require vvk/laravel-doctrine-web
+composer require orm-backend/laravel-doctrine-web
 ```
 
 ```BASH
-composer require vvk/laravel-doctrine-admin
+composer require orm-backend/laravel-doctrine-admin
 ```
 
 * Publising
 
 ```BASH
-php artisan vendor:publish --provider="VVK\Admin\PackageServiceProvider"
+php artisan vendor:publish --provider="OrmBackend\Admin\PackageServiceProvider"
 ```
 
 ## Setting up
@@ -62,7 +62,7 @@ LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
 ```
 
 ```BASH
-VVK\ORM\DoctrineServiceProvider::class,
+OrmBackend\ORM\DoctrineServiceProvider::class,
 LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
 ```
 

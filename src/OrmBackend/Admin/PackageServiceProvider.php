@@ -1,13 +1,13 @@
 <?php
-namespace VVK\Admin;
+namespace OrmBackend\Admin;
 
 use App\Model\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
-use VVK\Admin\Components\AboutComponent;
-use VVK\Admin\Components\BreadcrumbsComponent;
-use VVK\Admin\Components\BrieflyComponent;
+use OrmBackend\Admin\Components\AboutComponent;
+use OrmBackend\Admin\Components\BreadcrumbsComponent;
+use OrmBackend\Admin\Components\BrieflyComponent;
 
 class PackageServiceProvider extends ServiceProvider
 {

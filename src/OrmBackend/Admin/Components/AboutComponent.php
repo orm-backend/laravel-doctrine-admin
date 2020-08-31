@@ -1,5 +1,5 @@
 <?php
-namespace VVK\Admin\Components;
+namespace OrmBackend\Admin\Components;
 
 use Illuminate\View\Component;
 

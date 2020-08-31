@@ -1,9 +1,9 @@
 {
-    "name": "vvk/laravel-doctrine-admin",
+    "name": "orm-backend/laravel-doctrine-admin",
     "description": "Administrative dashboard for Laravel Doctrine",
     "type": "library",
     "license": "MIT",
-    "keywords": ["vvk", "laravel-doctrine-admin", "laravel admin", "doctrine"],
+    "keywords": ["orm-backend", "laravel-doctrine-admin", "laravel admin", "doctrine"],
     "authors": [
         {
             "name": "Vitaliy Kovalenko",
@@ -18,13 +18,13 @@
     },
     "autoload": {
         "psr-4": {
-        	"VVK\\Admin\\": "src/VVK/Admin/"
+        	"OrmBackend\\Admin\\": "src/OrmBackend/Admin/"
         }
     },
     "extra": {
 	    "laravel": {
 	        "providers": [
-	            "VVK\\Admin\\PackageServiceProvider"
+	            "OrmBackend\\Admin\\PackageServiceProvider"
 	        ]
 	    }
 	}

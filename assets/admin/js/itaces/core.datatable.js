@@ -1,7 +1,7 @@
 'use strict';
 (function($) {
 
-	var pluginName = 'VVKDatatable';
+	var pluginName = 'OrmBackendDatatable';
 	var pfx = 'kt-';
 	var util = KTUtil;
 	var app = KTApp;
