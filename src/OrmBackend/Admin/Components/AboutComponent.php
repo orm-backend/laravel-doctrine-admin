@@ -28,7 +28,7 @@ class AboutComponent extends Component
         $map = array_column($packages, 'name');
         $doctrine = array_search('doctrine/orm', $map);
         $laravel = array_search('laravel/framework', $map);
-        $admin = array_search('vvk/laravel-doctrine-admin', $map);
+        $admin = array_search('orm-backend/laravel-doctrine-admin', $map);
 
         return view($this->template, [
             'laravel' => $packages[$laravel]->version,
