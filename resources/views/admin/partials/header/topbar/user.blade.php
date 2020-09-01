@@ -15,7 +15,7 @@
 	</div>
 	<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround kt-header__topbar-item--langs">
 		<!--[html-partial:include:{"file":"partials/_topbar/dropdown/user.html"}]/-->
-		@include('itaces::admin.partials.topbar.dropdown.user')
+		@include('ormbackend::admin.partials.topbar.dropdown.user')
 	</div>
 </div>
 

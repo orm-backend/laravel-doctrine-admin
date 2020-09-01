@@ -60,12 +60,12 @@ class BrieflyComponent extends Component
         $qb->from($userClassName,'u');
         $qb->select($qb->expr()->countDistinct('u.'.$userClassName::getIdentifierName()));
         $registered = $qb->getQuery()
-            ->enableResultCache(config('itaces.caches.result_ttl'))
+            ->enableResultCache(config('ormbackend.caches.result_ttl'))
             ->getSingleScalarResult();
 
         $qb->where($qb->expr()->isNotNull('u.emailVerifiedAt'));
         $confirmed = $qb->getQuery()
-            ->enableResultCache(config('itaces.caches.result_ttl'))
+            ->enableResultCache(config('ormbackend.caches.result_ttl'))
             ->getSingleScalarResult();
 
         return view($this->template, [

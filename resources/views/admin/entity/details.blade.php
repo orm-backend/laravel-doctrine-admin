@@ -1,5 +1,5 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
 <!-- begin:: Content -->
 <style>
 @media print
@@ -10,7 +10,7 @@
     }
 }
 </style>
-<script src="/assets/admin/js/itaces/entity-edit.js" type="text/javascript" defer></script>
+<script src="/assets/admin/js/ormbackend/entity-edit.js" type="text/javascript" defer></script>
 <!-- Modal -->
 <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">

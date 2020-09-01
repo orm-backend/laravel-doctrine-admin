@@ -13,9 +13,9 @@
 		<ul class="kt-menu__subnav">
 			@foreach ($item['submenu'] as $child)
 				@if(isset($child['submenu']) && count($child['submenu']))
-					@include('itaces::admin.components.menu.submenu', ['item' => $child])
+					@include('ormbackend::admin.components.menu.submenu', ['item' => $child])
 				@else
-					@include('itaces::admin.components.menu.item', ['item' => $child])
+					@include('ormbackend::admin.components.menu.item', ['item' => $child])
 				@endif
 			@endforeach
 		</ul>

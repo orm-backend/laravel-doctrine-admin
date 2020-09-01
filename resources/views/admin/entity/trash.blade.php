@@ -1,7 +1,7 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
 <!-- begin:: Content -->
-<script src="/assets/admin/js/itaces/entity-table.js" type="text/javascript" defer></script>
+<script src="/assets/admin/js/ormbackend/entity-table.js" type="text/javascript" defer></script>
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 	@if (session('success'))
 	<div class="row">
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 	@endif
-	@include ('itaces::admin.partials.advanced-search-form')
+	@include ('ormbackend::admin.partials.advanced-search-form')
 	<div class="kt-portlet kt-portlet--mobile">
 		<div class="kt-portlet__head kt-portlet__head--lg">
 			<div class="kt-portlet__head-label">
@@ -74,7 +74,7 @@
 		@endcan
 		<div class="kt-portlet__body kt-portlet__body--fit">
 			<!--begin: Datatable -->
-			<table class="kt-datatable itaces-datatable">
+			<table class="kt-datatable ormbackend-datatable">
 				<thead>
                     <tr>
                     	<th data-selector="kt-checkbox--solid" data-field="RecordID" data-sortable="false" data-width="20" data-textalign="center">#</th>

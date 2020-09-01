@@ -34,7 +34,7 @@ class AdminController extends WebController
     
     public function index()
     {
-        return view($this->views['index'] ?? 'itaces::admin.index');
+        return view($this->views['index'] ?? 'ormbackend::admin.index');
     }
     
     /**
@@ -83,7 +83,7 @@ class AdminController extends WebController
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
 
-        return view($this->views[$classUrlName]['search'] ?? 'itaces::admin.entity.search', [
+        return view($this->views[$classUrlName]['search'] ?? 'ormbackend::admin.entity.search', [
             'paginator' => $paginator,
             'container' => $container,
             'meta' => $meta
@@ -124,7 +124,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view($this->views[$classUrlName]['details'] ?? 'itaces::admin.entity.details', [
+        return view($this->views[$classUrlName]['details'] ?? 'ormbackend::admin.entity.details', [
             'container' => $container,
             'meta' => $meta
         ]);
@@ -164,7 +164,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view($this->views[$classUrlName]['edit'] ?? 'itaces::admin.entity.edit', [
+        return view($this->views[$classUrlName]['edit'] ?? 'ormbackend::admin.entity.edit', [
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.'.$group.'.update', [$classUrlName, $id])
@@ -204,7 +204,7 @@ class AdminController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view($this->views[$classUrlName]['create'] ?? 'itaces::admin.entity.create', [
+        return view($this->views[$classUrlName]['create'] ?? 'ormbackend::admin.entity.create', [
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.'.$group.'.store', [$classUrlName])
@@ -261,7 +261,7 @@ class AdminController extends WebController
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
         
-        return view($this->views[$classUrlName]['trash'] ?? 'itaces::admin.entity.trash', [
+        return view($this->views[$classUrlName]['trash'] ?? 'ormbackend::admin.entity.trash', [
             'paginator' => $paginator,
             'container' => $container,
             'meta' => $meta

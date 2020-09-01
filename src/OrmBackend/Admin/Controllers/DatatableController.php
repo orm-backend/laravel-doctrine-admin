@@ -102,7 +102,7 @@ class DatatableController extends WebController
         $container->buildMetaFields($classMetadata);
         $container->addCollection($paginator->items());
         
-        return view('itaces::admin.entity.datatable', [
+        return view('ormbackend::admin.entity.datatable', [
             'paginator' => $paginator,
             'container' => $container,
             'meta' => $meta

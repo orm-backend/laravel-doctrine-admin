@@ -711,7 +711,7 @@
                 "media": "{$config.dist}/media/"
             }
         },
-        "itaces": {
+        "ormbackend": {
         	"nested-criteria-builder": {
 	        	"src": {
 	        		"styles": [
@@ -722,24 +722,24 @@
 	            	]
 	            },
 	        	"output": {
-		        	"styles": "{$config.dist}/css/itaces/",
-	                "scripts": "{$config.dist}/js/itaces/"
+		        	"styles": "{$config.dist}/css/ormbackend/",
+	                "scripts": "{$config.dist}/js/ormbackend/"
 	        	}
 	        },
         	"admin": {
 	            "src": {
 	            	"styles": [
-	                    "{$config.path.src}/sass/itaces/entity-details.scss"
+	                    "{$config.path.src}/sass/ormbackend/entity-details.scss"
 	                ],
 	                "scripts": [
-	                    "{$config.path.src}/js/itaces/**/*.js"
+	                    "{$config.path.src}/js/ormbackend/**/*.js"
 	                ]
 	            },
 	            "output": {
-	                "scripts": "{$config.dist}/js/itaces/"
+	                "scripts": "{$config.dist}/js/ormbackend/"
 	            },
 	            "bundle": {
-	            	"styles": "{$config.dist}/css/itaces/itaces.bundle.css"
+	            	"styles": "{$config.dist}/css/ormbackend/ormbackend.bundle.css"
 	            }
 	        }
         }

@@ -58,7 +58,7 @@ class SettingsController extends WebController
         $roles = $this->repository->getQuery(Role::class)->getResult();
         
         foreach ($roles as $role) {
-            if ($role->getCode() === config('itaces.roles.guest', 'guest')) {
+            if ($role->getCode() === config('ormbackend.roles.guest', 'guest')) {
                 $guestId = $role->getId();
             }
             
@@ -83,7 +83,7 @@ class SettingsController extends WebController
             'classUrlName' => $classUrlName
         ];
 
-        return view($this->views[$classUrlName]['settings']['permissions'] ?? 'itaces::admin.settings.permissions', [
+        return view($this->views[$classUrlName]['settings']['permissions'] ?? 'ormbackend::admin.settings.permissions', [
             'container' => $container,
             'meta' => $meta,
             'formAction' => route('admin.'.$group.'.settings.permissions.update', [$classUrlName], false),

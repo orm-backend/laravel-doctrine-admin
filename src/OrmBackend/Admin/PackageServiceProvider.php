@@ -23,22 +23,22 @@ class PackageServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__.'/../../routes.php');
-        $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'itaces');
+        $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'ormbackend');
 
         $this->publishes([
             __DIR__.'/../../../public/admin' => public_path('assets/admin')
-        ], 'itaces-admin-assets');
+        ], 'ormbackend-admin-assets');
         
         $this->publishes([
-            __DIR__.'/../../../resources/views/admin' => resource_path('views/vendor/itaces/admin')
-        ], 'itaces-admin-views');
+            __DIR__.'/../../../resources/views/admin' => resource_path('views/vendor/ormbackend/admin')
+        ], 'ormbackend-admin-views');
         
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
-        ], 'itaces-admin-config');
+        ], 'ormbackend-admin-config');
         
         Gate::define('dashboard', function (User $user) {
-            return $user->getId() === 1 || $user->hasRole(config('itaces.roles.dashboard', 'dashboard'));
+            return $user->getId() === 1 || $user->hasRole(config('ormbackend.roles.dashboard', 'dashboard'));
         });
         
         Gate::define('settings', function (User $user) {

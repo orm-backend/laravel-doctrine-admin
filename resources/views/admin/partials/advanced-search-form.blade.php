@@ -1,5 +1,5 @@
 <!-- begin:: Advanced Search Form -->
-<script src="/assets/admin/js/itaces/advanced-search-form.js" type="text/javascript" defer></script>
+<script src="/assets/admin/js/ormbackend/advanced-search-form.js" type="text/javascript" defer></script>
 <div class="kt-portlet kt-portlet--mobile advanced-search-portlet">
 	<div class="kt-portlet__head kt-portlet__head--lg">
 		<div class="kt-portlet__head-label">

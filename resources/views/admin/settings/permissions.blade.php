@@ -1,14 +1,14 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
 <!-- begin:: Content -->
-<script src="/assets/admin/js/itaces/entity-edit.js" type="text/javascript" defer></script>
+<script src="/assets/admin/js/ormbackend/entity-edit.js" type="text/javascript" defer></script>
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-	@include('itaces::admin.includes.alert', ['errors' => $errors])
+	@include('ormbackend::admin.includes.alert', ['errors' => $errors])
 	<div class="row">
 		<div class="col-lg-12">
 			<!--begin::Portlet-->
 			<div class="kt-portlet kt-portlet--last kt-portlet--head-lg kt-portlet--responsive-mobile" id="kt_page_portlet">
-				@include('itaces::admin.includes.settings-header', ['meta' => $meta])
+				@include('ormbackend::admin.includes.settings-header', ['meta' => $meta])
 				<ul class="nav nav-pills nav-fill" role="tablist">
 					<li class="nav-item">
 						<a class="nav-link active" data-toggle="tab" href="javascript:;" data-target="#permission_tab">{{ __('Permissions') }}</a>
@@ -56,14 +56,14 @@
         														<input type="hidden" name="{{ $entity->field('model')->fullname }}" value="{{ $entity->field('model')->value }}">
         														<input type="hidden" name="{{ $entity->field('role')->fullname }}" value="{{ $entity->field('role')->value }}">
                                                             	@if ($entity->field('role')->value == $guestId)
-                        											@include('itaces::admin.fields.guest-permission', [
+                        											@include('ormbackend::admin.fields.guest-permission', [
                         												'field' => $permission,
                         												'old' => $old,
                         												'message' => $message ?? null,
                         												'group' => $entity->field('role')->value
                         											])
                         										@else
-                        											@include('itaces::admin.fields.group-permission', [
+                        											@include('ormbackend::admin.fields.group-permission', [
                         												'field' => $permission,
                         												'old' => $old,
                         												'message' => $message ?? null,

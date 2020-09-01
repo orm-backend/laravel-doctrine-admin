@@ -1,10 +1,10 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
 <!-- begin:: Content -->
-<script src="/assets/admin/js/itaces/entity-edit.js" type="text/javascript" defer></script>
-@include('itaces::admin.includes.delete-modal')
+<script src="/assets/admin/js/ormbackend/entity-edit.js" type="text/javascript" defer></script>
+@include('ormbackend::admin.includes.delete-modal')
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-	@include('itaces::admin.includes.alert', ['errors' => $errors])
+	@include('ormbackend::admin.includes.alert', ['errors' => $errors])
 	<div class="row">
 		<div class="col-lg-12">
 			<!--begin::Portlet-->

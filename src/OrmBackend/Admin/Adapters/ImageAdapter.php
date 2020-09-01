@@ -47,7 +47,7 @@ class ImageAdapter extends AdminControllerAdapter
         $container = new FieldContainer($this->repository->em());
         $container->addEntity($entity);
         
-        return view('itaces::admin.image.edit', [
+        return view('ormbackend::admin.image.edit', [
             'container' => $container,
             'meta' => [
                 'group' => $group,
@@ -65,7 +65,7 @@ class ImageAdapter extends AdminControllerAdapter
      */
     public function create(Request $request, string $classUrlName, string $group)
     {
-        return view('itaces::admin.image.create', [
+        return view('ormbackend::admin.image.create', [
             'action' => route('admin.'.$group.'.store', $classUrlName),
         ]);
     }

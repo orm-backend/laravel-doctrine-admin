@@ -21,7 +21,7 @@ class UserAdapter extends AdminControllerAdapter
      */
     public function create(Request $request, string $classUrlName, string $group)
     {
-        return view($this->views[$classUrlName]['create'] ?? 'itaces::admin.user.create', [
+        return view($this->views[$classUrlName]['create'] ?? 'ormbackend::admin.user.create', [
             'roles' => $this->repository->getQuery(Role::class)->getResult()
         ]);
     }
@@ -34,7 +34,7 @@ class UserAdapter extends AdminControllerAdapter
     {
         $classUrlName = Helper::classToUrl(get_class($entity));
         
-        return view($this->views[$classUrlName]['edit'] ?? 'itaces::admin.user.edit', [
+        return view($this->views[$classUrlName]['edit'] ?? 'ormbackend::admin.user.edit', [
             'roles' => $this->repository->getQuery(Role::class)->getResult(),
             'user' => $entity
         ]);

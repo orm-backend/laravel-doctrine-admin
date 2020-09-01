@@ -10,8 +10,8 @@
     <!-- Styles -->
     <link href="{{ asset('assets/admin/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/admin/css/metronic.bundle.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/admin/css/itaces/nested-criteria-builder.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/admin/css/itaces/itaces.bundle.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/css/ormbackend/nested-criteria-builder.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/css/ormbackend/ormbackend.bundle.css') }}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/assets/admin/media/logos/favicon.ico" />
     <!-- begin::Global Config(global config for global JS sciprts) -->
 	<script>
@@ -38,36 +38,36 @@
 	<!--begin::Global Theme Bundle(used by all pages) -->
 	<script src="{{ asset('assets/admin/plugins/global/plugins.bundle.js') }}" type="text/javascript" defer></script>
     <script src="{{ asset('assets/admin/js/metronic.bundle.js') }}" type="text/javascript" defer></script>
-    <script src="{{ asset('assets/admin/js/itaces/nested-criteria-builder.js') }}" type="text/javascript" defer></script>
-    <script src="{{ asset('assets/admin/js/itaces/core.datatable.js') }}" type="text/javascript" defer></script>
-    <script src="{{ asset('assets/admin/js/itaces/core.js') }}" type="text/javascript" defer></script>
+    <script src="{{ asset('assets/admin/js/ormbackend/nested-criteria-builder.js') }}" type="text/javascript" defer></script>
+    <script src="{{ asset('assets/admin/js/ormbackend/core.datatable.js') }}" type="text/javascript" defer></script>
+    <script src="{{ asset('assets/admin/js/ormbackend/core.js') }}" type="text/javascript" defer></script>
     <!--end::Global Theme Bundle -->
 </head>
 <body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
     <!-- begin:: Page -->
     <!--[html-partial:include:{"file":"partials/_header/base-mobile.html"}]/-->
-    @include('itaces::admin.partials.header.base-mobile')
+    @include('ormbackend::admin.partials.header.base-mobile')
     <div class="kt-grid kt-grid--hor kt-grid--root">
     	<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
     		<!--[html-partial:include:{"file":"partials/_aside/base.html"}]/-->
-    		@include('itaces::admin.partials.aside.base')
+    		@include('ormbackend::admin.partials.aside.base')
     		<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
     			<!--[html-partial:include:{"file":"partials/_header/base.html"}]/-->
-    			@include('itaces::admin.partials.header.base')
+    			@include('ormbackend::admin.partials.header.base')
     			<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
     				<!--[html-partial:include:{"file":"partials/_subheader/subheader-v1.html"}]/-->
-    				<x-admin-breadcrumbs template="itaces::admin.components.breadcrumbs"/>
+    				<x-admin-breadcrumbs template="ormbackend::admin.components.breadcrumbs"/>
     				<!--[html-partial:include:{"file":"partials/_content/base.html"}]/-->
-    				@yield('itaces::content')
+    				@yield('ormbackend::content')
     			</div>
     			<!--[html-partial:include:{"file":"partials/_footer/base.html"}]/-->
-    			@include('itaces::admin.partials.footer.base')
+    			@include('ormbackend::admin.partials.footer.base')
     		</div>
     	</div>
     </div>
     <!-- end:: Page -->
     <!--[html-partial:include:{"file":"partials/_scrolltop.html"}]/-->
-    @include('itaces::admin.partials.scrolltop')
+    @include('ormbackend::admin.partials.scrolltop')
     <!--[html-partial:include:{"file":"partials/_toolbar.html"}]/-->
     
     <!--[html-partial:include:{"file":"partials/_demo-panel.html"}]/-->

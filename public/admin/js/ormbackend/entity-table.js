@@ -1,7 +1,7 @@
 "use strict";
 jQuery(document).ready(function() {
 	var selectedRows = [];
-	var datatable = $('.itaces-datatable').OrmBackendDatatable({
+	var datatable = $('.ormbackend-datatable').OrmBackendDatatable({
 		data: {
 			type: 'local',
 			saveState: false,

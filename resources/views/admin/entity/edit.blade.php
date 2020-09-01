@@ -1,16 +1,16 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
 <!-- begin:: Content -->
-<script src="/assets/admin/js/itaces/entity-edit.js" type="text/javascript" defer></script>
-@include('itaces::admin.includes.delete-modal')
+<script src="/assets/admin/js/ormbackend/entity-edit.js" type="text/javascript" defer></script>
+@include('ormbackend::admin.includes.delete-modal')
 @php ($entity = $container->first())
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-	@include('itaces::admin.includes.alert', ['errors' => $errors])
+	@include('ormbackend::admin.includes.alert', ['errors' => $errors])
 	<div class="row">
 		<div class="col-lg-12">
 			<!--begin::Portlet-->
 			<div class="kt-portlet kt-portlet--last kt-portlet--head-lg kt-portlet--responsive-mobile" id="kt_page_portlet">
-				@include('itaces::admin.includes.edit-header', ['meta' => $meta, 'entity' => $entity])
+				@include('ormbackend::admin.includes.edit-header', ['meta' => $meta, 'entity' => $entity])
 				<form class="kt-form" name="entity-edit" method="post" action="{{ $formAction }}" enctype="multipart/form-data">
     				@csrf
     				<div class="kt-portlet__body">
@@ -21,8 +21,8 @@
 									<div class="kt-section__body">
 										@php ($old = old($entity->classUrlName))
 										@php ($field = $entity->field('id'))
-										@include('itaces::admin.fields.id', ['field' => $field])
-										@include('itaces::admin.includes.fields', ['meta' => $meta, 'fields' => $entity->fields(), 'old' => $old, 'message' => $message ?? null, 'exclude' => [$field->fullname]])
+										@include('ormbackend::admin.fields.id', ['field' => $field])
+										@include('ormbackend::admin.includes.fields', ['meta' => $meta, 'fields' => $entity->fields(), 'old' => $old, 'message' => $message ?? null, 'exclude' => [$field->fullname]])
 									</div>
 								</div>
 							</div>

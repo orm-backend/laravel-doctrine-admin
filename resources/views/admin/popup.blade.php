@@ -10,7 +10,7 @@
     <!-- Styles -->
     <link href="{{ asset('assets/admin/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/admin/css/metronic.bundle.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/itaces/nested-criteria-builder.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/admin/css/ormbackend/nested-criteria-builder.css') }}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/assets/admin/media/logos/favicon.ico" />
     <!-- begin::Global Config(global config for global JS sciprts) -->
 	<script>
@@ -37,9 +37,9 @@
 	<!--begin::Global Theme Bundle(used by all pages) -->
 	<script src="{{ asset('assets/admin/plugins/global/plugins.bundle.js') }}" type="text/javascript" defer></script>
     <script src="{{ asset('assets/admin/js/metronic.bundle.js') }}" type="text/javascript" defer></script>
-    <script src="{{ asset('assets/admin/js/itaces/core.datatable.js') }}" type="text/javascript" defer></script>
-    <script src="{{ asset('assets/admin/js/itaces/nested-criteria-builder.js') }}" type="text/javascript" defer></script>
-    <script src="{{ asset('assets/admin/js/itaces/core.js') }}" type="text/javascript" defer></script>
+    <script src="{{ asset('assets/admin/js/ormbackend/core.datatable.js') }}" type="text/javascript" defer></script>
+    <script src="{{ asset('assets/admin/js/ormbackend/nested-criteria-builder.js') }}" type="text/javascript" defer></script>
+    <script src="{{ asset('assets/admin/js/ormbackend/core.js') }}" type="text/javascript" defer></script>
     <!--end::Global Theme Bundle -->
 </head>
 <body class="kt-page--loading">
@@ -47,10 +47,10 @@
     <div class="kt-grid kt-grid--hor kt-grid--root">
     	<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
 			<!--[html-partial:include:{"file":"partials/_content/base.html"}]/-->
-			@yield('itaces::content')
+			@yield('ormbackend::content')
 		</div>
     </div>
     <!-- end:: Page -->
-    @include('itaces::admin.partials.scrolltop')
+    @include('ormbackend::admin.partials.scrolltop')
 </body>
 </html>

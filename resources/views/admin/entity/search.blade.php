@@ -1,16 +1,16 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
 <!-- begin:: Content -->
-<script src="/assets/admin/js/itaces/entity-table.js" type="text/javascript" defer></script>
-@include('itaces::admin.includes.delete-modal')
+<script src="/assets/admin/js/ormbackend/entity-table.js" type="text/javascript" defer></script>
+@include('ormbackend::admin.includes.delete-modal')
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-	@include ('itaces::admin.includes.session-aler')
-	@include ('itaces::admin.partials.advanced-search-form')
+	@include ('ormbackend::admin.includes.session-aler')
+	@include ('ormbackend::admin.partials.advanced-search-form')
 	<div class="kt-portlet kt-portlet--mobile">
-		@include('itaces::admin.includes.search-header', ['meta' => $meta])
+		@include('ormbackend::admin.includes.search-header', ['meta' => $meta])
 		<div class="kt-portlet__body kt-portlet__body--fit">
 			<!--begin: Datatable -->
-			<table class="kt-datatable itaces-datatable">
+			<table class="kt-datatable ormbackend-datatable">
 				<thead>
                     <tr>
                     	<th data-selector="kt-checkbox--solid" data-field="RecordID" data-sortable="false" data-width="20" data-textalign="center">#</th>

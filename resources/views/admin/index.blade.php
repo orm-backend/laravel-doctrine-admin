@@ -1,4 +1,4 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
-@include('itaces::admin.partials.content.base')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
+@include('ormbackend::admin.partials.content.base')
 @endsection

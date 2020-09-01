@@ -4,9 +4,9 @@
 		<ul class="kt-menu__nav ">
 			@foreach ($menu as $item)
 				@if(isset($item['submenu']) && count($item['submenu']))
-					@include('itaces::admin.components.menu.submenu', ['item' => $item])
+					@include('ormbackend::admin.components.menu.submenu', ['item' => $item])
 				@else
-					@include('itaces::admin.components.menu.item', ['item' => $item])
+					@include('ormbackend::admin.components.menu.item', ['item' => $item])
 				@endif
 			@endforeach
 		</ul>

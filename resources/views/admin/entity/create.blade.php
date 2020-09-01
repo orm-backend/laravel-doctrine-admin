@@ -1,15 +1,15 @@
-@extends('itaces::admin.layout')
-@section('itaces::content')
+@extends('ormbackend::admin.layout')
+@section('ormbackend::content')
 <!-- begin:: Content -->
-<script src="/assets/admin/js/itaces/entity-edit.js" type="text/javascript" defer></script>
+<script src="/assets/admin/js/ormbackend/entity-edit.js" type="text/javascript" defer></script>
 @php ($entity = $container->first())
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-	@include('itaces::admin.includes.alert', ['errors' => $errors])
+	@include('ormbackend::admin.includes.alert', ['errors' => $errors])
 	<div class="row">
 		<div class="col-lg-12">
 			<!--begin::Portlet-->
 			<div class="kt-portlet kt-portlet--last kt-portlet--head-lg kt-portlet--responsive-mobile" id="kt_page_portlet">
-				@include('itaces::admin.includes.create-header', ['meta' => $meta])
+				@include('ormbackend::admin.includes.create-header', ['meta' => $meta])
 				<form class="kt-form" name="entity-edit" method="post" action="{{ $formAction }}" enctype="multipart/form-data">
     				@csrf
     				<div class="kt-portlet__body">
@@ -25,7 +25,7 @@
     										@endif
 										@endforeach
 										@php ($old = old($entity->classUrlName))
-										@include('itaces::admin.includes.fields', ['meta' => $meta, 'fields' => $fields, 'old' => $old, 'message' => $message ?? null])
+										@include('ormbackend::admin.includes.fields', ['meta' => $meta, 'fields' => $fields, 'old' => $old, 'message' => $message ?? null])
 									</div>
 								</div>
 							</div>
