@@ -54,7 +54,7 @@ php artisan vendor:publish --provider="OrmBackend\Admin\PackageServiceProvider"
 
 ## Setting up
 
-config/app.php
+* config/app.php
 
 ```BASH
 //Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
@@ -64,6 +64,21 @@ LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
 ```BASH
 OrmBackend\ORM\DoctrineServiceProvider::class,
 LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
+```
+
+* app/Providers/EventServiceProvider.php
+
+```PHP
+protected $listen = [
+    Registered::class => [
+        SendEmailVerificationNotification::class,
+    ],
+    
+    BeforMenu::class => [
+        AdminMenuListener::class,
+        OauthMenuListener::class,
+    ],
+];
 ```
 
 
