@@ -7,7 +7,7 @@
 				<a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Quick links</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
 				<div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
 					<ul id="quick-links" class="kt-menu__subnav">
-						<li class="kt-menu__item " aria-haspopup="true"><a href="https://vvk.com/" class="kt-menu__link" target="_blank"><i class="kt-menu__link-icon flaticon2-group"></i><span class="kt-menu__link-text">{{ __('Development team') }}</span></a></li>
+						<li class="kt-menu__item " aria-haspopup="true"><a href="https://www.orm-backend.com/" class="kt-menu__link" target="_blank"><i class="kt-menu__link-icon flaticon2-group"></i><span class="kt-menu__link-text">{{ __('Development team') }}</span></a></li>
 					</ul>
 				</div>
 			</li>
