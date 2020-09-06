@@ -4,6 +4,7 @@ namespace OrmBackend\Admin\Adapters;
 use App\Model\Role;
 use App\Model\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use OrmBackend\Admin\Controllers\AdminControllerAdapter;
 use OrmBackend\ORM\Entities\Entity;
 use OrmBackend\Utility\Helper;
@@ -65,7 +66,9 @@ class UserAdapter extends AdminControllerAdapter
     public function store(Request $request, string $classUrlName, string $group)
     {
         $request->validate(User::getRequestValidationRules());
-        $this->repository->createOrUpdate(User::class, $request->all());
+        $data = $request->post();
+        $data['password'] = Hash::make($data['password']);
+        $this->repository->createOrUpdate(User::class, $data);
         $this->repository->em()->flush();
         $url = route('admin.'.$group.'.search', 'app-model-user');
         
@@ -87,6 +90,11 @@ class UserAdapter extends AdminControllerAdapter
         }
         
         $request->validate($rules);
+        
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        
         $this->repository->createOrUpdate(User::class, $data, $id);
         $this->repository->em()->flush();
         $url = route('admin.'.$group.'.search', 'app-model-user');
