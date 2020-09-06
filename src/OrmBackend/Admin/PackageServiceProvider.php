@@ -38,11 +38,11 @@ class PackageServiceProvider extends ServiceProvider
         ], 'ormbackend-admin-config');
         
         Gate::define('dashboard', function (User $user) {
-            return $user->getId() === 1 || $user->hasRole(config('ormbackend.roles.dashboard', 'dashboard'));
+            return $user->getPrimary() === 1 || $user->hasRole(config('ormbackend.roles.dashboard', 'dashboard'));
         });
         
         Gate::define('settings', function (User $user) {
-            return $user->getId() === 1;
+            return $user->getPrimary() === 1 || $user->hasRole(config('ormbackend.roles.admin', 'admin'));
         });
 
         Blade::component('admin-about', AboutComponent::class);
