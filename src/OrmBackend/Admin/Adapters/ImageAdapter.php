@@ -47,7 +47,7 @@ class ImageAdapter extends AdminControllerAdapter
         $container = new FieldContainer($this->repository->em());
         $container->addEntity($entity);
         
-        return view('ormbackend::admin.image.edit', [
+        return view($this->views[$classUrlName]['edit'] ?? 'ormbackend::admin.image.edit', [
             'container' => $container,
             'meta' => [
                 'group' => $group,
@@ -65,8 +65,8 @@ class ImageAdapter extends AdminControllerAdapter
      */
     public function create(Request $request, string $classUrlName, string $group)
     {
-        return view('ormbackend::admin.image.create', [
-            'action' => route('admin.'.$group.'.store', $classUrlName),
+        return view($this->views[$classUrlName]['create'] ?? 'ormbackend::admin.image.create', [
+            'formAction' => route('admin.'.$group.'.store', $classUrlName),
         ]);
     }
 

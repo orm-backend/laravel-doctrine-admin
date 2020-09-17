@@ -25,7 +25,7 @@
 						</div>
 					</div>
 				</div>
-				<form class="kt-form" name="entity-edit" method="post" action="{{ route('admin.entity.store', 'app-model-image') }}" enctype="multipart/form-data">
+				<form class="kt-form" name="entity-edit" method="post" action="{{ $formAction }}" enctype="multipart/form-data">
 					@csrf
 					<div class="kt-portlet__body">
     					<div class="form-group row">
