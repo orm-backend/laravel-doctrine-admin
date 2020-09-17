@@ -52,9 +52,11 @@
                         	<td><a href="{{ $field->value ? route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">{{ $field->valueName }}</a></td>
                         	@elseif ($field->type == 'image')
                         	<td>
+                        		@if ($field->value)
                         		<a class="kt-media" href="{{ $field->value ? route('admin.'.$meta['group'].'.details', [$field->refClassUrlName, $field->value]) : 'javascript:,' }}" target="_blank">
                         			<img src="{{ crop($field->path, 'center', 50, 50) }}" alt="{{ $field->valueName }}">
                         		</a>
+                        		@endif
                         	</td>
                         	@elseif ($field->value && $field->type == 'datetime')
                         	<td>{{ $field->value->toDateTimeString() }}</td>
