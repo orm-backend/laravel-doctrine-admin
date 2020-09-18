@@ -27,7 +27,7 @@ class AdminController extends WebController
 
     public function __construct()
     {
-        $this->repository = new WithJoinsRepository(true);
+        $this->repository = new WithJoinsRepository();
         $this->adapters = config('admin.adapters');
         $this->views = config('admin.views');
     }
