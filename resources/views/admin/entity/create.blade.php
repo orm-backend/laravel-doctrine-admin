@@ -20,6 +20,9 @@
 									<div class="kt-section__body">
 										@php ($fields = [])
 										@foreach ($entity->fields() as $field)
+											@if (($field->type == 'reference' || $field->type == 'collection') && !$field->isOwningSide)
+												@continue
+											@endif
     										@if (!$field->disabled)
     											@php ($fields[] = $field)
     										@endif

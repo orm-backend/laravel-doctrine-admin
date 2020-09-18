@@ -22,7 +22,16 @@
 										@php ($old = old($entity->classUrlName))
 										@php ($field = $entity->field('id'))
 										@include('ormbackend::admin.fields.id', ['field' => $field])
-										@include('ormbackend::admin.includes.fields', ['meta' => $meta, 'fields' => $entity->fields(), 'old' => $old, 'message' => $message ?? null, 'exclude' => [$field->fullname]])
+										@php ($fields = [])
+										@foreach ($entity->fields() as $field)
+											@if (($field->type == 'reference' || $field->type == 'collection') && !$field->isOwningSide)
+												@continue
+											@endif
+    										@if (!$field->disabled)
+    											@php ($fields[] = $field)
+    										@endif
+										@endforeach
+										@include('ormbackend::admin.includes.fields', ['meta' => $meta, 'fields' => $fields, 'old' => $old, 'message' => $message ?? null, 'exclude' => [$field->fullname]])
 									</div>
 								</div>
 							</div>
